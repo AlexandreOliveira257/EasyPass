@@ -7,7 +7,7 @@ Esta aplicação visa resolver algumas dessas inconveniências ao permitir aos u
 <ul>
     <li>React</li>
     <li>NodeJS</li>
-    <li>PostgresSQL</li>
+    <li>MySQL</li>
 </ul>
 
 <h2>Modelo ER</h2>
