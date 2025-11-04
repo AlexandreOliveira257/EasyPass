@@ -11,4 +11,5 @@ Esta aplicação visa resolver algumas dessas inconveniências ao permitir aos u
 </ul>
 
 <h2>Modelo ER</h2>
-<img width="1566" height="1310" alt="ptps_bd drawio" src="https://github.com/user-attachments/assets/043794ab-e321-4328-a56e-aea2af20ed62" />
+
+<img width="2025" height="1509" alt="ptps_bd2 drawio (3)" src="https://github.com/user-attachments/assets/3101ae6c-85f6-4e3c-b820-aff2707f78fe" />
