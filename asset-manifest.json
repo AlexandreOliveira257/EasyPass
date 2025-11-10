@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/EasyPass/static/css/main.07013793.css",
+    "main.js": "/EasyPass/static/js/main.ec8a45fc.js",
+    "index.html": "/EasyPass/index.html",
+    "main.07013793.css.map": "/EasyPass/static/css/main.07013793.css.map",
+    "main.ec8a45fc.js.map": "/EasyPass/static/js/main.ec8a45fc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07013793.css",
+    "static/js/main.ec8a45fc.js"
+  ]
+}
