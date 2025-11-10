@@ -1,0 +1,18 @@
+header{
+    background-color: #1C1C8A;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bus{
+    max-width: auto;
+    height: 70px;
+    fill:white; 
+}
+
+.avatar{
+    max-width: auto;
+    height: 70px;
+    margin-right:10px;
+}
