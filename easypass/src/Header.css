@@ -1,18 +1,22 @@
 header{
-    background-color: #1C1C8A;
+    background: #11114D;
+    background: linear-gradient(60deg, rgba(17, 17, 77, 1) 0%, rgba(28, 28, 138, 1) 100%);
     padding: 20px;
+    height: 125px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 .bus{
     max-width: auto;
-    height: 70px;
+    height: 70%;
+    margin-left: 25px;
     fill:white; 
 }
 
 .avatar{
     max-width: auto;
-    height: 70px;
-    margin-right:10px;
+    height: 70%;
+    margin-right: 40px;
 }
