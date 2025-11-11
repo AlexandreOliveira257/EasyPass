@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/EasyPass/static/css/main.07013793.css",
-    "main.js": "/EasyPass/static/js/main.6f25776d.js",
-    "index.html": "/EasyPass/index.html",
-    "main.07013793.css.map": "/EasyPass/static/css/main.07013793.css.map",
-    "main.6f25776d.js.map": "/EasyPass/static/js/main.6f25776d.js.map"
+    "main.css": "https://alexandreoliveira257.github.io/EasyPass/static/css/main.10a0ed6b.css",
+    "main.js": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.6f25776d.js",
+    "static/media/APP_BG1.png": "https://alexandreoliveira257.github.io/EasyPass/static/media/APP_BG1.3f67556f3f222373220a.png",
+    "index.html": "https://alexandreoliveira257.github.io/EasyPass/index.html",
+    "main.10a0ed6b.css.map": "https://alexandreoliveira257.github.io/EasyPass/static/css/main.10a0ed6b.css.map",
+    "main.6f25776d.js.map": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.6f25776d.js.map"
   },
   "entrypoints": [
-    "static/css/main.07013793.css",
+    "static/css/main.10a0ed6b.css",
     "static/js/main.6f25776d.js"
   ]
 }
