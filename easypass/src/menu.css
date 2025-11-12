@@ -9,12 +9,9 @@
 
 }
 
-nav, a, h1 {
+nav {
     display: flex;
     flex-direction: column;
-    text-decoration: 0;
-    color: #171766;
-    font-family: "Alexandria", sans-serif;
     font-weight: normal;
     gap: 3vh;
 }
@@ -26,20 +23,29 @@ nav, a, h1 {
 
 
 a {
+    text-decoration: 0;
+    color: #171766;
     font-size: 1vw;
     display: flex;
     flex-direction: row;
     gap: 20px;
+    font-family: "Alexandria", sans-serif;
 }
 
-h1 {
+.menu {
+    
+    
+    margin: 0;
+    margin-bottom: 10%;
+    font-family: "Alexandria", sans-serif;
+}
+h1{
     color: #1C1C8A;
     font-weight: 450;
     font-size: 2vw;
-    margin: 0;
-    margin-bottom: 10%;
-}
+     font-family: "Alexandria", sans-serif;
 
+}
 .barra {
     display: flex;
     align-self: center;

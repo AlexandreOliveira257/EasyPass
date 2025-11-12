@@ -4,3 +4,8 @@ body{
         url("../public/APP_BG1.png");
     overflow: hidden;
 }
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,12 @@
+.portalMenu{
+    background-color: #E1E8F8;
+     width: 65vw;
+    padding: 3%;
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.navPortal{
+    gap: 5%;
+    justify-content: center;
+}

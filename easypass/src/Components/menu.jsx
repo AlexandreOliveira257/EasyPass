@@ -1,7 +1,7 @@
 import "../menu.css"
 function Menu(){
     return <div className="barraMenu">
-            <h1>Menu</h1>
+            <h1 className="menu">Menu</h1>
             <nav className="iconsMenu">
                 <a href="#"><img src="icons/passe.svg"/>Passes</a>
                 <a href="#"><img src="icons/pedidos.svg"/>Pedidos</a>
