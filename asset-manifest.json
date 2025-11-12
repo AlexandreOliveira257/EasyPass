@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "https://alexandreoliveira257.github.io/EasyPass/static/css/main.73186412.css",
-    "main.js": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.202dfda9.js",
+    "main.js": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.55c5d738.js",
     "static/media/APP_BG1.png": "https://alexandreoliveira257.github.io/EasyPass/static/media/APP_BG1.3f67556f3f222373220a.png",
     "index.html": "https://alexandreoliveira257.github.io/EasyPass/index.html",
     "main.73186412.css.map": "https://alexandreoliveira257.github.io/EasyPass/static/css/main.73186412.css.map",
-    "main.202dfda9.js.map": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.202dfda9.js.map"
+    "main.55c5d738.js.map": "https://alexandreoliveira257.github.io/EasyPass/static/js/main.55c5d738.js.map"
   },
   "entrypoints": [
     "static/css/main.73186412.css",
-    "static/js/main.202dfda9.js"
+    "static/js/main.55c5d738.js"
   ]
 }
