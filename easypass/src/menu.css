@@ -2,10 +2,9 @@
     background-color: #E1E8F8;
     display: flex;
     flex-direction: column;
-    width: fit-content;
-    height: fit-content;
-    padding: 40px;
-    margin: 50px;
+    width: 14vw;
+    padding: 3%;
+    margin: 30px;
     border-radius: 15px;
 
 }
@@ -17,19 +16,17 @@ nav, a, h1 {
     color: #171766;
     font-family: "Alexandria", sans-serif;
     font-weight: normal;
-    gap: 20px;
+    gap: 3vh;
 }
 
 .terminarSessao {
     color: #AB2020;
 }
 
-.definicoes {
-    margin-top: 50%;
-}
+
 
 a {
-    font-size: 20px;
+    font-size: 1vw;
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -38,15 +35,14 @@ a {
 h1 {
     color: #1C1C8A;
     font-weight: 450;
-    font-size: 38px;
+    font-size: 2vw;
     margin: 0;
-    margin-bottom: 40px;
+    margin-bottom: 10%;
 }
 
 .barra {
     display: flex;
     align-self: center;
-    margin-top: 25px;
     width: 90%;
     height: 1px;
     background-color: #B7C2DA;
@@ -54,6 +50,6 @@ h1 {
 }
 
 .iconsMenu img{
-    width: 18px;
+    width: 1.5vw;
 }
 

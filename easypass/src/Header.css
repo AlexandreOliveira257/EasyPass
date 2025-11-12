@@ -2,7 +2,7 @@ header{
     background: #11114D;
     background: linear-gradient(60deg, rgba(17, 17, 77, 1) 0%, rgba(28, 28, 138, 1) 100%);
     padding: 20px;
-    height: 125px;
+    height: 5vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
