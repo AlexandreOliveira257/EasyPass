@@ -9,7 +9,7 @@
 
 }
 
-nav {
+.iconsMenu {
     display: flex;
     flex-direction: column;
     font-weight: normal;

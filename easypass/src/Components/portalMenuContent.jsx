@@ -5,11 +5,17 @@ function portalMenuContent(){
         <div className="flex">
         <h1>Bem-vindo, [nome]</h1>
         <nav className="navPortal">
-            <a className="btnPortal">Notificações</a>
-            <a className="btnPortal">Gerir Passes</a>
+            <div className="flex">
+            <a className="btnPortal">Notificações</a><img src="icons/notifications.svg"/>
+            </div>
+            <div className="flex">
+            <a className="btnPortal">Gerir Passes</a><img src="icons/gerirPasses.svg"/>
+            </div>
         </nav>
         </div>
         <hr className="hrPortal"/>
+        <h2 className="osSeusPasses">Os seus passes</h2>
+        <img className="criarPasse" src="criarPasse.svg"/>
     </PortalMenu>
 }
 
