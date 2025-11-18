@@ -1,9 +1,10 @@
 .portalMenu{
     background-color: #E1E8F8;
-     width: 65vw;
+    width: 90vw;
     padding: 3%;
     margin: 30px;
     border-radius: 15px;
+    height: 60vh;
 }
 
 .navPortal{
@@ -19,7 +20,7 @@
         color:#1C1C8A;
         opacity: 50%;
         font-weight: 500;
-        font-size: 1.5vw;
+        font-size: 1.4vw;
 }
 
 .hrPortal {
