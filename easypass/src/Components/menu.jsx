@@ -12,7 +12,7 @@ function Menu(){
                 <Link to="/transportes" ><img src="icons/localizar.svg"/>Localizar Transporte</Link>
             <div className="barra"></div>
                 <Link to="/definicoes" className="definicoes"><img src="icons/settings.svg" />Definições</Link>
-                <Link to="terminarSessao"className="terminarSessao"><img src="icons/logout.svg" />Terminar Sessão</Link>
+                <Link to="/iniciar"className="terminarSessao"><img src="icons/logout.svg" />Terminar Sessão</Link>
             </nav>
         </div> 
 }
