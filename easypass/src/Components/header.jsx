@@ -1,8 +1,9 @@
 import "../Header.css"
+import { Link } from "react-router"
 function Header(){
     return <header >
-        <a href="index.html" className="bus"><img src="EasyPass.png" /></a>
-        <a href="index.html" className="avatar"><img src="Generic-avatar.png" /></a>
+        <Link to="/" className="bus"><img src="EasyPass.png" /></Link>
+        <Link to="/" className="avatar"><img src="Generic-avatar.png" /></Link>
         </header> 
 }
 export default Header
