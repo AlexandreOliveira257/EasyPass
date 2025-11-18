@@ -13,7 +13,7 @@ function portalMenuContent(){
             </div>
         </nav>
         </div>
-        <hr className="hrPortal"/>
+        <div className="hrPortal"></div>
         <h2 className="osSeusPasses">Os seus passes</h2>
         <img className="criarPasse" src="criarPasse.svg"/>
     </PortalMenu>

@@ -1,7 +1,6 @@
 import React from "react"
 import "../App.css"
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import Passes from "../Routes-Menu/Passes"
 import PortalPage from "./PortalPage"
 function App(){
     return(
