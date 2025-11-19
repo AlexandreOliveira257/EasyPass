@@ -2,28 +2,24 @@
     width: 4vw ;
 }
 
-.btnIdioma{
-    border: 0;
-    background-color: #1C1C8A;
-    color:white;
-    font-family: 'Alexandria';
-    margin-bottom: 10px;
-    padding: 1vw;
-    display: block;
-    max-width: 30%;
-    width: 100%;
-}
 
-.btnSobre{
+
+.Btn{
+    font-size: 1vw;
     border: 0;
     background-color: #1C1C8A;
     color:white;
     font-family: 'Alexandria';
     padding:1vw;
     width: 100%;
-    max-width: 30%;
+    max-width: 20%;
+    
+    border-radius: 0.4vw;
+    margin-bottom: 1vw;
 }
-
+.iconArrow{
+    width: 0.5vw;
+}
 .alignButtons{
     display: flex;
     flex-direction: column;
@@ -31,3 +27,4 @@
     justify-content: center;
     min-height: 50vh;
 }
+

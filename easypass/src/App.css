@@ -10,4 +10,7 @@ body{
     justify-content: space-between;
 }
 
-
+.idiomaFlex{
+    display: flex;
+    gap: 1vw;
+}

@@ -1,5 +1,6 @@
 import PortalMenu from "./portalMenu"
 import "../buttons.css"
+import { Link } from "react-router"
 function DefinicoesMenuContent(){
     return(
             <PortalMenu>
@@ -10,8 +11,12 @@ function DefinicoesMenuContent(){
                 <hr></hr>
                 <div>
                 <div className="alignButtons">
-                <button className="btnIdioma"><img src="icons/icon.svg"/> ALTERAR IDIOMA</button>
-                <button className="btnSobre"><img src="icons/icon.svg"/> SOBRE</button>
+                <Link className="Btn" to="/idiomas">
+                <img className="iconArrow" src="icons/icon.svg"/> ALTERAR IDIOMA
+                </Link>
+                <Link className="Btn" to="/sobre">
+                <img className="iconArrow" src="icons/icon.svg"/> SOBRE
+                </Link>
                 </div>
                 </div>
             </PortalMenu>
