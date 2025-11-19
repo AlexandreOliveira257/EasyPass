@@ -1,22 +1,24 @@
+import { useTranslation } from "react-i18next";
 import PortalMenu from "./portalMenu";
 
-function portalMenuContent(){
-     return <PortalMenu>
+function PortalMenuContent(){
+    const {t} = useTranslation()
+     return  <PortalMenu>
         <div className="flex">
-        <h1>Bem-vindo, [nome]</h1>
+        <h1>{t('welcome')} [nome]</h1>
         <nav className="navPortal">
             <div className="flex">
-            <a className="btnPortal">Notificações</a><img src="icons/notifications.svg"/>
+            <a className="btnPortal">{t('notificacoes')}</a><img src="icons/notifications.svg"/>
             </div>
             <div className="flex">
-            <a className="btnPortal">Gerir Passes</a><img src="icons/gerirPasses.svg"/>
+            <a className="btnPortal">{t('gerirPasses')}</a><img src="icons/gerirPasses.svg"/>
             </div>
         </nav>
         </div>
         <div className="hrPortal"></div>
-        <h2 className="osSeusPasses">Os seus passes</h2>
+        <h2 className="osSeusPasses">{t('seusPasses')}</h2>
         <img className="criarPasse" src="criarPasse.svg"/>
     </PortalMenu>
 }
 
-export default portalMenuContent
+export default PortalMenuContent
