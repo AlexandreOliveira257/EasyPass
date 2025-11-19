@@ -47,7 +47,7 @@ i18n.use(initReactI18next).init({
       seusPasses:"Os seus passes",
       welcome:"Bem-vindo,"} },
   },
-  lng: "en",
+  lng: "pt",
   fallbackLng: "en",
   interpolation: { escapeValue: false }
 });
