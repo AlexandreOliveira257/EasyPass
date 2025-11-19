@@ -8,20 +8,11 @@ export default function EasyPassLogin() {
     <div className="container">
       {/* Purple/Blue Background Panel */}
       <div className={`purple-panel ${showLogin ? 'slide-left' : ''}`}>
-        {/* Logo and Brand */}
+
         <div className="brand">
-          {/* Bus Icon */}
           <div className="bus-icon">
-            <svg viewBox="0 0 100 100" fill="none">
-              <rect x="15" y="25" width="70" height="45" rx="4" stroke="white" strokeWidth="3" fill="white" fillOpacity="0.1"/>
-              <rect x="20" y="30" width="25" height="20" rx="2" fill="white"/>
-              <rect x="55" y="30" width="25" height="20" rx="2" fill="white"/>
-              <circle cx="30" cy="65" r="5" fill="white"/>
-              <circle cx="70" cy="65" r="5" fill="white"/>
-              <path d="M15 40 L10 35 L10 30" stroke="white" strokeWidth="2"/>
-            </svg>
+            <img src="EasyPass_Vetor.svg" alt="logo" />
           </div>
-          <h1>EASYPASS</h1>
         </div>
 
         {/* Initial Buttons */}
@@ -29,11 +20,15 @@ export default function EasyPassLogin() {
           <div className="button-group">
             <button onClick={() => setShowLogin(true)} className="btn-primary">
               <span>ENTRAR</span>
-              <span className="arrow">→</span>
+              <span className="arrow">
+                <img src="./icons/goBackBtn.svg"/>
+              </span>
             </button>
             <button className="btn-primary">
               <span>REGISTAR</span>
-              <span className="arrow">→</span>
+              <span className="arrow">
+                <img src="./icons/goBackBtn.svg"/>
+              </span>
             </button>
             <button className="btn-link">
               ENTRAR COMO CONVIDADO

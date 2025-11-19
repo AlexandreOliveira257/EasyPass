@@ -2,8 +2,6 @@
     width: 4vw ;
 }
 
-
-
 .Btn{
     font-size: 1vw;
     border: 0;
@@ -17,9 +15,11 @@
     margin-bottom: 1vw;
     cursor: pointer;
 }
+
 .iconArrow{
     width: 0.5vw;
 }
+
 .alignButtons{
     display: flex;
     flex-direction: column;
