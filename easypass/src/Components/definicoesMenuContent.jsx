@@ -8,17 +8,20 @@ function DefinicoesMenuContent(){
             <PortalMenu>
                 <div className="flex">
                     <h1>{t('settings').toUpperCase()}</h1>
-                    <img className="goBackBtn" src="icons/goBackBtn.svg"/>
                 </div>
-                <hr></hr>
+
+                <div className="hrPortal"></div>
                 <div>
                 <div className="alignButtons">
+
                 <Link className="Btn" to="/idiomas">
                 <img className="iconArrow" src="icons/icon.svg"/> {t('titleIdioma')}
                 </Link>
+
                 <Link className="Btn" to="/sobre">
                 <img className="iconArrow" src="icons/icon.svg"/> {t('sobre')}
                 </Link>
+
                 </div>
                 </div>
             </PortalMenu>

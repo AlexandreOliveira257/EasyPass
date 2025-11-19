@@ -7,7 +7,7 @@ function PedidosMenuContent(){
     return(
       <PortalMenu>
         <h1>{t('pedidos').toUpperCase()}</h1>
-        <hr></hr>
+        <div className="hrPortal"></div>
       </PortalMenu>
     )
 }

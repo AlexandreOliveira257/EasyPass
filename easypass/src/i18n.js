@@ -7,6 +7,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: { 
       translation: { 
+
       //===MENU===
       pedidos:"Requests", 
       movimentos:"Movements",
@@ -16,10 +17,12 @@ i18n.use(initReactI18next).init({
       settings:"Settings",
       logout:"Logout",
       //===idiomaMenuContent===
+
       titleIdioma:"CHANGE LANGUAGE",
       sobre:"ABOUT",
       ingles:"English",
       portugues:"Portuguese",
+
       //===portalMenuContent===
       notificacoes:"Notifications",
       gerirPasses:"Manage Passes",
@@ -28,6 +31,7 @@ i18n.use(initReactI18next).init({
      }  },
 
     pt: { translation: { 
+
       //===MENU===
       pedidos:"Pedidos",
       movimentos:"Movimentos", 
@@ -36,11 +40,13 @@ i18n.use(initReactI18next).init({
       transportes:"Localizar Transportes",
       settings:"Definições",
       logout:"Terminar Sessão",
+
       //===idiomaMenuContent===
       titleIdioma:"ALTERAR IDIOMA",
       sobre:"SOBRE",
       ingles:"Inglês",
       portugues:"Português",
+      
       //===portalMenuContent===
       notificacoes:"Notificações",
       gerirPasses:"Gerir Passes",

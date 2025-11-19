@@ -5,7 +5,7 @@ function MovimentosMenuContent(){
     return(
     <PortalMenu>
         <h1>{t('movimentos').toUpperCase()}</h1>
-        <hr></hr>
+        <div className="hrPortal"></div>
     </PortalMenu>
     )
 }
