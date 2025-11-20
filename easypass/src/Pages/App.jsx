@@ -7,6 +7,7 @@ import Iniciar from "./Iniciar";
 import Movimentos from "../Routes-Menu/Movimentos";
 import Definicoes from "../Routes-Menu/Definicoes";
 import Idiomas from "../Routes-Menu/Idiomas";
+import Horarios from "../Routes-Menu/Horarios";
 function App(){
     return(
         <div className="bgImg">
@@ -17,6 +18,7 @@ function App(){
                 <Route path="/movimentos" element={<Movimentos/>}/>
                 <Route path="/definicoes" element={<Definicoes/>}/>
                 <Route path="/idiomas" element={<Idiomas/>}/>
+                <Route path="/horarios" element={<Horarios/>}/>
                 <Route path="/iniciar" element={<Iniciar/>}/>
             </Routes>
         </div>
