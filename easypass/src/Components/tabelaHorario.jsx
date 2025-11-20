@@ -2,7 +2,7 @@ import "../Horarios.css"
 function TabelaHorario(){
     return(
         <div>
-            <div class="container">
+            <div class="containerHorario">
         <table>
             <thead>
                 <tr>
