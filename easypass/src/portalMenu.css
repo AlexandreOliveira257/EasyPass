@@ -43,3 +43,32 @@ transition-timing-function: cubic-bezier(0.022, 0.736, 0.198, 0.997);
 box-shadow: 0px 0px 15px rgb(205, 205, 205) ;
 }
 
+.criarPasseh3{
+    font-family: "Alexandria", sans-serif;
+        color:#1C1C8A;
+        opacity: 50%;
+        font-weight: 500;
+        font-size: 1.4vw;
+        text-align: center;
+}
+
+.criarPasseFlexImages{
+    display: flex;
+    justify-content: center;
+    gap:1vw;
+}
+
+.disabled{
+    color:#1C1C8A;
+    opacity: 50%;
+    text-align: center;
+}
+
+figcaption{
+        color:#1C1C8A;
+    text-align: center;
+}
+
+.passeAuto{
+width: 30vw;
+}

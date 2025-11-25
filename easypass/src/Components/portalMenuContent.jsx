@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import PortalMenu from "./portalMenu";
 import { useState } from "react";
-
+import { Link } from "react-router";
 function PortalMenuContent(){
     const {t} = useTranslation()
       const [showNotifications, setShowNotifications] = useState(false);
@@ -16,13 +16,13 @@ function PortalMenuContent(){
             <a onClick={() => setShowNotifications(!showNotifications)} className="btnPortal">{t('notificacoes')}</a><img src="icons/notifications.svg"/>
             </div>
             <div className="flex">
-            <a className="btnPortal">{t('gerirPasses')}</a><img src="icons/gerirPasses.svg"/>
+            <a className="btnPortal">{t('gerirPasses')}</a><img src={"icons/gerirPasses.svg"}/>
             </div>
         </nav>
         </div>
         <div className="hrPortal"></div>
         <h2 className="osSeusPasses">{t('seusPasses')}</h2>
-        <img className="criarPasse" src="criarPasse.svg"/>
+        <Link to="/criarpasse"><img className="criarPasse" src={t('criarpasse')}/></Link>
         </>
         )}
         {showNotifications && (

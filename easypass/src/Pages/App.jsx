@@ -9,6 +9,7 @@ import Definicoes from "../Routes-Menu/Definicoes";
 import Idiomas from "../Routes-Menu/Idiomas";
 import Horarios from "../Routes-Menu/Horarios";
 import Perfil from "../Routes-Menu/Perfil";
+import CriarPasse from "../Routes-Menu/CriarPasse";
 function App(){
     return(
         <div className="bgImg">
@@ -21,7 +22,9 @@ function App(){
                 <Route path="/idiomas" element={<Idiomas/>}/>
                 <Route path="/horarios" element={<Horarios/>}/>
                 <Route path="/perfil" element={<Perfil/>}/>
+                <Route path="/criarPasse" element={<CriarPasse/>}/>
                 <Route path="/iniciar" element={<Iniciar/>}/>
+
             </Routes>
         </div>
     )

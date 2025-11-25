@@ -27,7 +27,8 @@ i18n.use(initReactI18next).init({
       notificacoes:"Notifications",
       gerirPasses:"Manage Passes",
       seusPasses:"Your Passes",
-      welcome:"Welcome,"
+      welcome:"Welcome,",
+      criarpasse:"icons/createpass.svg"
      }  },
 
     pt: { translation: { 
@@ -51,7 +52,9 @@ i18n.use(initReactI18next).init({
       notificacoes:"Notificações",
       gerirPasses:"Gerir Passes",
       seusPasses:"Os seus passes",
-      welcome:"Bem-vindo,"} },
+      welcome:"Bem-vindo,",
+      criarpasse:"criarPasse.svg"}
+     },
   },
   lng: "pt",
   fallbackLng: "en",
