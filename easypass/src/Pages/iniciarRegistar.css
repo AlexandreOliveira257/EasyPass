@@ -1,0 +1,73 @@
+.register-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  background: white;
+  opacity: 0;
+  transition: all 1.25s;
+  transition-timing-function: cubic-bezier(0.813, 0.008, 0.167, 0.992);
+  overflow: hidden;
+}
+
+    .register-panel.slide-in {
+    width: 55%;
+    opacity: 1;
+    }
+
+    .register-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    }
+
+    .register-card {
+    background: #E1E8F6;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    padding: 3.5rem;
+    width: 100%;
+    max-width: 28rem;
+    position: relative;
+    }
+
+    .register-card h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #1C1C8A;
+    margin: 0 0 1.5rem 0;
+    }
+
+/* Botão Registar */
+.btn-register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 50%;
+  background: #1C1C8A;
+  color: #E1E8F6;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+  .btn-register img{
+    width: 2.3rem;
+    rotate: 180deg;
+  }
+
+  .btn-register:hover {
+    transform: scale(1.03, 1.03);
+    opacity: 85%;
+    transition: all 0.5s;
+    transition-timing-function: cubic-bezier(0.022, 0.736, 0.198, 0.997);
+  }

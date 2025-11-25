@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next"
 import PortalMenu from "./portalMenu"
 import "../Horarios.css"
 import TabelaHorario from "./tabelaHorario"
+
 function HorarioMenuContent(){
     const {t} = useTranslation()
     return (
@@ -19,7 +20,7 @@ function HorarioMenuContent(){
                 <option>AMIAIS DE BAIXO</option>
                 <option>OUTRO LOCAL</option>
             </select>
-            <button>PESQUISAR</button>
+            <button className="pesquisarBtn">PESQUISAR</button>
         </div>
         <TabelaHorario/>
         </div>
