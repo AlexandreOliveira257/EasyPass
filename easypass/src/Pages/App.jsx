@@ -10,6 +10,8 @@ import Idiomas from "../Routes-Menu/Idiomas";
 import Horarios from "../Routes-Menu/Horarios";
 import Perfil from "../Routes-Menu/Perfil";
 import CriarPasse from "../Routes-Menu/CriarPasse";
+import LocalizarTransporte from "../Routes-Menu/Transportes";
+
 function App(){
     return(
         <div className="bgImg">
@@ -24,7 +26,7 @@ function App(){
                 <Route path="/perfil" element={<Perfil/>}/>
                 <Route path="/criarPasse" element={<CriarPasse/>}/>
                 <Route path="/iniciar" element={<Iniciar/>}/>
-
+                <Route path="/localizarTransporte" element={<LocalizarTransporte/>}/>
             </Routes>
         </div>
     )

@@ -2,6 +2,7 @@ import PortalMenu from "./portalMenu"
 import "../buttons.css"
 import { Link } from "react-router"
 import { useTranslation } from "react-i18next"
+
 function PedidosMenuContent(){
   const {t} = useTranslation()
     return(

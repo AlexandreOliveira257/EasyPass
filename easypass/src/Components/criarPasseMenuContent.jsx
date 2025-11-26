@@ -1,5 +1,6 @@
 import { Link } from "react-router"
 import { useState } from "react";
+import { useTranslation } from "react-i18next"
 import EscolherOperadorBus from "./escolherOperadorBus";
 import EscolherOperadorTrain from "./escolherOperadorTrain";
 import EscolherPasseComboio from "./escolherPasseComboio";
@@ -14,6 +15,8 @@ import PasseComboioFinal from "./passeComboioFinal";
 
 function CriarPasseMenuContent(){
 const [view, setView] = useState("none");   
+const {t} = useTranslation()
+
     return(
         
         <div>
@@ -21,14 +24,15 @@ const [view, setView] = useState("none");
         {view === "none" && (
         <>
         <div className="flex">
-        <span></span><Link to="/"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
+            <span></span><Link to="/"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
         </div>
-        <h3 className="criarPasseh3">Escolha o meio de transporte</h3>
+
+        <h3 className="criarPasseh3">{t('escolhaMeioTransporte')}</h3>
         <div className="criarPasseFlexImages">
-        <figure><img src="BoatOption.svg"/><figcaption className="disabled">Barco</figcaption></figure>
-        <figure><img onClick={()=>setView("escolherOperadorBus")} src="BusOption1.svg"/><figcaption>Autocarro</figcaption></figure>
-        <figure><img onClick={()=>setView("escolherOperadorTrain")} src="TrainOption1.svg"/><figcaption>Comboio</figcaption></figure>
-        <figure><img src="MetroOption.svg"/><figcaption className="disabled">Metro</figcaption></figure>
+            <figure><img src="BoatOption.svg"/><figcaption className="disabled">{t('barco')}</figcaption></figure>
+            <figure><img onClick={()=>setView("escolherOperadorBus")} src="BusOption1.svg"/><figcaption>{t('autocarro')}</figcaption></figure>
+            <figure><img onClick={()=>setView("escolherOperadorTrain")} src="TrainOption1.svg"/><figcaption>{t('comboio')}</figcaption></figure>
+            <figure><img src="MetroOption.svg"/><figcaption className="disabled">{t('metro')}</figcaption></figure>
         </div>
         </>
         )}

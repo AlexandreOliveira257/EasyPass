@@ -1,46 +1,50 @@
+import { useTranslation } from "react-i18next"
+
 function VerificarPasseVerde({setView}){
+    const {t} = useTranslation()
+
     return(
         <div className="formPerfil">
         <div className="flex">
         <span></span><img onClick={()=>setView("none")} className="goBackBtn" src="icons/goBackBtn.svg"/>
         </div>
         <div className="photo-area">
-          <h1>VERIFICAR DADOS</h1>
+          <h1>{t('verificarDados').toUpperCase}</h1>
         </div>
 
           <div className="form">
-            <label>Nome Completo</label>
+            <label>{t('nomeCompleto')}</label>
             <input type="text" defaultValue="Luís José António" />
-            <label>Modalidade</label>
+            <label>{t('modalidade')}</label>
             <input disabled type="text" defaultValue="Passe Ferroviário Verde" />
 
-            <label>NIF</label>
+            <label>{t('nif')}</label>
             <input type="text" defaultValue="235666789" />
 
-            <label>Tipo Documento Identificação</label>
+            <label>{t('tipoDocumentoIdentificacao')}</label>
             <div className="doc-type">
               <label>
-                Cartão de cidadão <input defaultChecked className="radio" type="radio" name="doc" /> 
+                {t('cartãoCidadao')} <input defaultChecked className="radio" type="radio" name="doc" /> 
               </label>
               <label>
-                Cartão de condução <input className="radio" type="radio" name="doc"  /> 
+                {t('cartaConducao')} <input className="radio" type="radio" name="doc"  /> 
               </label>
             </div>
 
-            <label>Requer passe físico?</label>
+            <label>{t('requerPasseFisico')}</label>
             <div className="doc-type">
               <label>
-                Sim <input defaultChecked className="radio"type="radio" name="passeTrue" /> 
+                {t('sim')} <input defaultChecked className="radio"type="radio" name="passeTrue" /> 
               </label>
               <label>
-                Não <input className="radio" type="radio" name="passeFalse"  /> 
+                {t('nao')} <input className="radio" type="radio" name="passeFalse"  /> 
               </label>
             </div>
             <hr></hr>
-            <p>Passe Digital: 5€</p>
-            <p>Modalidade: 5€</p>
+            <p>{t('passeDigital')}: 5€</p>
+            <p>{t('modalidade')}: 5€</p>
             <p>Total: 10€</p>
-            <button onClick={()=>setView("passeComboioFinal")} className="save-btn">PAGAMENTO</button>
+            <button onClick={()=>setView("passeComboioFinal")} className="save-btn">{t('pagamento').toUpperCase()}</button>
           </div>
           </div>
     )

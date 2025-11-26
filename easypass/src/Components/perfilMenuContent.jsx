@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next"
 import PortalMenu from "./portalMenu";
 import "../Perfil.css"
+
 function PerfilMenuContent() {
   const [activeTab, setActiveTab] = useState(0);
+  const {t} = useTranslation()
 
   return (
     <PortalMenu>
@@ -10,7 +13,7 @@ function PerfilMenuContent() {
         {/* FOTO */}
         <div className="photo-area">
           <div className="circle-photo"></div>
-          <button className="btn-photo">ALTERAR FOTO</button>
+          <button className="btn-photo">{t('alterarFoto').toUpperCase()}</button>
         </div>
         {/* TABS */}
         <div className="tabs">
@@ -18,21 +21,21 @@ function PerfilMenuContent() {
             className={`tab ${activeTab === 0 ? "active-tab" : ""}`}
             onClick={() => setActiveTab(0)}
           >
-            Dados Pessoais
+            {t('dadosPessoais')}
           </div>
 
           <div
             className={`tab ${activeTab === 1 ? "active-tab" : ""}`}
             onClick={() => setActiveTab(1)}
           >
-            Morada
+            {t('morada')}
           </div>
 
           <div
             className={`tab ${activeTab === 2 ? "active-tab" : ""}`}
             onClick={() => setActiveTab(2)}
           >
-            Contactos
+            {t('contactos')}
           </div>
         </div>
 
@@ -41,24 +44,25 @@ function PerfilMenuContent() {
         {/* TAB 0 - DADOS PESSOAIS */}
         {activeTab === 0 && (
           <div className="form">
-            <label>Nome Completo</label>
+            <label>{t('nomeCompleto')}</label>
             <input type="text" defaultValue="Luís José António" />
 
-            <label>Género</label>
+            <label>{t('genero')}</label>
             <select>
-              <option>Masculino</option>
-              <option>Feminino</option>
+              <option>{t('masculino')}</option>
+              <option>{t('feminino')}</option>
+              <option>{t('generoOutro')}</option>
             </select>
 
-            <label>Nacionalidade</label>
+            <label>{t('nacionalidade')}</label>
             <select>
-              <option>Portuguesa</option>
+              <option>{t('portuguesa')}</option>
             </select>
 
-            <label>NIF</label>
+            <label>{t('nif')}</label>
             <input type="text" defaultValue="235666789" />
 
-            <label>Data de nascimento</label>
+            <label>{t('dataNascimento')}</label>
             <div className="row">
               <select>
                 <option>01</option>
@@ -71,21 +75,21 @@ function PerfilMenuContent() {
               </select>
             </div>
 
-            <label>Tipo Documento Identificação</label>
+            <label>{t('tipoDocumentoIdentificacao')}</label>
             <div className="doc-type">
               <label>
-                Cartão de cidadão <input className="radio"type="radio" name="doc" /> 
+                {t('cartãoCidadao')} <input className="radio"type="radio" name="doc" /> 
               </label>
 
               <label>
-                Cartão de condução <input className="radio"type="radio" name="doc" defaultChecked /> 
+                {t('cartaConducao')} <input className="radio"type="radio" name="doc" defaultChecked /> 
               </label>
             </div>
 
-            <label>Número Documento Identificação</label>
+            <label>{t('numeroDocumentoIdentificacao')}</label>
             <input type="text" />
 
-            <label>Validade Documento Identificação</label>
+            <label>{t('validadeDocumentoIdentificacao')}</label>
             <div className="row">
               <select>
                 <option>17</option>
@@ -98,20 +102,20 @@ function PerfilMenuContent() {
               </select>
             </div>
 
-            <button className="save-btn">GUARDAR</button>
+            <button className="save-btn">{t('guardar').toUpperCase()}</button>
           </div>
         )}
 
         {/* TAB 1 - MORADA */}
         {activeTab === 1 && (
           <div className="form">
-            <label>Morada</label>
-            <input type="text" placeholder="Escreva a sua morada" />
-            <label>Código Postal</label>
-            <input type="text" placeholder="Escreva o seu código postal" />
-            <label>Localidade</label>
-            <input type="text" placeholder="Escreva a sua localidade" />
-            <label>País de residência</label>
+            <label>{t('morada')}</label>
+            <input type="text" placeholder={t('aSuaMorada')} />
+            <label>{t('codigoPostal')}</label>
+            <input type="text" placeholder={t('oSeuCodigoPostal')} />
+            <label>{t('localidade')}</label>
+            <input type="text" placeholder={t('aSuaLocalidade')} />
+            <label>{t('paisResidencia')}</label>
             <select>
               <option>Portugal</option>
               <option>Angola</option>
@@ -123,13 +127,13 @@ function PerfilMenuContent() {
         {activeTab === 2 && (
           <div className="form">
             <label>Email</label>
-            <input type="text" placeholder="Escreva o seu email" />
-            <label>Telemóvel</label>
-            <input type="text" placeholder="Escreva a sua telemóvel" />
-            <label>Contato preferêncial</label>
+            <input type="text" placeholder={t('oSeuEmail')} />
+            <label>{t('telemovel')}</label>
+            <input type="text" placeholder={t('oSeuTelemovel')} />
+            <label>{t('contactoPreferencial')}</label>
             <select>
               <option>Email</option>
-              <option>Telemóvel</option>
+              <option>{t('telemovel')}</option>
             </select>
           </div>
         )}

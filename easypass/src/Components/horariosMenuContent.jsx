@@ -8,19 +8,17 @@ function HorarioMenuContent(){
     return (
     <PortalMenu>
         <h1>{t('horarios').toUpperCase()}</h1>
-        <hr></hr>
+        <div className="hrPortal"></div>
         <div className="flex">
            <div class="search-box">
-            <h3>PESQUISA DE HORÁRIOS <img src=""></img></h3>
-            <select>
+            <h3>{t('pesquisaHorarios').toUpperCase()} <img src=""></img></h3>
+            <select className="estacao">
                 <option selected disabled>SANTARÉM</option>
-                <option></option>
             </select>
-            <select>
+            <select className="estacao">
                 <option>AMIAIS DE BAIXO</option>
-                <option>OUTRO LOCAL</option>
             </select>
-            <button className="pesquisarBtn">PESQUISAR</button>
+            <button className="pesquisarBtn">{t('pesquisa').toUpperCase()}</button>
         </div>
         <TabelaHorario/>
         </div>

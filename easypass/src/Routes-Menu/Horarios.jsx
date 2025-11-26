@@ -1,6 +1,6 @@
 import Header from "../Components/header"
-import HorarioMenuContent from "../Components/horariosMenuContent"
 import Menu from "../Components/menu"
+import HorarioMenuContent from "../Components/horariosMenuContent"
 
 function Horarios(){
     return (

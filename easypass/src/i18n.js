@@ -8,6 +8,9 @@ i18n.use(initReactI18next).init({
     en: { 
       translation: { 
 
+      sim:"Yes",
+      nao:"No",
+
       //===MENU===
       pedidos:"Requests", 
       movimentos:"Movements",
@@ -16,6 +19,60 @@ i18n.use(initReactI18next).init({
       transportes:"Locate Transports",
       settings:"Settings",
       logout:"Logout",
+
+      //===Profile===
+      alterarFoto: "Change Photo",
+      dadosPessoais: "Personal Data",
+      morada: "Address",
+      contactos: "Contacts",
+      nomeCompleto: "Full Name",
+      genero: "Gender",
+      masculino: "Male",
+      feminino: "Female",
+      generoOutro: "Other",
+      nacionalidade: "Nationality",
+      portuguesa: "Portuguese",
+      dataNascimento: "Birthday Date",
+      nif: "Tax ID",
+      tipoDocumentoIdentificacao: "ID Document Type",
+      cartãoCidadao: "Citizen Card",
+      cartaConducao: "Driver's License",
+      numeroDocumentoIdentificacao: "ID Document Number",
+      validadeDocumentoIdentificacao: "ID Document Expiry Date",
+      guardar: "save",
+      codigoPostal: "Postal Code",
+      localidade: "City",
+      paisResidencia: "Country of Residence",
+      aSuaMorada: "Your address...",
+      oSeuCodigoPostal: "Your postal code...",
+      aSuaLocalidade: "Your city...",
+      oSeuEmail: "Your email...",
+      telemovel: "Mobile",
+      oSeuTelemovel: "Your mobile...",
+      contactoPreferencial: "Preferred Contact",
+      requerPasseFisico:"Require a physical pass?",
+
+      //===NewPass===
+      escolhaMeioTransporte: "Choose the Means of Transport",
+      barco: "Boat",
+      autocarro: "Bus",
+      comboio: "Train",
+      metro: "Metro",
+      modalidade: "Type",
+      pagamento: "Payment",
+      verificarDados: "Check Details",
+      passeFerroviarioVerde: "Passe Ferroviário Verde",
+      passeUrbano: "Urban Pass",
+      passeJovem: "Youth Pass",
+      passeDigital: "Digital Pass",
+      passeCriadoSucesso: "Pass created successfully!",
+      escolherOperadorPreferencia: "Choose your preferred operator",
+      escolherPassePretendeCriar: "Choose the pass you want to create",
+
+      //===Schedules===
+      pesquisaHorarios:"SEARCH SCHEDULE",
+      pesquisa:"SEARCH",
+
       //===idiomaMenuContent===
 
       titleIdioma:"CHANGE LANGUAGE",
@@ -33,6 +90,9 @@ i18n.use(initReactI18next).init({
 
     pt: { translation: { 
 
+      sim:"Sim",
+      nao:"Não",
+
       //===MENU===
       pedidos:"Pedidos",
       movimentos:"Movimentos", 
@@ -41,6 +101,59 @@ i18n.use(initReactI18next).init({
       transportes:"Localizar Transportes",
       settings:"Definições",
       logout:"Terminar Sessão",
+
+      //===Perfil===
+      alterarFoto: "Alterar Foto",
+      dadosPessoais: "Dados Pessoais",
+      morada: "Morada",
+      contactos: "Contactos",
+      nomeCompleto: "Nome Completo",
+      dataNascimento: "Data de nascimento",
+      genero: "Género",
+      masculino: "Masculino",
+      feminino: "Feminino",
+      generoOutro: "Outro",
+      nacionalidade: "Nacionalidade",
+      portuguesa: "Portuguesa",
+      nif: "NIF",
+      tipoDocumentoIdentificacao: "Tipo de Documento de Identificação",
+      cartãoCidadao: "Cartão de Cidadão",
+      cartaConducao: "Carta de Condução",
+      numeroDocumentoIdentificacao: "Número do Documento de Identificação",
+      validadeDocumentoIdentificacao: "Validade do Documento de Identificação",
+      guardar: "guardar",
+      codigoPostal: "Código Postal",
+      localidade: "Localidade",
+      paisResidencia: "País de Residência",
+      aSuaMorada: "A sua morada...",
+      oSeuCodigoPostal: "O seu código postal...",
+      aSuaLocalidade: "A sua localidade...",
+      oSeuEmail: "O seu email...",
+      telemovel: "Telemóvel",
+      oSeuTelemovel: "O seu telemóvel...",
+      contactoPreferencial: "Contacto Preferencial",
+      requerPasseFisico:"Requer passe físico?",
+
+      //===CriarPasse===
+      escolhaMeioTransporte: "Escolha o meio de Transporte",
+      barco: "Barco",
+      autocarro: "Autocarro",
+      comboio: "Comboio",
+      metro: "Metro",
+      modalidade:"Modalidade",
+      pagamento:"pagamento",
+      verificarDados:"verificar dados",
+      passeFerroviarioVerde:"Passe Ferroviário Verde",
+      passeUrbano:"Passe Urbano",
+      passeJovem:"Passe Jovem",
+      passeDigital:"Passe Digital",
+      passeCriadoSucesso:"Passe criado com sucesso!",
+      escolherOperadorPreferencia:"Escolha o operador de preferência",
+      escolherPassePretendeCriar:"Escolha o passe que pretende criar",
+
+      //===Horários===
+      pesquisaHorarios:"PESQUISA DE HORARIOS",
+      pesquisa:"Pesquisa",
 
       //===idiomaMenuContent===
       titleIdioma:"ALTERAR IDIOMA",

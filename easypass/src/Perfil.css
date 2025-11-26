@@ -1,7 +1,7 @@
     .tabs {
         display: flex;
         gap: 20px;
-        border-bottom: 2px solid #e0e0e0;
+        border-bottom: 2px solid #1C1C8A;
         margin-bottom: 25px;
     }
     .formPerfil{
@@ -16,8 +16,8 @@
         color: #636363;
     }
     .active-tab {
-        color: #005ac2;
-        border-bottom: 3px solid #005ac2;
+        color: #1C1C8A;
+        border-bottom: 3px solid #1C1C8A;
     }
 
     /* Foto */
