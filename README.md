@@ -15,7 +15,7 @@ Esta aplicação visa resolver algumas dessas inconveniências ao permitir aos u
 <h2>Tecnologias</h2>
 <ul>
     <li>React</li>
-    <li>NodeJS</li>
+    <li>PHP</li>
     <li>MySQL</li>
 </ul>
 
