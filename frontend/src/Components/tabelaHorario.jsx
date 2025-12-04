@@ -1,8 +1,9 @@
 import "../Horarios.css"
 function TabelaHorario(){
+
     return(
         <div>
-            <div class="containerHorario">
+            <div className="containerHorario">
         <table>
             <thead>
                 <tr>
@@ -23,11 +24,7 @@ function TabelaHorario(){
                     <td>Férias Esc.</td>
                     <td>1982</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                       
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
@@ -38,11 +35,7 @@ function TabelaHorario(){
                     <td>Período Esc</td>
                     <td>982</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                        
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
@@ -53,11 +46,7 @@ function TabelaHorario(){
                     <td>Período Esc.</td>
                     <td>195</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                        
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
@@ -68,11 +57,7 @@ function TabelaHorario(){
                     <td>Todo o Ano</td>
                     <td>608</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                        
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
@@ -83,11 +68,7 @@ function TabelaHorario(){
                     <td>Férias Esc.</td>
                     <td>1982</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                        
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
@@ -98,11 +79,7 @@ function TabelaHorario(){
                     <td>Período Esc.</td>
                     <td>1982</td>
                     <td class="logo-cell">
-                        <svg class="logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="50" cy="25" rx="45" ry="22" fill="#1e40af" opacity="0.8"/>
-                            <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">VIEIRA</text>
-                            <text x="50" y="33" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">TEJO</text>
-                        </svg>
+                        
                     </td>
                     <td class="info-cell"><span class="info-icon">ⓘ</span></td>
                 </tr>
