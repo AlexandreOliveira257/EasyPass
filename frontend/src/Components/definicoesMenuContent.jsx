@@ -8,6 +8,7 @@ function DefinicoesMenuContent(){
             <PortalMenu>
                 <div className="flex">
                     <h1>{t('settings').toUpperCase()}</h1>
+
                 </div>
 
                 <div className="hrPortal"></div>

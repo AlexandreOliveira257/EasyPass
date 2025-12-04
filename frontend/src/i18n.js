@@ -18,7 +18,13 @@ i18n.use(initReactI18next).init({
       horarios:"Schedules",
       transportes:"Locate Transports",
       settings:"Settings",
+      sobre:"About",
       logout:"Logout",
+
+      //===SOBRE===
+      termosECondicoes:"Terms and Conditions", 
+      politicaPrivacidade:"Privacy Policy",
+      acessibilidade:"Accessibility",
 
       //===Profile===
       alterarFoto: "Change Photo",
@@ -100,7 +106,13 @@ i18n.use(initReactI18next).init({
       horarios:"Horários",
       transportes:"Localizar Transportes",
       settings:"Definições",
+      sobre:"Sobre",
       logout:"Terminar Sessão",
+
+      //===SOBRE===
+      termosECondicoes:"Termos e Condições", 
+      politicaPrivacidade:"Politica de Privacidade",
+      acessibilidade:"Acessibilidade",
 
       //===Perfil===
       alterarFoto: "Alterar Foto",
