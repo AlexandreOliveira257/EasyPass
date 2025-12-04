@@ -127,9 +127,9 @@ export default function EasyPassLogin() {
               <input type="number" placeholder="O seu NIF" />                    
             </div>
 
-            <div className="form-group">
-              <label>Aceitar Termos e condições</label>
-              <input type="checkbox" placeholder="termos e condições" />                    
+            <div className="checkTermos">
+              <input className="checkMark" type="checkbox" placeholder="" /> 
+              <label>Aceitar Termos e condições</label>                  
             </div>
 
             <div className="register-form">
