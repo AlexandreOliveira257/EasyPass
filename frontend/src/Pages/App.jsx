@@ -11,6 +11,7 @@ import Horarios from "../Routes-Menu/Horarios";
 import Perfil from "../Routes-Menu/Perfil";
 import CriarPasse from "../Routes-Menu/CriarPasse";
 import LocalizarTransporte from "../Routes-Menu/Transportes";
+import Sobre from "../Routes-Menu/Sobre";
 
 function App(){
     return(
@@ -21,6 +22,7 @@ function App(){
                 <Route path="/pedidos" element={<Pedidos/>}/>
                 <Route path="/movimentos" element={<Movimentos/>}/>
                 <Route path="/definicoes" element={<Definicoes/>}/>
+                <Route path="/sobre" element={<Sobre/>}/>
                 <Route path="/idiomas" element={<Idiomas/>}/>
                 <Route path="/horarios" element={<Horarios/>}/>
                 <Route path="/perfil" element={<Perfil/>}/>

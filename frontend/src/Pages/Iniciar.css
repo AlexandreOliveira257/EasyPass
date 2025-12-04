@@ -348,3 +348,41 @@
     transition: all 0.5s;
     transition-timing-function: cubic-bezier(0.022, 0.736, 0.198, 0.997);
   }
+
+.checkTermos{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+  .checkTermos label{
+    font-size: 14px;
+    font-weight: 500;
+    color: #171766;
+    margin-bottom: 1.05rem;
+  }
+
+  .checkMark {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid #1C1C8A;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+    .checkMark:checked::after {
+      content: '';
+      position: absolute;
+      width: 0.9rem; 
+      height: 0.9rem;
+      background-color: #1C1C8A;
+      border-radius: 0.3rem; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
