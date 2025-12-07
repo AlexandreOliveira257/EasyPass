@@ -34,10 +34,10 @@ function VerificarPasseUrbano({setView}){
             <label>{t('requerPasseFisico')}</label>
             <div className="doc-type">
               <label>
-                {t('sim')} <input defaultChecked className="radio"type="radio" name="passeTrue" /> 
+                {t('sim')} <input defaultChecked className="radio"type="radio" name="passeFisico" /> 
               </label>
               <label>
-                {t('nao')} <input className="radio" type="radio" name="passeFalse"  /> 
+                {t('nao')} <input className="radio" type="radio" name="passeFisico"  /> 
               </label>
             </div>
             <hr></hr>
