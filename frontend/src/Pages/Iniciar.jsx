@@ -18,7 +18,7 @@ export default function EasyPassLogin() {
         </div>
 
         {/* Botões Inicio */}
-        {!showLogin && (
+        {!showLogin && !showRegister && (
           <div className="button-group">
             <button onClick={() => setShowLogin(true)} className="btn-primary">
               <span>ENTRAR</span>
