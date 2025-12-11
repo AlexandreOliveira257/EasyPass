@@ -6,9 +6,7 @@ import { HashRouter } from "react-router-dom";
 import  './i18n';
 
 ReactDOM.createRoot(document.querySelector("#root")).render(
-    <React.StrictMode>
         <HashRouter>
             <App />
         </HashRouter>
-    </React.StrictMode>
 );
