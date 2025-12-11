@@ -1,31 +1,54 @@
-# ... (Passos de Build do Slim e React OMITIDOS) ...
+name: Deploy Slim + React (Sem Build, Composer e FTP)
 
-      # --- 3. Deploy via FTP ---
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout do Código
+        uses: actions/checkout@v4
+
+      # --- 1. Configuração e Dependências PHP (Composer) ---
+      - name: 🐘 Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Ajustar à versão do Hostinger
+          extensions: mbstring, zip, pdo_mysql
+          coverage: none
+
+      - name: 📦 Instalar Dependências PHP (Composer)
+        run: composer install --prefer-dist --no-dev --optimize-autoloader
+        
+      # --- 2. Deploy via FTP ---
       
-      # A) Deploy do Front-end (React build) para a raiz
-      - name: ⏫ Deploy do Front-end (index.html e static/)
+      # A) Deploy do Front-end (conteúdo de frontend/public/) para a raiz
+      - name: ⏫ Deploy do Front-end (index.html, bus_logos, icons)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # MUDANÇA CRÍTICA AQUI: O 'local-dir' deve apontar para o
-          # RESULTADO da compilação do React.
+          # Envia o CONTEÚDO da pasta 'public' para a raiz
           local-dir: './frontend/public/' 
           remote-dir: '/' # Raiz do subdomínio
 
-      # B) Deploy do Backend (Slim e Composer)
+      # B) Deploy do Backend (Slim e Composer) para a raiz
       - name: ⏫ Deploy do Backend (Slim e vendor)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # O resto do projeto (Slim) vai para a raiz, excluindo o código-fonte React.
+          # Exclui o código-fonte React / front-end que não queremos na raiz
           exclude: |
             **/node_modules/**
             .git/
             .github/
-            /frontend
+            /frontend 
+            /backend # Se quiser manter o backend num nível superior
           local-dir: './'
           remote-dir: '/'
