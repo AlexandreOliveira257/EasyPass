@@ -1,4 +1,4 @@
-name: Deploy Slim + React (Sem Build, Composer e FTP)
+name: Deploy Slim + React
 
 on:
   push:
@@ -9,46 +9,58 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Checkout
       - name: ⬇️ Checkout do Código
         uses: actions/checkout@v4
 
-      # --- 1. Configuração e Dependências PHP (Composer) ---
+      # 2️⃣ PHP e Composer
       - name: 🐘 Configurar PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Ajustar à versão do Hostinger
+          php-version: '8.2'
           extensions: mbstring, zip, pdo_mysql
           coverage: none
 
       - name: 📦 Instalar Dependências PHP (Composer)
         run: composer install --prefer-dist --no-dev --optimize-autoloader
-        
-      # --- 2. Deploy via FTP ---
-      
-      # A) Deploy do Front-end (conteúdo de frontend/public/) para a raiz
-      - name: ⏫ Deploy do Front-end (index.html, bus_logos, icons)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Envia o CONTEÚDO da pasta 'public' para a raiz
-          local-dir: './frontend/public/' 
-          remote-dir: '/' # Raiz do subdomínio
 
-      # B) Deploy do Backend (Slim e Composer) para a raiz
-      - name: ⏫ Deploy do Backend (Slim e vendor)
+      # 3️⃣ Node.js e React
+      - name: ⚡ Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 📦 Instalar Dependências Front-end
+        run: |
+          cd frontend
+          npm ci
+
+      - name: 🛠 Build Front-end
+        run: |
+          cd frontend
+          npm run build
+
+      # 4️⃣ Deploy Front-end (React build)
+      - name: ⏫ Deploy do Front-end
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Exclui o código-fonte React / front-end que não queremos na raiz
+          local-dir: './frontend/build'  # Pasta gerada pelo build
+          remote-dir: '/'               # Raiz do subdomínio
+
+      # 5️⃣ Deploy Backend (Slim)
+      - name: ⏫ Deploy do Backend (PHP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           exclude: |
             **/node_modules/**
             .git/
             .github/
-            /frontend 
-            /backend # Se quiser manter o backend num nível superior
+            /frontend/src
           local-dir: './'
           remote-dir: '/'
