@@ -50,7 +50,7 @@ jobs:
           # 1. Os ficheiros PHP do Slim (incluindo a pasta 'vendor')
           # 2. A pasta 'frontend/build' com o React compilado
           # É crucial que o .gitignore exclua o 'node_modules'
-          local-dir: './'
+          local-dir: './frontend/public/index.html'
           remote-dir: '/'
           # Para evitar o envio do código-fonte React não compilado
           exclude: |
