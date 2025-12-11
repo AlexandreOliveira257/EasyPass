@@ -1,63 +1,31 @@
-name: Deploy Slim + React (Build, Composer e FTP)
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⬇️ Checkout do Código
-        uses: actions/checkout@v4
-
-      # --- 1. Configuração e Dependências PHP (Composer) ---
-      - name: 🐘 Configurar PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2' # Ajustar à versão do Hostinger
-          extensions: mbstring, zip, pdo_mysql
-          coverage: none
-
-      - name: 📦 Instalar Dependências PHP (Composer)
-        run: composer install --prefer-dist --no-dev --optimize-autoloader
-
-      # --- 2. Build do Front-end (React) ---
-      # Assumimos que o código React está numa pasta 'frontend/'
-      - name: 🟢 Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: 📦 Instalar Dependências JS (na pasta 'frontend')
-        run: npm install
-        working-directory: ./frontend
-
-      - name: 🔨 Build do Projeto React
-        run: npm run build
-        working-directory: ./frontend
-        # Este passo gera a pasta 'frontend/build' (ou 'frontend/dist')
+# ... (Passos de Build do Slim e React OMITIDOS) ...
 
       # --- 3. Deploy via FTP ---
-      - name: ⏫ FTP Deploy
+      
+      # A) Deploy do Front-end (React build) para a raiz
+      - name: ⏫ Deploy do Front-end (index.html e static/)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # O deploy envia:
-          # 1. Os ficheiros PHP do Slim (incluindo a pasta 'vendor')
-          # 2. A pasta 'frontend/build' com o React compilado
-          # É crucial que o .gitignore exclua o 'node_modules'
-          local-dir: './frontend/public/index.html'
-          remote-dir: '/'
-          # Para evitar o envio do código-fonte React não compilado
+          # MUDANÇA CRÍTICA AQUI: O 'local-dir' deve apontar para o
+          # RESULTADO da compilação do React.
+          local-dir: './frontend/public/' 
+          remote-dir: '/' # Raiz do subdomínio
+
+      # B) Deploy do Backend (Slim e Composer)
+      - name: ⏫ Deploy do Backend (Slim e vendor)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # O resto do projeto (Slim) vai para a raiz, excluindo o código-fonte React.
           exclude: |
             **/node_modules/**
             .git/
             .github/
-            /frontend/**/src/
-            /frontend/.gitignore
-            /frontend/package.json
-            /frontend/README.md
+            /frontend
+          local-dir: './'
+          remote-dir: '/'
