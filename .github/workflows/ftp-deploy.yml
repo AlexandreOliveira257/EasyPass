@@ -1,9 +1,9 @@
-name: Deploy Slim + React (API e Frontend)
+name: Deploy React + PHP Puro (Build Simples e FTP)
 
 on:
   push:
     branches:
-      - main 
+      - main # O deploy ocorre após um push para a branch 'main'
 
 jobs:
   build-and-deploy:
@@ -13,7 +13,6 @@ jobs:
         uses: actions/checkout@v4
 
       # --- 1. BUILD DO FRONTEND (REACT) ---
-      
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
@@ -21,61 +20,47 @@ jobs:
 
       - name: 📦 Instalar Dependências do React
         run: npm install
-        # 🎯 CORRIGIDO: Agora aponta para a pasta 'frontend'
+        # 🎯 Usa a pasta correta: ./frontend
         working-directory: ./frontend 
 
       - name: 🔨 Build do Projeto React
         run: npm run build
-        # O output (frontend estático) será gerado em: ./frontend/build/ (ou dist/)
-        # Assumindo que o build gera a pasta 'build'
+        # O output estático será gerado em: ./frontend/build/
         working-directory: ./frontend 
         
-      # --- 2. PREPARAÇÃO DO BACKEND (SLIM) ---
+      # --- 2. DEPLOY FTP (TUDO PARA A RAIZ) ---
       
-      - name: 🐘 Configurar PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, zip, pdo_mysql 
-          coverage: none
-          
-      - name: 📦 Instalar Dependências PHP (Composer)
-        run: composer install --prefer-dist --no-dev --optimize-autoloader
-        # 🎯 CORRIGIDO: Agora aponta para a pasta 'backend'
-        working-directory: ./backend 
+      # Este passo é o mais complexo, pois tem de enviar:
+      # 1. Os ficheiros compilados do React (a pasta 'build')
+      # 2. Todos os ficheiros PHP Puro necessários
 
-      # --- 3. DEPLOY FTP (ESTRUTURA HÍBRIDA) ---
-      
-      # A) Deploy do Frontend (React) para a RAIZ do Subdomínio
+      # A) Deploy dos Ficheiros Estáticos (React Build)
       - name: ⏫ A) Deploy do Frontend (React)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # 🎯 CORRIGIDO: Envia o conteúdo da pasta de BUILD do React
-          # Deve ser: ./frontend/build/ ou ./frontend/dist/
+          # Envia APENAS o conteúdo da pasta de BUILD do React para a RAIZ
+          # É aqui que o utilizador aterra: seudominio.pt/
           local-dir: './frontend/build/' 
-          remote-dir: '/' # O utilizador acede a seudominio.pt/
+          remote-dir: '/' 
 
-      # B) Deploy do Backend (Slim) para um Subdiretório 'api'
-      - name: ⏫ B) Deploy do Backend (Slim)
+      # B) Deploy dos Ficheiros de Backend (PHP Puro)
+      - name: ⏫ B) Deploy dos Ficheiros PHP Puro
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # 🎯 CORRIGIDO: Envia a pasta pública do Slim (que tem o index.php)
-          local-dir: './backend/public/' 
-          remote-dir: '/api/' # A API estará acessível em seudominio.pt/api/
-          
-      # C) Opcional: Deploy da pasta vendor (para um local seguro)
-      - name: ⏫ C) Deploy da Pasta 'vendor' (para um local seguro)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # 🎯 CORRIGIDO: Envia a pasta vendor criada em ./backend/vendor/
-          local-dir: './backend/vendor/' 
-          remote-dir: '/slim_root/vendor/'
+          # Envia os ficheiros da raiz do repositório (os seus ficheiros PHP)
+          local-dir: './' 
+          remote-dir: '/'
+          # IMPORTANTE: Excluímos as pastas de desenvolvimento (node_modules, frontend, backend)
+          # para não sobrepor o React compilado com os ficheiros de origem.
+          exclude: |
+            **/node_modules/**
+            .git/
+            .github/
+            /frontend
+            /backend
