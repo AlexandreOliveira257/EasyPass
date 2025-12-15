@@ -1,9 +1,9 @@
-name: Deploy React + PHP Puro (Build e FTP)
+name: Deploy Slim + React (API e Frontend)
 
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
   build-and-deploy:
@@ -12,32 +12,70 @@ jobs:
       - name: ⬇️ Checkout do Código
         uses: actions/checkout@v4
 
-      # --- Build do Front-end (React) ---
+      # --- 1. BUILD DO FRONTEND (REACT) ---
+      
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20' 
 
-      - name: 📦 Instalar Dependências do Front-end (React)
+      - name: 📦 Instalar Dependências do React
         run: npm install
-        # 🎯 CORREÇÃO: Define o diretório de trabalho correto
-        working-directory: ./easypass-frontend/frontend 
+        # 🎯 CORRIGIDO: Agora aponta para a pasta 'frontend'
+        working-directory: ./frontend 
 
-      - name: 🔨 Build do Projeto React (Gera a pasta 'build')
+      - name: 🔨 Build do Projeto React
         run: npm run build
-        # 🎯 CORREÇÃO: Define o diretório de trabalho correto
-        working-directory: ./easypass-frontend/frontend 
+        # O output (frontend estático) será gerado em: ./frontend/build/ (ou dist/)
+        # Assumindo que o build gera a pasta 'build'
+        working-directory: ./frontend 
+        
+      # --- 2. PREPARAÇÃO DO BACKEND (SLIM) ---
+      
+      - name: 🐘 Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, zip, pdo_mysql 
+          coverage: none
+          
+      - name: 📦 Instalar Dependências PHP (Composer)
+        run: composer install --prefer-dist --no-dev --optimize-autoloader
+        # 🎯 CORRIGIDO: Agora aponta para a pasta 'backend'
+        working-directory: ./backend 
 
-      # --- Deploy via FTP ---
-      - name: ⏫ FTP Deploy
+      # --- 3. DEPLOY FTP (ESTRUTURA HÍBRIDA) ---
+      
+      # A) Deploy do Frontend (React) para a RAIZ do Subdomínio
+      - name: ⏫ A) Deploy do Frontend (React)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # 💡 ATENÇÃO: É PRECISO ESPECIFICAR A PASTA DE ORIGEM DO DEPLOY!
-          # A pasta de build/produção (que é o output do npm run build) 
-          # está agora em ./easypass-frontend/frontend/build/
-          # Se o seu servidor espera apenas o conteúdo da pasta 'build' na raiz:
-          local-dir: './easypass-frontend/frontend/build/' 
-          remote-dir: '/' # Raiz do subdomínio (public_html)
+          # 🎯 CORRIGIDO: Envia o conteúdo da pasta de BUILD do React
+          # Deve ser: ./frontend/build/ ou ./frontend/dist/
+          local-dir: './frontend/build/' 
+          remote-dir: '/' # O utilizador acede a seudominio.pt/
+
+      # B) Deploy do Backend (Slim) para um Subdiretório 'api'
+      - name: ⏫ B) Deploy do Backend (Slim)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # 🎯 CORRIGIDO: Envia a pasta pública do Slim (que tem o index.php)
+          local-dir: './backend/public/' 
+          remote-dir: '/api/' # A API estará acessível em seudominio.pt/api/
+          
+      # C) Opcional: Deploy da pasta vendor (para um local seguro)
+      - name: ⏫ C) Deploy da Pasta 'vendor' (para um local seguro)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # 🎯 CORRIGIDO: Envia a pasta vendor criada em ./backend/vendor/
+          local-dir: './backend/vendor/' 
+          remote-dir: '/slim_root/vendor/'
