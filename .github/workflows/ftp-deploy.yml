@@ -39,5 +39,5 @@ jobs:
           # A pasta de build/produção (que é o output do npm run build) 
           # está agora em ./easypass-frontend/frontend/build/
           # Se o seu servidor espera apenas o conteúdo da pasta 'build' na raiz:
-          local-dir: './frontend/build/' 
+          local-dir: './easypass-frontend/frontend/build/' 
           remote-dir: '/' # Raiz do subdomínio (public_html)
