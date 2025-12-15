@@ -3,7 +3,7 @@ name: Deploy React + PHP Puro (Build e FTP)
 on:
   push:
     branches:
-      - main
+      - main # O deploy ocorre após um push para a branch 'main'
 
 jobs:
   build-and-deploy:
@@ -16,15 +16,15 @@ jobs:
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20' # Recomendado usar a versão LTS
 
       - name: 📦 Instalar Dependências do Front-end (React)
         run: npm install
 
       - name: 🔨 Build do Projeto React (Gera a pasta 'build')
         run: npm run build
-        # Assumindo que o comando 'npm run build' gera a pasta 'build'
-
+        # Este comando gera o output estático e otimizado na pasta 'build'
+        
       # --- Deploy via FTP ---
       - name: ⏫ FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
@@ -32,6 +32,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Envia os ficheiros PHP e a pasta 'build' para o servidor
-          local-dir: './'
-          remote-dir: '/'
+          # Envia todos os ficheiros do repositório (incluindo a nova pasta 'build')
+          local-dir: './' 
+          remote-dir: '/' # Raiz do subdomínio (p. ex., public_html)
