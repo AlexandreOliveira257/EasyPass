@@ -28,12 +28,10 @@ jobs:
         # O output estático será gerado em: ./frontend/build/
         working-directory: ./frontend 
         
-      # --- 2. DEPLOY FTP (TUDO PARA A RAIZ) ---
+  # ... passos 1. BUILD DO FRONTEND (REACT) ...
+        
+# --- 2. DEPLOY FTP (TUDO PARA A RAIZ) ---
       
-      # Este passo é o mais complexo, pois tem de enviar:
-      # 1. Os ficheiros compilados do React (a pasta 'build')
-      # 2. Todos os ficheiros PHP Puro necessários
-
       # A) Deploy dos Ficheiros Estáticos (React Build)
       - name: ⏫ A) Deploy do Frontend (React)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
@@ -41,10 +39,10 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Envia APENAS o conteúdo da pasta de BUILD do React para a RAIZ
-          # É aqui que o utilizador aterra: seudominio.pt/
           local-dir: './frontend/build/' 
           remote-dir: '/' 
+          file-permissions: 0644   # <-- Adicionar esta linha
+          folder-permissions: 0755 # <-- Adicionar esta linha
 
       # B) Deploy dos Ficheiros de Backend (PHP Puro)
       - name: ⏫ B) Deploy dos Ficheiros PHP Puro
@@ -53,14 +51,15 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Envia os ficheiros da raiz do repositório (os seus ficheiros PHP)
           local-dir: './' 
           remote-dir: '/'
-          # IMPORTANTE: Excluímos as pastas de desenvolvimento (node_modules, frontend, backend)
-          # para não sobrepor o React compilado com os ficheiros de origem.
           exclude: |
             **/node_modules/**
             .git/
             .github/
             /frontend
             /backend
+          file-permissions: 0644   # <-- Adicionar esta linha
+          folder-permissions: 0755 # <-- Adicionar esta linha
+
+            
