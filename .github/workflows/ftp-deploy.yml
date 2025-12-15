@@ -1,4 +1,4 @@
-name: Deploy Slim + React
+name: Deploy React + PHP Puro (Build e FTP)
 
 on:
   push:
@@ -6,61 +6,32 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Checkout
       - name: ⬇️ Checkout do Código
         uses: actions/checkout@v4
 
-      # 2️⃣ PHP e Composer
-      - name: 🐘 Configurar PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, zip, pdo_mysql
-          coverage: none
-
-      - name: 📦 Instalar Dependências PHP (Composer)
-        run: composer install --prefer-dist --no-dev --optimize-autoloader
-
-      # 3️⃣ Node.js e React
-      - name: ⚡ Configurar Node.js
-        uses: actions/setup-node@v3
+      # --- Build do Front-end (React) ---
+      - name: 🟢 Configurar Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: 📦 Instalar Dependências Front-end
-        run: |
-          cd frontend
-          npm ci
+      - name: 📦 Instalar Dependências do Front-end (React)
+        run: npm install
 
-      - name: 🛠 Build Front-end
-        run: |
-          cd frontend
-          npm run build
+      - name: 🔨 Build do Projeto React (Gera a pasta 'build')
+        run: npm run build
+        # Assumindo que o comando 'npm run build' gera a pasta 'build'
 
-      # 4️⃣ Deploy Front-end (React build)
-      - name: ⏫ Deploy do Front-end
+      # --- Deploy via FTP ---
+      - name: ⏫ FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './frontend/build'  # Pasta gerada pelo build
-          remote-dir: '/'               # Raiz do subdomínio
-
-      # 5️⃣ Deploy Backend (Slim)
-      - name: ⏫ Deploy do Backend (PHP)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          exclude: |
-            **/node_modules/**
-            .git/
-            .github/
-            /frontend/src
+          # Envia os ficheiros PHP e a pasta 'build' para o servidor
           local-dir: './'
           remote-dir: '/'

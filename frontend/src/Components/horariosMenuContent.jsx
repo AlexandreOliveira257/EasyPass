@@ -20,9 +20,8 @@ function HorarioMenuContent(){
       if(err){
         console.error("Erro ao buscar localidades:", err);
       return;
-    }
-    if(Array.isArray(data)){
-        setLocalidades(data); //recebe um array que contem Code: 1234, Description: ""
+    } else {
+        setLocalidades(data); //recebe um array que contem Code: 1234, Description: "NomeLocal"
     }
     });
   }, []);
@@ -36,7 +35,7 @@ function HorarioMenuContent(){
             <h3>{t('pesquisaHorarios').toUpperCase()}</h3>
 
             <select onChange={e => setOrigem(e.target.value)} className="estacao">
-            <option defaultValue disabled>Escolha uma Origem!</option>
+            <option selected disabled>Escolha uma Origem!</option>
             {localidades.map((el) => (
               <option  key={el.Code} value={el.Code}>
                 {el.Description}
@@ -44,10 +43,10 @@ function HorarioMenuContent(){
             ))}
             </select>
             <select onChange={e => setDestino(e.target.value)} className="estacao">
-              <option defaultValue disabled>Escolha um Destino!</option>
+              <option selected disabled>Escolha um Destino!</option>
                 {localidades.map((el) => (
               <option  key={el.Code} value={el.Code}>
-                {el.Description}
+                {el.Description}  
               </option>
             ))}
             </select>
