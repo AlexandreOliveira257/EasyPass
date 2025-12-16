@@ -56,6 +56,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./${{ env.FINAL_DEPLOY_PATH }}/
-          # ALTERAÇÃO AQUI: Enviamos para dentro da public_html
-          server-dir: ./public_html/
+          # Mudamos para ./ porque o teu acesso já "nasce" dentro da public_html
+          server-dir: ./
+          # IMPORTANTE: Como não podes apagar pastas à mão, 
+          # isto vai apenas substituir os ficheiros existentes.
           dangerous-clean-up: false
