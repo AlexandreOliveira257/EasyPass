@@ -44,22 +44,16 @@ jobs:
           file-permissions: 0644   # <-- Adicionar esta linha
           folder-permissions: 0755 # <-- Adicionar esta linha
 
-      # B) Deploy dos Ficheiros de Backend (PHP Puro)
-      - name: ⏫ B) Deploy dos Ficheiros PHP Puro
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './' 
-          remote-dir: '/'
-          exclude: |
-            **/node_modules/**
-            .git/
-            .github/
-            /frontend
-            /backend
-          file-permissions: 0644   # <-- Adicionar esta linha
-          folder-permissions: 0755 # <-- Adicionar esta linha
+      - name: ⏫ Deploy do Backend (PHP)
+  uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+  with:
+    server: ${{ secrets.FTP_SERVER }}
+    username: ${{ secrets.FTP_USERNAME }}
+    password: ${{ secrets.FTP_PASSWORD }}
+    local-dir: './backend/src/'
+    remote-dir: '/public_html/api/'
+    file-permissions: 0644
+    folder-permissions: 0755
+
 
             
