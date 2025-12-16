@@ -1,9 +1,9 @@
-name: Deploy React + PHP (Backend Folder)
+name: Deploy React + PHP (Estrutura Frontend/Backend)
 
 on:
   push:
     branches:
-      - main  # O deploy acontece sempre que enviares algo para a branch main
+      - main
 
 jobs:
   build-and-deploy:
@@ -17,33 +17,37 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: 📦 Instalar Dependências
+        # Entra na pasta frontend para instalar
         run: npm install
+        working-directory: ./frontend
 
       - name: 🔨 Build do Projeto React
+        # Entra na pasta frontend para fazer o build
         run: npm run build
-        # Nota: Se usares Vite, o comando gera a pasta 'dist'. 
-        # Se usares Create React App, gera a pasta 'build'.
+        working-directory: ./frontend
 
       - name: 📂 Organizar ficheiros para o Servidor
         run: |
-          # 1. Identificar a pasta de build (dist ou build)
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || echo "build")
-          echo "Pasta de build detectada: $BUILD_DIR"
-          
-          # 2. Copiar a pasta backend para dentro da pasta de build
-          # O comando -r copia a pasta inteira com o login.php lá dentro
-          if [ -d "backend" ]; then
-            cp -r backend $BUILD_DIR/
-            echo "✅ Pasta backend copiada com sucesso."
+          # 1. Deteta se a pasta de build no frontend é 'dist' ou 'build'
+          if [ -d "frontend/dist" ]; then
+            BUILD_PATH="frontend/dist"
           else
-            echo "⚠️ Pasta backend não encontrada no repositório!"
+            BUILD_PATH="frontend/build"
+          fi
+          echo "Pasta de build detectada em: $BUILD_PATH"
+          
+          # 2. Copia a pasta backend (que está na raiz) para dentro do build
+          if [ -d "backend" ]; then
+            cp -r backend $BUILD_PATH/
+            echo "✅ Pasta backend copiada."
+          else
+            echo "⚠️ Pasta backend não encontrada na raiz."
           fi
           
-          # 3. Guardar o nome da pasta para o próximo passo
-          echo "FINAL_DIR=$BUILD_DIR" >> $GITHUB_ENV
+          # 3. Define o caminho final para o passo de FTP
+          echo "FINAL_DEPLOY_PATH=$BUILD_PATH" >> $GITHUB_ENV
 
       - name: ⏫ FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -51,9 +55,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Usa a pasta de build que detetámos acima
-          local-dir: ./${{ env.FINAL_DIR }}/
-          # Envia para a raiz do servidor (ex: public_html/)
+          # Envia o conteúdo da pasta de build que agora contém o React e o Backend
+          local-dir: ./${{ env.FINAL_DEPLOY_PATH }}/
           server-dir: ./
-          # Mantemos false para não apagar pastas importantes do servidor
           dangerous-clean-up: false
