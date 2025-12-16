@@ -11,7 +11,7 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
- const { setUsername } = useUser();
+  const { setUsername } = useUser();
 
 
   return (
@@ -45,7 +45,6 @@ export default function EasyPassLogin() {
             ENTRAR COMO CONVIDADO
             </button>
             </Link>
-            
           </div>
         )}
       </div>
