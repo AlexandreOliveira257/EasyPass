@@ -1,51 +1,59 @@
-name: Deploy React + PHP Puro (Hostinger FTP)
+name: Deploy React + PHP (Backend Folder)
 
 on:
   push:
     branches:
-      - main # Deploy ocorre quando há push na branch main
+      - main  # O deploy acontece sempre que enviares algo para a branch main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout do código
       - name: ⬇️ Checkout do Código
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurar Node.js
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      # 3️⃣ Instalar dependências do React
-      - name: 📦 Instalar Dependências do React
+      - name: 📦 Instalar Dependências
         run: npm install
-        working-directory: ./frontend
 
-      # 4️⃣ Build do React
       - name: 🔨 Build do Projeto React
         run: npm run build
-        working-directory: ./frontend
+        # Nota: Se usares Vite, o comando gera a pasta 'dist'. 
+        # Se usares Create React App, gera a pasta 'build'.
 
-      # 5️⃣ Deploy do React (frontend) para public_html
-      - name: ⏫ Deploy Frontend (React) para Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      - name: 📂 Organizar ficheiros para o Servidor
+        run: |
+          # 1. Identificar a pasta de build (dist ou build)
+          BUILD_DIR=$([ -d "dist" ] && echo "dist" || echo "build")
+          echo "Pasta de build detectada: $BUILD_DIR"
+          
+          # 2. Copiar a pasta backend para dentro da pasta de build
+          # O comando -r copia a pasta inteira com o login.php lá dentro
+          if [ -d "backend" ]; then
+            cp -r backend $BUILD_DIR/
+            echo "✅ Pasta backend copiada com sucesso."
+          else
+            echo "⚠️ Pasta backend não encontrada no repositório!"
+          fi
+          
+          # 3. Guardar o nome da pasta para o próximo passo
+          echo "FINAL_DIR=$BUILD_DIR" >> $GITHUB_ENV
+
+      - name: ⏫ FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './frontend/build/'
-          server-dir: '/public_html/'
-
-      # 6️⃣ Deploy do Backend (PHP) para /public_html/api
-      - name: ⏫ Deploy Backend (PHP) para Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './backend/src/'
-          server-dir: '/public_html/api/'
+          # Usa a pasta de build que detetámos acima
+          local-dir: ./${{ env.FINAL_DIR }}/
+          # Envia para a raiz do servidor (ex: public_html/)
+          server-dir: ./
+          # Mantemos false para não apagar pastas importantes do servidor
+          dangerous-clean-up: false
