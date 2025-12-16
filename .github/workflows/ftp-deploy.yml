@@ -55,7 +55,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Envia o conteúdo da pasta de build que agora contém o React e o Backend
           local-dir: ./${{ env.FINAL_DEPLOY_PATH }}/
-          server-dir: ./
+          # ALTERAÇÃO AQUI: Enviamos para dentro da public_html
+          server-dir: ./public_html/
           dangerous-clean-up: false
