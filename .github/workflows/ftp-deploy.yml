@@ -45,8 +45,8 @@ jobs:
           folder-permissions: 0755 # <-- Adicionar esta linha
 
       - name: ⏫ Deploy do Backend (PHP)
-  uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-  with:
+    uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+    with:
     server: ${{ secrets.FTP_SERVER }}
     username: ${{ secrets.FTP_USERNAME }}
     password: ${{ secrets.FTP_PASSWORD }}
