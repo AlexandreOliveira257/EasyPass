@@ -1,9 +1,9 @@
-name: Deploy React + PHP Puro (Hostinger FTP)
+name: Deploy React + PHP Hostinger (Robusto)
 
 on:
   push:
     branches:
-      - main # Deploy ocorre quando há push na branch main
+      - main
 
 jobs:
   build-and-deploy:
@@ -26,12 +26,20 @@ jobs:
         working-directory: ./frontend
 
       # 4️⃣ Build do React
-      - name: 🔨 Build do Projeto React
+      - name: 🔨 Build do React
         run: npm run build
         working-directory: ./frontend
 
-      # 5️⃣ Deploy do React (frontend) para public_html
-      - name: ⏫ Deploy Frontend (React) para Hostinger
+      # 5️⃣ Verificar se build foi criado
+      - name: 📂 Verificar Build
+        run: |
+          if [ ! -d "./frontend/build" ]; then
+            echo "Build do React não encontrado! Abortando."
+            exit 1
+          fi
+
+      # 6️⃣ Deploy Frontend via FTP
+      - name: ⏫ Deploy Frontend (React)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -41,9 +49,18 @@ jobs:
           remote-dir: '/public_html/'
           file-permissions: 0644
           folder-permissions: 0755
+          git-ftp-args: --verbose
 
-      # 6️⃣ Deploy do Backend (PHP) para /public_html/api
-      - name: ⏫ Deploy Backend (PHP) para Hostinger
+      # 7️⃣ Verificar Backend
+      - name: 📂 Verificar Backend
+        run: |
+          if [ ! -d "./backend/src" ]; then
+            echo "Backend PHP não encontrado! Abortando."
+            exit 1
+          fi
+
+      # 8️⃣ Deploy Backend via FTP
+      - name: ⏫ Deploy Backend (PHP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -53,3 +70,4 @@ jobs:
           remote-dir: '/public_html/api/'
           file-permissions: 0644
           folder-permissions: 0755
+          git-ftp-args: --verbose
