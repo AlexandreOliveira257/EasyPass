@@ -1,45 +1,49 @@
-name: Deploy React + PHP Puro (Build Simples e FTP)
+name: Deploy React + PHP Puro (Hostinger FTP)
 
 on:
   push:
     branches:
-      - main # O deploy ocorre após um push para a branch 'main'
+      - main # Deploy ocorre quando há push na branch main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout do código
       - name: ⬇️ Checkout do Código
         uses: actions/checkout@v4
 
-      # --- 1. BUILD DO FRONTEND (REACT) ---
+      # 2️⃣ Configurar Node.js
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' 
+          node-version: '20'
 
+      # 3️⃣ Instalar dependências do React
       - name: 📦 Instalar Dependências do React
         run: npm install
-        # 🎯 Usa a pasta correta: ./frontend
-        working-directory: ./frontend 
+        working-directory: ./frontend
 
+      # 4️⃣ Build do React
       - name: 🔨 Build do Projeto React
         run: npm run build
-        # O output estático será gerado em: ./frontend/build/
-        working-directory: ./frontend 
-        
-      - name: ⏫ A) Deploy do Frontend (React)
+        working-directory: ./frontend
+
+      # 5️⃣ Deploy do React (frontend) para public_html
+      - name: ⏫ Deploy Frontend (React) para Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './frontend/build/' 
-          remote-dir: '/' 
-          file-permissions: 0644   # <-- Adicionar esta linha
-          folder-permissions: 0755 # <-- Adicionar esta linha
+          local-dir: './frontend/build/'
+          remote-dir: '/public_html/'
+          file-permissions: 0644
+          folder-permissions: 0755
 
-      - name: ⏫ Deploy do Backend (PHP)
+      # 6️⃣ Deploy do Backend (PHP) para /public_html/api
+      - name: ⏫ Deploy Backend (PHP) para Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -49,6 +53,3 @@ jobs:
           remote-dir: '/public_html/api/'
           file-permissions: 0644
           folder-permissions: 0755
-
-
-            
