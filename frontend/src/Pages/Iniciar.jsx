@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import "../Pages/Iniciar.css";
 import "../Pages/iniciarRegistar.css";
+import { Link } from "react-router";
+import PortalMenuContent from '../Components/portalMenuContent';
+import { useUser } from '../Contexts/UserContext';
+
 
 export default function EasyPassLogin() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+ const { setUsername } = useUser();
+
 
   return (
     <div className="container">
@@ -32,9 +40,12 @@ export default function EasyPassLogin() {
                 <img src="./icons/goBackBtn.svg"/>
               </span>
             </button>
-            <button className="btn-link">
-              ENTRAR COMO CONVIDADO
+            <Link to="/passes">
+            <button onClick={() => {setUsername("Convidado") }}className="btn-link">
+            ENTRAR COMO CONVIDADO
             </button>
+            </Link>
+            
           </div>
         )}
       </div>
@@ -53,12 +64,12 @@ export default function EasyPassLogin() {
             
             <div className="form-group">
               <label>Email</label>
-              <input type="email" placeholder="O seu email" />
+              <input onChange={e => setEmail(e.target.value)} type="email" placeholder="O seu email" />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" placeholder="A sua palavra-passe" />   
+              <input onChange={e => setPassword(e.target.value)}type="password" placeholder="A sua palavra-passe" />   
               <a href="#" className="forgot-password">Esqueceu-se da palavra-passe?</a>                  
             </div>
 

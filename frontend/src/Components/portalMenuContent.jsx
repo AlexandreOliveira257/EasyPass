@@ -2,15 +2,16 @@ import { useTranslation } from "react-i18next";
 import PortalMenu from "./portalMenu";
 import { useState } from "react";
 import { Link } from "react-router";
+import { useUser } from "../Contexts/UserContext";
 function PortalMenuContent(){
     const {t} = useTranslation()
       const [showNotifications, setShowNotifications] = useState(false);
-
+    const {username} = useUser();
      return  <PortalMenu>
         {!showNotifications && (
             <>
         <div className="flex">
-        <h1>{t('welcome')} [nome]</h1>
+        <h1>{t('welcome')} {username}</h1>
         <nav className="navPortal">
             <div className="flex">
             <a onClick={() => setShowNotifications(!showNotifications)} className="btnPortal">{t('notificacoes')}</a><img src="icons/notifications.svg"/>

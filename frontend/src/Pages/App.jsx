@@ -16,7 +16,7 @@ function App(){
     return(
         <div className="bgImg">
             <Routes>
-                <Route path="/" element={<PortalPage/>}/>
+                <Route path="/" element={<Iniciar/>}/>
                 <Route path="/passes" element={<PortalPage/>}/>
                 <Route path="/pedidos" element={<Pedidos/>}/>
                 <Route path="/movimentos" element={<Movimentos/>}/>
