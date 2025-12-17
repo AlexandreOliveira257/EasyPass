@@ -177,14 +177,14 @@ export default function EasyPassLogin() {
     console.log(data)
     setUsername(data.nome);
     console.log(username)
-    if(username != undefined){
-    navigate("/passes")
-    }
   })
   .catch(err => {
     setError(err);
     console.log(err);
   });
+  if(username != undefined){
+    navigate("/passes")
+    }
   }//loginSubmit
   function SignUpSubmit(){
 
