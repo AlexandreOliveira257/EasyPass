@@ -1,4 +1,17 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Headers: Content-Type");
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+
+$email = $data["email"] ?? null;
+$pass = $data["pass"] ?? null;
+
+if (!$email || !$pass) {
+    echo json_encode([["result" => "dados insuficientes"]]);
+    exit;
+}
 function estabelerConexao()
 {
     $host = 'ftp.antrob.eu';
@@ -14,4 +27,17 @@ function estabelerConexao()
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
     return $pdo = new PDO($dsn, $user, $pass, $options);
+}
+
+$pdo = estabelerConexao();
+
+// buscar usuário
+$stmt = $pdo->prepare("SELECT * FROM pessoa WHERE email = ? AND palavra_passe = ?");
+$stmt->execute([$email, $pass]);
+$user = $stmt->fetch();
+
+if ($user) {
+    echo json_encode([["result" => "login ok"]]);
+} else {
+    echo json_encode([["result" => "login inválido"]]);
 }
