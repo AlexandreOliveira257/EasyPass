@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import "../Pages/Iniciar.css";
 import "../Pages/iniciarRegistar.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import PortalMenuContent from '../Components/portalMenuContent';
 import { useUser } from '../Contexts/UserContext';
-
 
 export default function EasyPassLogin() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const { setUsername } = useUser();
-
-
+  const {setUsername} = useUser();
+  const [msg, setMsg] = useState("");
+  const [error,setError] = useState("");
+  const navigate = useNavigate();
   return (
     <div className="container">
       {/* Purple/Blue Background Panel */}
@@ -72,7 +72,7 @@ export default function EasyPassLogin() {
               <a href="#" className="forgot-password">Esqueceu-se da palavra-passe?</a>                  
             </div>
 
-            <button className="btn-submit">
+            <button onClick={loginSubmit} className="btn-submit">
               <span>ENTRAR</span>
               <span>
                 <img src="./icons/goBackBtnWhite.svg"/>
@@ -155,4 +155,28 @@ export default function EasyPassLogin() {
       </div>
     </div>
   );
+  function loginSubmit(){
+      const url = "https://migale.antrob.eu/backend/login.php"
+      const headers = {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      }
+      let data = {
+        pass: password,
+        email: email
+      }
+     fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    setError(err);
+    console.log(err);
+  });
+  }
 }
