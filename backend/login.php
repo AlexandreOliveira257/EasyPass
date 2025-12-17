@@ -15,7 +15,7 @@ if (!$email || !$pass) {
 
 function estabelerConexao()
 {
-    $host = 'ftp.antrob.eu';
+    $host = 'localhost';
     $db   = 'u506280443_migaleDB';
     $user = 'u506280443_migaledbUser';
     $pass = '+9w6?HZu';
@@ -30,19 +30,16 @@ function estabelerConexao()
     return new PDO($dsn, $user, $pass, $options);
 }
 
-try {
-    $pdo = estabelerConexao();
-    $stmt = $pdo->prepare("SELECT * FROM pessoa WHERE email = ? AND palavra_passe = ?");
-    $stmt->execute([$email, $pass]);
-    $user = $stmt->fetch();
+$pdo = estabelerConexao();
 
-    if ($user) {
-        $response = ["result" => "Login com sucesso!"];
-    } else {
-        $response = ["result" => "Ocorreu um erro no login!"];
-    }
-} catch (Exception $e) {
-    $response = ["result" => "Erro no servidor", "error" => $e->getMessage()];
+$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt->execute([$email, $pass]);
+$user = $stmt->fetch();
+
+if ($user) {
+    $response = ["result" => "Login com sucesso!"];
+} else {
+    $response = ["result" => "Ocorreu um erro no login!"];
 }
 
 echo json_encode($response);
