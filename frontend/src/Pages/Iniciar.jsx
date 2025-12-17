@@ -176,8 +176,8 @@ export default function EasyPassLogin() {
   .then(data => {
     console.log(data)
     setUsername(data.nome);
-    console.log({username})
-    if({username} != ""){
+    console.log(username)
+    if(username != undefined){
     navigate("/passes")
     }
   })
