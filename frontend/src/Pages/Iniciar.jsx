@@ -156,7 +156,7 @@ export default function EasyPassLogin() {
       </div>
     </div>
   );
-  function loginSubmit(){
+ function loginSubmit(){
     console.log("CLICOU")
       const url = "https://migale.antrob.eu/backend/login.php"
       const headers = {
@@ -173,9 +173,9 @@ export default function EasyPassLogin() {
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => {
+  .then(async data => {
     console.log(data)
-    setUsername(data.nome);
+    await setUsername(data.nome);
     console.log(username)
   })
   .catch(err => {
