@@ -32,7 +32,7 @@ function estabelerConexao()
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("SELECT * FROM pessoa WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
