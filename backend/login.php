@@ -30,16 +30,19 @@ function estabelerConexao()
     return new PDO($dsn, $user, $pass, $options);
 }
 
-$pdo = estabelerConexao();
+try {
+    $pdo = estabelerConexao();
+    $stmt = $pdo->prepare("SELECT * FROM pessoa WHERE email = ? AND palavra_passe = ?");
+    $stmt->execute([$email, $pass]);
+    $user = $stmt->fetch();
 
-$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
-$stmt->execute([$email, $pass]);
-$user = $stmt->fetch();
-
-if ($user) {
-    $response = ["result" => "Login com sucesso!"];
-} else {
-    $response = ["result" => "Ocorreu um erro no login!"];
+    if ($user) {
+        $response = ["result" => "Login com sucesso!"];
+    } else {
+        $response = ["result" => "Ocorreu um erro no login!"];
+    }
+} catch (Exception $e) {
+    $response = ["result" => "Erro no servidor", "error" => $e->getMessage()];
 }
 
 echo json_encode($response);
