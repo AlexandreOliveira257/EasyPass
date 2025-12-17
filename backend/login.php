@@ -7,11 +7,12 @@ $data = json_decode($input, true);
 
 $email = $data["email"] ?? null;
 $pass = $data["pass"] ?? null;
-$result = "";
+
 if (!$email || !$pass) {
-    echo json_encode([["result" => "dados insuficientes"]]);
+    echo json_encode(["result" => "dados insuficientes"]);
     exit;
 }
+
 function estabelerConexao()
 {
     $host = 'ftp.antrob.eu';
@@ -26,21 +27,19 @@ function estabelerConexao()
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
-    return $pdo = new PDO($dsn, $user, $pass, $options);
+    return new PDO($dsn, $user, $pass, $options);
 }
 
 $pdo = estabelerConexao();
 
-// buscar usuário
 $stmt = $pdo->prepare("SELECT * FROM pessoa WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    $result = "Login com sucesso!";
+    $response = ["result" => "Login com sucesso!"];
 } else {
-    $result = "Ocorreu um erro no login!";
+    $response = ["result" => "Ocorreu um erro no login!"];
 }
 
-$response = array("result" => $result);
 echo json_encode($response);
