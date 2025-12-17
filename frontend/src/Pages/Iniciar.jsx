@@ -156,6 +156,7 @@ export default function EasyPassLogin() {
     </div>
   );
   function loginSubmit(){
+    console.log("CLICOU")
       const url = "https://migale.antrob.eu/backend/login.php"
       const headers = {
         "Accept": "application/json",
