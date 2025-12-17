@@ -22,7 +22,7 @@ $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    $response = ["result" => "Login com sucesso!", "nome" => $user['nome'], "apelido" => $user['apelido']];
+    $response = ["result" => "Login com sucesso!", "nome" => $user['nome']];
 } else {
     $response = ["result" => "Ocorreu um erro no login!"];
 }

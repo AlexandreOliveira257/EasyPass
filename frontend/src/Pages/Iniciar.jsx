@@ -10,7 +10,8 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {setUsername} = useUser();
+  const {username, setUsername} = useUser();
+
   const [msg, setMsg] = useState("");
   const [error,setError] = useState("");
   const navigate = useNavigate();
@@ -174,6 +175,9 @@ export default function EasyPassLogin() {
   .then(res => res.json())
   .then(data => {
     console.log(data)
+    setUsername(data.nome);
+    console.log({username})
+    navigate("/passes")
   })
   .catch(err => {
     setError(err);
