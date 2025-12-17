@@ -41,3 +41,6 @@ if ($user) {
 } else {
     $result = "Ocorreu um erro no login!";
 }
+
+$response = array("result" => $result);
+echo json_encode($response);
