@@ -7,7 +7,7 @@ $data = json_decode($input, true);
 
 $email = $data["email"] ?? null;
 $pass = $data["pass"] ?? null;
-
+$result = "";
 if (!$email || !$pass) {
     echo json_encode([["result" => "dados insuficientes"]]);
     exit;
@@ -37,7 +37,7 @@ $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    echo json_encode([["result" => "login ok"]]);
+    $result = "Login com sucesso!";
 } else {
-    echo json_encode([["result" => "login inválido"]]);
+    $result = "Ocorreu um erro no login!";
 }
