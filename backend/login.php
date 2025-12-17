@@ -9,7 +9,7 @@ $data = json_decode($input, true);
 $email = $data["email"] ?? null;
 $pass = $data["pass"] ?? null;
 
-if (!$email || !$pass) {
+if (!$email && !$pass) {
     echo json_encode(["result" => "dados insuficientes"]);
     exit;
 }
