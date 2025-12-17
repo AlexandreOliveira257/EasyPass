@@ -17,12 +17,12 @@ if (!$email || !$pass) {
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT nome,apelido FROM PESSOA WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    $response = ["result" => "Login com sucesso!"];
+    $response = ["result" => "Login com sucesso!" + $user];
 } else {
     $response = ["result" => "Ocorreu um erro no login!"];
 }
