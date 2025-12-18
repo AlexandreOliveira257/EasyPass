@@ -19,7 +19,7 @@ if (!$email && !$pass) {
 $pdo = estabelerConexao();
 
 $stmt = $pdo->prepare(
-  "INSERT INTO PESSOA (nome, email, palavra_passe, nif) VALUES (?, ?, ?, ?)"
+    "INSERT INTO PESSOA (nome, email, palavra_passe, nif) VALUES (?, ?, ?, ?)"
 );
 
 $success = $stmt->execute([$nome, $email, $pass, $NIF]);
@@ -28,7 +28,4 @@ if ($success) {
     echo json_encode(["result" => "Registo efetuado com sucesso"]);
 } else {
     echo json_encode(["result" => "Erro ao registar utilizador"]);
-}
-
-
-echo json_encode($response);
+};
