@@ -10,10 +10,8 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {username, setUsername} = useUser();
-
-  const [msg, setMsg] = useState("");
-  const [error,setError] = useState("");
+  const {username,setUsername} = useUser();
+  const [nif,setNif] = useState("")
   const navigate = useNavigate();
   return (
     <div className="container">
@@ -115,17 +113,17 @@ export default function EasyPassLogin() {
             
             <div className="form-group">
               <label>Nome Completo</label>
-              <input type="text" placeholder="O seu nome" />
+              <input onChange={e => setUsername(e.target.value)} type="text" placeholder="O seu nome" />
             </div>
 
             <div className="form-group">
               <label>Email</label>
-              <input type="email" placeholder="O seu email" />
+              <input onChange={e => setEmail(e.target.value)} type="email" placeholder="O seu email" />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" placeholder="A sua palavra-passe" />                   
+              <input onChange={e => setPassword(e.target.value)} type="password" placeholder="A sua palavra-passe" />                   
             </div>
 
             <div className="form-group">
@@ -135,16 +133,16 @@ export default function EasyPassLogin() {
 
             <div className="form-group">
               <label>NIF</label>
-              <input type="number" placeholder="O seu NIF" />                    
+              <input onChange={e => setNif(e.target.value)} type='text' pattern='[0-9]*' inputmode="numeric" placeholder="O seu NIF" />                    
             </div>
 
             <div className="checkTermos">
               <input className="checkMark" type="checkbox" placeholder="" /> 
-              <label>Aceitar Termos e condições</label>                  
+              <label >Aceitar Termos e condições</label>                  
             </div>
 
             <div className="register-form">
-              <button className="btn-register">
+              <button onClick={SignUpSubmit} className="btn-register">
                 <span>REGISTAR</span>
                 <span className="arrow">
                   <img src="./icons/goBackBtnWhite.svg"/>
@@ -164,7 +162,7 @@ export default function EasyPassLogin() {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      email,
+      email: email,
       pass: password
     })
   })
@@ -179,10 +177,31 @@ export default function EasyPassLogin() {
     })
     .catch(err => {
       console.error(err);
-      setError("Erro de ligação ao servidor");
     });
 }
   function SignUpSubmit(){
+      const url = "https://migale.antrob.eu/backend/signup.php";
+fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      pass: password,
+      nome: username,
+      nif: nif
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
 
+      if (data.result === "Utilizador adicionado com sucesso!") {
+        setUsername(data.nome);
+        navigate("/passes");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
   }//SignUpSubmit
 }
