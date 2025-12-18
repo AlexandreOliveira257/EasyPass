@@ -18,14 +18,17 @@ if (!$email && !$pass) {
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("INSERT INTO PESSOA (nome,email,palavra_passe,nif) values(?,?,?,?)");
-$stmt->execute([$nome, $email, $pass, $NIF]);
-$user = $stmt->fetch();
+$stmt = $pdo->prepare(
+  "INSERT INTO PESSOA (nome, email, palavra_passe, nif) VALUES (?, ?, ?, ?)"
+);
 
-if ($user) {
-    $response = ["result" => "Utilizador adicionado com sucesso!", "nome" => $user['nome']];
+$success = $stmt->execute([$nome, $email, $pass, $NIF]);
+
+if ($success) {
+    echo json_encode(["result" => "Registo efetuado com sucesso"]);
 } else {
-    $response = ["result" => "Ocorreu um erro ao adicionar novo utilizador!"];
+    echo json_encode(["result" => "Erro ao registar utilizador"]);
 }
+
 
 echo json_encode($response);
