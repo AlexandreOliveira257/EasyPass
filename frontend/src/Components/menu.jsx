@@ -1,8 +1,12 @@
 import { useTranslation } from "react-i18next"
 import "../menu.css"
 import { Link } from "react-router"
+import { useUser } from "../Contexts/UserContext"
+
 function Menu(){
     const {t} = useTranslation();
+    const {username, setUsername} = useUser();
+
     return <div className="barraMenu">
             <h1 className="menu">Menu</h1>
             <nav className="iconsMenu">
@@ -14,7 +18,7 @@ function Menu(){
                 <Link to="/localizarTransporte" ><img src="icons/localizar.svg"/>{t('transportes')}</Link>
             <div className="barra"></div>
                 <Link to="/definicoes" className="definicoes"><img src="icons/settings.svg" />{t('settings')}</Link>
-                <Link to="/iniciar"className="terminarSessao"><img src="icons/logout.svg" />{t('logout')}</Link>
+                <Link onClick={() => setUsername(undefined)} to="/iniciar" className="terminarSessao"><img src="icons/logout.svg" />{t('logout')}</Link>
             </nav>
         </div> 
 }

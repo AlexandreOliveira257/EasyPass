@@ -156,36 +156,32 @@ export default function EasyPassLogin() {
       </div>
     </div>
   );
- function loginSubmit(){
-    console.log("CLICOU")
-      const url = "https://migale.antrob.eu/backend/login.php"
-      const headers = {
-        "Accept": "application/json",
-        "Content-type": "application/json"
-      }
-      let data = {
-        pass: password,
-        email: email
-      }
-     fetch(url, {
+
+ function loginSubmit() {
+  const url = "https://migale.antrob.eu/backend/login.php";
+
+  fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify({
+      email,
+      pass: password
+    })
   })
-  .then(res => res.json())
-  .then(async data => {
-    console.log(data)
-    await setUsername(data.nome);
-    console.log(username)
-  })
-  .catch(err => {
-    setError(err);
-    console.log(err);
-  });
-  if(username != undefined){
-    navigate("/passes")
-    }
-  }//loginSubmit
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+
+      if (data.result === "Login com sucesso!") {
+        setUsername(data.nome);
+        navigate("/passes");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      setError("Erro de ligação ao servidor");
+    });
+}
   function SignUpSubmit(){
 
   }//SignUpSubmit
