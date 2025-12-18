@@ -11,10 +11,12 @@ export default function EasyPassLogin() {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const {username, setUsername} = useUser();
+  const [nif, setNif] = useState("");
 
   const [msg, setMsg] = useState("");
   const [error,setError] = useState("");
   const navigate = useNavigate();
+
   return (
     <div className="container">
       {/* Purple/Blue Background Panel */}
@@ -135,7 +137,13 @@ export default function EasyPassLogin() {
 
             <div className="form-group">
               <label>NIF</label>
-              <input type="number" placeholder="O seu NIF" />                    
+              <input type="text" inputMode='numeric' placeholder="O seu NIF" 
+              maxLength={9}
+              value={nif}
+              onChange={e => {
+                const onlyNumbers = e.target.value.replace(/\D/g, "");
+                setNif(onlyNumbers);
+              }} />                    
             </div>
 
             <div className="checkTermos">
@@ -182,7 +190,7 @@ export default function EasyPassLogin() {
       setError("Erro de ligação ao servidor");
     });
 }
-  function SignUpSubmit(){
 
-  }//SignUpSubmit
+  function SignUpSubmit(){
+  }
 }
