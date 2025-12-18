@@ -19,7 +19,7 @@ if (!$email && !$pass) {
 $pdo = estabelerConexao();
 
 $stmt = $pdo->prepare("INSERT INTO PESSOA (nome,email,palavra_passe,nif) values(?,?,?,?)");
-$stmt->execute([$nome, $email, $pass, $nif]);
+$stmt->execute([$nome, $email, $pass, $NIF]);
 $user = $stmt->fetch();
 
 if ($user) {

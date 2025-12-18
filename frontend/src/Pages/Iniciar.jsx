@@ -182,7 +182,7 @@ export default function EasyPassLogin() {
 }
   function SignUpSubmit(){
       const url = "https://migale.antrob.eu/backend/signup.php";
-fetch(url, {
+    fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
