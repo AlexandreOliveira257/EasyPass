@@ -122,12 +122,12 @@ export default function EasyPassLogin() {
 
             <div className="form-group">
               <label>Email</label>
-              <input type="email" placeholder="O seu email" />
+              <input onChange={setEmail(e.target.value)} type="email" placeholder="O seu email" />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" placeholder="A sua palavra-passe" />                   
+              <input onChange={setPassword(e.target.value)} type="password" placeholder="A sua palavra-passe" />                   
             </div>
 
             <div className="form-group">
