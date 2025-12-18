@@ -152,7 +152,7 @@ export default function EasyPassLogin() {
             </div>
 
             <div className="register-form">
-              <button className="btn-register">
+              <button onClick={SignUpSubmit} className="btn-register">
                 <span>REGISTAR</span>
                 <span className="arrow">
                   <img src="./icons/goBackBtnWhite.svg"/>
