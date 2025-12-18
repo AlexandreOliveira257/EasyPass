@@ -1,19 +1,21 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
 header("Access-Control-Allow-Headers: Content-Type");
+
 include "DBConnection.php";
+
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
 
 $email = $data["email"] ?? null;
 $pass = $data["pass"] ?? null;
 
-if (!$email && !$pass) {
+if (!$email || !$pass) {
     echo json_encode(["result" => "dados insuficientes"]);
     exit;
 }
-
 
 $pdo = estabelerConexao();
 
@@ -23,8 +25,9 @@ $user = $stmt->fetch();
 
 if ($user) {
     $response = ["result" => "Login com sucesso!", "nome" => $user['nome']];
+
 } else {
-    $response = ["result" => "Ocorreu um erro no login!"];
+    $response = ["result" => "Email ou palavra-passe incorretos!"];
 }
 
 echo json_encode($response);
