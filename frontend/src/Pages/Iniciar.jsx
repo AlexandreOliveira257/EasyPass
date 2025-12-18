@@ -10,8 +10,11 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {username,setUsername} = useUser();
-  const [nif,setNif] = useState("")
+  const {username, setUsername} = useUser();
+  const [nif, setNif] = useState("");
+
+  const [msg, setMsg] = useState("");
+  const [error,setError] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -114,17 +117,17 @@ export default function EasyPassLogin() {
             
             <div className="form-group">
               <label>Nome Completo</label>
-              <input onChange={e => setUsername(e.target.value)} type="text" placeholder="O seu nome" />
+              <input type="text" placeholder="O seu nome" />
             </div>
 
             <div className="form-group">
               <label>Email</label>
-              <input onChange={e => setEmail(e.target.value)} type="email" placeholder="O seu email" />
+              <input type="email" placeholder="O seu email" />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input onChange={e => setPassword(e.target.value)} type="password" placeholder="A sua palavra-passe" />                   
+              <input type="password" placeholder="A sua palavra-passe" />                   
             </div>
 
             <div className="form-group">
@@ -134,16 +137,22 @@ export default function EasyPassLogin() {
 
             <div className="form-group">
               <label>NIF</label>
-              <input onChange={e => setNif(e.target.value)} type='text' pattern='[0-9]*' inputmode="numeric" placeholder="O seu NIF" />                    
+              <input type="text" inputMode='numeric' placeholder="O seu NIF" 
+              maxLength={9}
+              value={nif}
+              onChange={e => {
+                const onlyNumbers = e.target.value.replace(/\D/g, "");
+                setNif(onlyNumbers);
+              }} />                    
             </div>
 
             <div className="checkTermos">
               <input className="checkMark" type="checkbox" placeholder="" /> 
-              <label >Aceitar Termos e condições</label>                  
+              <label>Aceitar Termos e condições</label>                  
             </div>
 
             <div className="register-form">
-              <button onClick={SignUpSubmit} className="btn-register">
+              <button className="btn-register">
                 <span>REGISTAR</span>
                 <span className="arrow">
                   <img src="./icons/goBackBtnWhite.svg"/>
@@ -163,7 +172,7 @@ export default function EasyPassLogin() {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      email: email,
+      email,
       pass: password
     })
   })
@@ -178,6 +187,7 @@ export default function EasyPassLogin() {
     })
     .catch(err => {
       console.error(err);
+      setError("Erro de ligação ao servidor");
     });
 }
   function SignUpSubmit(){
@@ -195,14 +205,6 @@ export default function EasyPassLogin() {
     .then(res => res.json())
     .then(data => {
       console.log(data);
-
-      if (data.result === "Utilizador adicionado com sucesso!") {
-        setUsername(data.nome);
-        navigate("/passes");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  }//SignUpSubmit
+})
+  }
 }
