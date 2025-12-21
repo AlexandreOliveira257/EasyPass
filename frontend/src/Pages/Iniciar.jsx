@@ -11,6 +11,7 @@ export default function EasyPassLogin() {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const {username, setUsername} = useUser();
+  const {pedido, setPedido} = useUser()
   const [nif, setNif] = useState("");
 
   const [msg, setMsg] = useState("");
@@ -182,6 +183,7 @@ export default function EasyPassLogin() {
 
       if (data.result === "Login com sucesso!") {
         setUsername(data.nome);
+        setPedido(data.pedidos);
         navigate("/passes");
       }
     })
