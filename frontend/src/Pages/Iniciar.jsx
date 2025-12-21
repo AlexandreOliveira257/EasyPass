@@ -205,7 +205,8 @@ export default function EasyPassLogin() {
     .then(data => {
       console.log(data);
       if (data.result === "Registo efetuado com sucesso") {
-        navigate("/login");
+        setShowRegister(false)
+        setShowLogin(true)
       }
 }).catch(err => {
       console.error(err);
