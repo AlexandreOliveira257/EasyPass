@@ -10,8 +10,7 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {username, setUsername} = useUser();
-  const {pedido, setPedido} = useUser()
+  const {username, setUsername, setPedido, setMovimentos} = useUser();
   const [nif, setNif] = useState("");
 
   const [msg, setMsg] = useState("");
