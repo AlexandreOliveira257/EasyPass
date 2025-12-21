@@ -26,9 +26,10 @@ $user = $stmt->fetch();
 if ($user) {
     // busca pedidos
     $stmt1 = $pdo->prepare("
-        SELECT mensagem 
+        SELECT mensagem, estado_pedido_descricao, data_emissao
         FROM PEDIDO 
         INNER JOIN PESSOA ON PESSOA.id_pessoa = PEDIDO.pessoa_id 
+        INNER JOIN ESTADO_PEDIDO on PESSOA.pedido_estado_id = ESTADO_PEDIDO.id_estado_pedido
         WHERE PESSOA.email = ?
     ");
     $stmt1->execute([$email]);
