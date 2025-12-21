@@ -25,7 +25,7 @@ function PedidosMenuContent(){
             </div>
             </div>
           ))
-        ) : ( <p>Sem Pedidos</p> )}
+        ) : ( <p>Não existem pedidos</p> )}
       </PortalMenu>
     )
 }

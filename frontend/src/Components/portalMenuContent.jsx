@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { useUser } from "../Contexts/UserContext";
 function PortalMenuContent(){
     const {t} = useTranslation()
-      const [showNotifications, setShowNotifications] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
     const {username} = useUser();
      return  <PortalMenu>
         {!showNotifications && (
