@@ -47,7 +47,7 @@ if ($user) {
     $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode([
         "result" => "Login com sucesso!",
-        "nome" => $user,
+        "nome" => $user['nome'],
         "pedidos" => $userPedidos,
         "movimentos" => $userMovimentos
     ]);
