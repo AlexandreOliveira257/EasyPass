@@ -19,7 +19,7 @@ if (!$email || !$pass) {
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT nome FROM PESSOA WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
@@ -34,11 +34,22 @@ if ($user) {
     ");
     $stmt1->execute([$email]);
     $userPedidos = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
+    // busca movimentos
+    $stmt2 = $pdo->prepare("
+        SELECT data_hora, valor, descricao, saldo_anterior, saldo_posterior, TIPOPASSE.nome_tipo
+        FROM MOVIMENTOPASSE 
+        INNER JOIN PASSE ON MOVIMENTOPASSE.PASSE_ID = PASSE.passe_id 
+        INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
+        INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
+        WHERE PESSOA.email = ?
+    ");
+    $stmt2->execute([$email]);
+    $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode([
         "result" => "Login com sucesso!",
-        "nome" => $user['nome'],
-        "pedidos" => $userPedidos
+        "nome" => $user,
+        "pedidos" => $userPedidos,
+        "movimentos" => $userMovimentos
     ]);
 } else {
     echo json_encode(["result" => "Email ou palavra-passe incorretos!"]);

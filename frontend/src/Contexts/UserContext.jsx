@@ -4,9 +4,14 @@ const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
   const [username, setUsername] = useState(undefined);
-  const [pedido,setPedido] = useState([])
+  const [pedidos,setPedido] = useState([])
+  const [movimentos, setMovimentos] = useState([])
   return (
-    <UserContext.Provider value={{ username, setUsername, pedido, setPedido }}>
+    <UserContext.Provider value={
+      { username, setUsername,
+        pedidos, setPedido,
+      movimentos, setMovimentos }
+      }>
       {children}
     </UserContext.Provider>
   );

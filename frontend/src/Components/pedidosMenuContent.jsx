@@ -7,15 +7,15 @@ import { useUser } from "../Contexts/UserContext"
 
 function PedidosMenuContent(){
   const [showPedido,setShowPedido] = useState(false);
-  const {pedido} = useUser();
+  const {pedidos} = useUser();
   const {t} = useTranslation()
-  console.log(pedido)
+  console.log(pedidos)
     return(
       <PortalMenu>
         <h1>{t('pedidos').toUpperCase()}</h1>
         <div className="hrPortal"></div>
-        {pedido.length>= 1 && (
-          pedido.map((el) => (
+        {pedidos.length >= 1 ? (
+          pedidos.map((el) => (
             <div className="pedidoContainer">
             <img src="EasyPass.png" width={50}></img>
             <div className="align">
@@ -25,7 +25,7 @@ function PedidosMenuContent(){
             </div>
             </div>
           ))
-        )}
+        ) : ( <p>Sem Pedidos</p> )}
       </PortalMenu>
     )
 }

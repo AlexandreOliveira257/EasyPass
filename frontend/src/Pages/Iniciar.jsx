@@ -184,6 +184,7 @@ export default function EasyPassLogin() {
       if (data.result === "Login com sucesso!") {
         setUsername(data.nome);
         setPedido(data.pedidos);
+        setMovimentos(data.movimentos)
         navigate("/passes");
       }
     })
