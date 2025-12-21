@@ -38,7 +38,7 @@ if ($user) {
     $stmt2 = $pdo->prepare("
         SELECT data_hora, valor, descricao, saldo_anterior, saldo_posterior, TIPOPASSE.nome_tipo
         FROM MOVIMENTOPASSE 
-        INNER JOIN PASSE ON MOVIMENTOPASSE.PASSE_ID = PASSE.passe_id 
+        INNER JOIN PASSE ON MOVIMENTOPASSE.passe_id = PASSE.id_passe
         INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
         INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
         WHERE PESSOA.email = ?
