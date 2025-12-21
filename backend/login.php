@@ -24,10 +24,21 @@ $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    $response = ["result" => "Login com sucesso!", "nome" => $user['nome']];
+    // busca pedidos
+    $stmt1 = $pdo->prepare("
+        SELECT mensagem 
+        FROM PEDIDO 
+        INNER JOIN PESSOA ON PESSOA.id_pessoa = PEDIDO.pessoa_id 
+        WHERE PESSOA.email = ?
+    ");
+    $stmt1->execute([$email]);
+    $userPedidos = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
+    echo json_encode([
+        "result" => "Login com sucesso!",
+        "nome" => $user['nome'],
+        "pedidos" => $userPedidos
+    ]);
 } else {
-    $response = ["result" => "Email ou palavra-passe incorretos!"];
+    echo json_encode(["result" => "Email ou palavra-passe incorretos!"]);
 }
-
-echo json_encode($response);
