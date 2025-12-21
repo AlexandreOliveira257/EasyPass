@@ -117,7 +117,7 @@ export default function EasyPassLogin() {
             
             <div className="form-group">
               <label>Nome Completo</label>
-              <input type="text" placeholder="O seu nome" />
+              <input onChange={e=>setUsername(e.target.value)} type="text" placeholder="O seu nome" />
             </div>
 
             <div className="form-group">
@@ -187,7 +187,6 @@ export default function EasyPassLogin() {
     })
     .catch(err => {
       console.error(err);
-      setError("Erro de ligação ao servidor");
     });
 }
   function SignUpSubmit(){
@@ -205,6 +204,11 @@ export default function EasyPassLogin() {
     .then(res => res.json())
     .then(data => {
       console.log(data);
-})
+      if (data.result === "Registo efetuado com sucesso") {
+        navigate("/login");
+      }
+}).catch(err => {
+      console.error(err);
+    });
   }
 }
