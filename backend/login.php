@@ -48,7 +48,7 @@ if ($user) {
 
     // busca passes
     $stmt3 = $pdo->prepare("
-        SELECT id_passe, data_validade, data_emissao, saldo, preco, estado_passe_descricao, nome_tipo
+        SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo
         FROM PASSE 
         INNER JOIN ESTADO_PASSE ON PASSE.passe_estado_id = ESTADO_PASSE.id_estado_passe
         INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
