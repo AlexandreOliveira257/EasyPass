@@ -6,12 +6,13 @@ export function UserProvider({ children }) {
   const [username, setUsername] = useState(undefined);
   const [pedidos,setPedido] = useState([])
   const [movimentos, setMovimentos] = useState([])
+  const [passes, setPasses] = useState([])
   return (
     <UserContext.Provider value={
       { username, setUsername,
         pedidos, setPedido,
-      movimentos, setMovimentos }
-      }>
+        movimentos, setMovimentos,
+        passes, setPasses }}>
       {children}
     </UserContext.Provider>
   );
