@@ -7,6 +7,7 @@ function PortalMenuContent(){
     const {t} = useTranslation()
     const [showNotifications, setShowNotifications] = useState(false);
     const {username} = useUser();
+    const {passes} = useUser()
      return  <PortalMenu>
         {!showNotifications && (
             <>
@@ -23,8 +24,24 @@ function PortalMenuContent(){
         </div>
         <div className="hrPortal"></div>
         <h2 className="osSeusPasses">{t('seusPasses')}</h2>
-        
+        <div className="idiomaFlex">
+            {passes.length >= 1 ? (
+                passes.map((el) =>(
+                    <div>
+                <span>{el.id_passe}</span>
+                <span>{el.data_emissao}</span>
+                <span>{el.data_validade}</span>
+                <span>{el.estado_passe_descricao}</span>
+                <span>{el.nome_tipo}</span>
+                <span>{el.preco}</span>
+                <span>{el.saldo}</span>
+                </div> ))
+            ):(
+             <></>
+            )}
         <Link to="/criarpasse"><img className="criarPasse" src={t('criarpasse')}/></Link>
+        </div>
+        
         </>
         )}
         {showNotifications && (

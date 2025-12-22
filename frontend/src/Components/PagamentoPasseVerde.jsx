@@ -19,10 +19,6 @@ function VerificarPasseVerde({setView}){
             <label>{t('modalidade')}</label>
             <input disabled type="text" defaultValue="Passe Ferroviário Verde" />
 
-            <label>{t('nif')}</label>
-            <input type="text" defaultValue="235666789" />
-
-          
             <label>{t('requerPasseFisico')}</label>
             <div className="doc-type">
               <label>

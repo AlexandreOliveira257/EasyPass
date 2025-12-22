@@ -35,7 +35,7 @@ const {t} = useTranslation()
         )}
         
         {view === "escolherOperadorBus" && <EscolherOperadorBus setView={setView}/>} 
-        {view === "escolherOperadorTrain" && <EscolherOperadorTrain view={view} setView={setView}/>} 
+        {view === "escolherOperadorTrain" && <EscolherOperadorTrain setView={setView}/>} 
         {view === "verificarDadosAutocarro" && <VerificarDadosAutocarro setView={setView}/>}
         {view === "verificarDadosComboio" && <VerificarDadosComboio setView={setView}/>}
         {view === "escolherPasseAutocarro" && <EscolherPasseAutocarro setView={setView}/>}

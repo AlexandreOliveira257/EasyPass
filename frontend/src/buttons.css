@@ -28,3 +28,21 @@
     min-height: 50vh;
 }
 
+.cardContainer{
+    width: 30vw;
+    height: 40vh;
+    background-image: url(../public/icons/cardGreen.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.cardFlex{ display: flex;}
+.cardAvatar{
+ margin: 1.5vw;
+}
+.cardFlexColumn{ display: flex; flex-direction: column; margin-top: 3vw;}
+.cardNome, .cardPass, .cardModalidade{margin: 0; color: white}
+.cardJustify{justify-content: space-between;}
+.cardPass,.cardModalidade{margin: 2vw;}
+.cardImageTrain{ margin-left: 2vw;}
