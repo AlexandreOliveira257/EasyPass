@@ -74,7 +74,7 @@ i18n.use(initReactI18next).init({
       passeCriadoSucesso: "Pass created successfully!",
       escolherOperadorPreferencia: "Choose your preferred operator",
       escolherPassePretendeCriar: "Choose the pass you want to create",
-
+      verificarPagamento:"Payment",
       //===Schedules===
       pesquisaHorarios:"SEARCH SCHEDULE",
       pesquisa:"SEARCH",
@@ -162,7 +162,7 @@ i18n.use(initReactI18next).init({
       passeCriadoSucesso:"Passe criado com sucesso!",
       escolherOperadorPreferencia:"Escolha o operador de preferência",
       escolherPassePretendeCriar:"Escolha o passe que pretende criar",
-
+      verificarPagamento:"Pagamento",
       //===Horários===
       pesquisaHorarios:"PESQUISA DE HORARIOS",
       pesquisa:"Pesquisa",

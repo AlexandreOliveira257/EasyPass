@@ -7,9 +7,9 @@ import EscolherPasseComboio from "./escolherPasseComboio";
 import EscolherPasseAutocarro from "./escolherPasseAutocarro";
 import VerificarDadosComboio from "./verificarDadosComboio";
 import VerificarDadosAutocarro from "./verificarDadosAutocarro";
-import VerificarPasseVerde from "./verificarPasseVerde";
-import VerificarPasseUrbano from "./verificarPasseUrbano";
-import VerificarPasseJovem from "./verificarPasseJovem";
+import VerificarPasseVerde from "./PagamentoPasseVerde";
+import VerificarPasseUrbano from "./PagamentoPasseUrbano";
+import VerificarPasseJovem from "./PagamentoPasseJovem";
 import PasseAutocarroFinal from "./passeAutocarroFinal";
 import PasseComboioFinal from "./passeComboioFinal";
 
@@ -17,16 +17,13 @@ function CriarPasseMenuContent(){
 const [view, setView] = useState("none");   
 const {t} = useTranslation()
 
-    return(
-        
+    return( 
         <div>
-      
         {view === "none" && (
         <>
         <div className="flex">
-            <span></span><Link to="/"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
+            <span></span><Link to="/passes"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
         </div>
-
         <h3 className="criarPasseh3">{t('escolhaMeioTransporte')}</h3>
         <div className="criarPasseFlexImages">
             <figure><img src="BoatOption.svg"/><figcaption className="disabled">{t('barco')}</figcaption></figure>

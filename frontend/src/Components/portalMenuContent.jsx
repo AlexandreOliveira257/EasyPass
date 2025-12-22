@@ -23,6 +23,7 @@ function PortalMenuContent(){
         </div>
         <div className="hrPortal"></div>
         <h2 className="osSeusPasses">{t('seusPasses')}</h2>
+        
         <Link to="/criarpasse"><img className="criarPasse" src={t('criarpasse')}/></Link>
         </>
         )}

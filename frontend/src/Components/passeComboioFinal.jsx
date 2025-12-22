@@ -7,7 +7,7 @@ function PasseComboioFinal(){
     return(
         <div>
             <div className="flex">
-        <span></span><Link to="/"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
+        <span></span><Link to="/passes"><img className="goBackBtn" src="icons/goBackBtn.svg"/></Link>
         </div>
         <h3 className="criarPasseh3">{t('passeCriadoSucesso')}</h3>
         <div className="criarPasseFlexImages">
