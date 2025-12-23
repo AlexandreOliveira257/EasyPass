@@ -57,12 +57,21 @@ if ($user) {
     ");
     $stmt3->execute([$email]);
     $userPasses = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+    // busca notifications
+    $stmt4 = $pdo->prepare("
+        SELECT titulo, mensagem, data_envio, lida FROM NOTIFICACAO 
+        INNER JOIN PESSOA ON NOTIFICACAO.pessoa_id = PESSOA.id_pessoa
+        WHERE PESSOA.email = ?
+    ");
+    $stmt4->execute([$email]);
+    $userNotifications = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode([
         "result" => "Login com sucesso!",
         "nome" => $user['nome'],
         "pedidos" => $userPedidos,
         "movimentos" => $userMovimentos,
-        "passes" => $userPasses
+        "passes" => $userPasses,
+        "notifications" => $userNotifications
     ]);
 } else {
     echo json_encode(["result" => "Email ou palavra-passe incorretos!"]);

@@ -7,12 +7,14 @@ export function UserProvider({ children }) {
   const [pedidos,setPedido] = useState([])
   const [movimentos, setMovimentos] = useState([])
   const [passes, setPasses] = useState([])
+  const [notifications, setNotifications] = useState([])
   return (
     <UserContext.Provider value={
       { username, setUsername,
         pedidos, setPedido,
         movimentos, setMovimentos,
-        passes, setPasses }}>
+        passes, setPasses,
+        notifications,setNotifications}}>
       {children}
     </UserContext.Provider>
   );

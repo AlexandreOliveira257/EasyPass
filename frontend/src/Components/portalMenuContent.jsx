@@ -6,8 +6,7 @@ import { useUser } from "../Contexts/UserContext";
 function PortalMenuContent(){
     const {t} = useTranslation()
     const [showNotifications, setShowNotifications] = useState(false);
-    const {username} = useUser();
-    const {passes} = useUser()
+    const {username, passes, notifications} = useUser();
      return  <PortalMenu>
         {!showNotifications && (
             <>
@@ -51,6 +50,11 @@ function PortalMenuContent(){
             <img className="goBackBtn" src="icons/goBackBtn.svg" onClick={() => setShowNotifications(false)}/>
             </div>
             <hr></hr>
+            {notifications.map((el)=>(
+                <div>
+                    {el}
+                </div>
+            ))}
             </>
       )}
     </PortalMenu>
