@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next"
 import PortalMenu from "./portalMenu";
 import "../Perfil.css"
+import { useUser } from "../Contexts/UserContext";
 
 function PerfilMenuContent() {
   const [activeTab, setActiveTab] = useState(0);
   const {t} = useTranslation()
+  const {username, nif} = useUser()
 
   return (
     <PortalMenu>
@@ -45,7 +47,7 @@ function PerfilMenuContent() {
         {activeTab === 0 && (
           <div className="form">
             <label>{t('nomeCompleto')}</label>
-            <input type="text" defaultValue="Luís José António" />
+            <input type="text" defaultValue={username} />
 
             <label>{t('genero')}</label>
             <select>
@@ -60,7 +62,7 @@ function PerfilMenuContent() {
             </select>
 
             <label>{t('nif')}</label>
-            <input type="text" defaultValue="235666789" />
+            <input type="text" defaultValue={nif} />
 
             <label>{t('dataNascimento')}</label>
             <div className="row">
