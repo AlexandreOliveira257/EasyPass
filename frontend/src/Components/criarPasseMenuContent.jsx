@@ -5,8 +5,6 @@ import EscolherOperadorBus from "./escolherOperadorBus";
 import EscolherOperadorTrain from "./escolherOperadorTrain";
 import EscolherPasseComboio from "./escolherPasseComboio";
 import EscolherPasseAutocarro from "./escolherPasseAutocarro";
-import VerificarDadosComboio from "./verificarDadosComboio";
-import VerificarDadosAutocarro from "./verificarDadosAutocarro";
 import VerificarPasseVerde from "./PagamentoPasseVerde";
 import VerificarPasseUrbano from "./PagamentoPasseUrbano";
 import VerificarPasseJovem from "./PagamentoPasseJovem";
@@ -36,8 +34,6 @@ const {t} = useTranslation()
         
         {view === "escolherOperadorBus" && <EscolherOperadorBus setView={setView}/>} 
         {view === "escolherOperadorTrain" && <EscolherOperadorTrain setView={setView}/>} 
-        {view === "verificarDadosAutocarro" && <VerificarDadosAutocarro setView={setView}/>}
-        {view === "verificarDadosComboio" && <VerificarDadosComboio setView={setView}/>}
         {view === "escolherPasseAutocarro" && <EscolherPasseAutocarro setView={setView}/>}
         {view === "escolherPasseComboio" && <EscolherPasseComboio setView={setView}/>}
         {view === "verificarPasseVerde" && <VerificarPasseVerde setView={setView}/>}
