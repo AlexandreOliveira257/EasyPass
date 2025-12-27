@@ -17,7 +17,7 @@ function VerificarPasseUrbano({setView}){
             <label>{t('nomeCompleto')}</label>
             <input type="text" defaultValue="Luís José António" />
             <label>{t('modalidade')}</label>
-            <input disabled type="text" defaultValue="Passe Ferroviário Verde" />
+            <input disabled type="text" defaultValue="Passe Urbano" />
             
             <label>{t('requerPasseFisico')}</label>
             <div className="doc-type">

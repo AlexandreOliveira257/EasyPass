@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next"
+import { useUser } from "../Contexts/UserContext"
 
 function VerificarPasseJovem({setView}){
     const {t} = useTranslation()
-
     return(
         <div className="formPerfil">
         <div className="flex">
@@ -39,6 +39,44 @@ function VerificarPasseJovem({setView}){
 }export default VerificarPasseJovem
 
 function BtnHandlerPagamento({setView}){
-  setView("passeAutocarroFinal")
+  const url = "https://migale.antrob.eu/backend/pagamento.php";
+  const {idpessoa} = useUser()
+  try{
+  fetch(url, {method:"POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      $tipo_id: 1, 
+      $pessoa_id: idpessoa,
+      $passo_estado_id: 1, 
+      $data_validade: Validade(), 
+      $data_emissao: Emissao(), 
+      $saldo: 0
+    })}).then(res => res.JSON()).then(data => {
+      console.log(data)
+      if(data.informacao === "Passe criado com sucesso!"){
+        setView("passeAutocarroFinal")
+      }
+    })
+  } catch (error) {
+    console.log("Ocorreu o seguinte erro: " + error)
+  } 
   
+  
+}
+
+function Emissao(){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+  var yyyy = today.getFullYear();
+
+  return today = yyyy + '/' + mm + '/' + dd ;
+}
+
+function Validade(){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+  var yyyy = today.getFullYear()+1;
+
+  return today = yyyy + '/' + mm + '/' + dd ;
 }
