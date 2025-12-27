@@ -19,7 +19,7 @@ if (!$email || !$pass) {
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("SELECT * FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
@@ -68,6 +68,7 @@ if ($user) {
     echo json_encode([
         "result" => "Login com sucesso!",
         "nome" => $user['nome'],
+        "id_pessoa" => $user['id_pessoa'],
         "pedidos" => $userPedidos,
         "movimentos" => $userMovimentos,
         "passes" => $userPasses,
