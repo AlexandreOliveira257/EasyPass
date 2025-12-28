@@ -7,16 +7,96 @@ import { useUser } from "../Contexts/UserContext";
 function PerfilMenuContent() {
   const [activeTab, setActiveTab] = useState(0);
   const {t} = useTranslation()
-  const {username, nif} = useUser()
 
+  const { nomeCompleto, nif, email } = useUser();
+  const dias = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+  const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
+  const anos = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i).reverse();
+  const anosId = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
+
+  const [formData, setFormData] = useState({
+    // Dados pessoais
+    nomeCompleto: nomeCompleto || "",
+    genero: "Selecionar",
+    nacionalidade: "Portuguesa",
+    nif: nif || "",
+    dataNascimento: "",
+    diasNascimento: "01",
+    mesesNascimento: "01",
+    anosNascimento: "2000",
+    anosId: "2030",
+    tipoDocumentoIdentificacao: "CARTA",
+    numeroDocumentoIdentificacao: "",
+    validadeDocumentoIdentificacao: "",
+
+    // Morada
+    morada: "",
+    codigoPostal: "",
+    localidade: "",
+    paisResidencia: "Portugal",
+
+    // Contactos
+    email: email || "",
+    telemovel: "",
+    contactoPreferencial: "Email"
+  });
+
+  // enviar dados ao backend
+  const handleSave = async () => {
+    const dadosEnviar = {
+      nomeCompleto: formData.nomeCompleto,
+      genero: formData.genero,
+      nacionalidade: formData.nacionalidade,
+      nif: formData.nif,
+      dataNascimento: formData.dataNascimento,
+      diasNascimento: formData.diasNascimento,
+      mesesNascimento: formData.mesesNascimento,
+      anosNascimento: formData.anosNascimento,
+      anosId: formData.anosId,
+      tipoDocumentoIdentificacao: formData.tipoDocumentoIdentificacao,
+      numeroDocumentoIdentificacao: formData.numeroDocumentoIdentificacao,
+      validadeDocumentoIdentificacao: formData.validadeDocumentoIdentificacao,
+
+      morada: formData.morada,
+      codigoPostal: formData.codigoPostal,
+      localidade: formData.localidade,
+      paisResidencia: formData.paisResidencia,
+
+      email: formData.email,
+      telemovel: formData.telemovel,
+      contactoPreferencial: formData.contactoPreferencial
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/update_perfil.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dadosEnviar),
+      });
+
+      const result = await response.json();
+      console.log('Success:', result);
+      alert("Dados perfil guardados com sucesso!");
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert("Erro ao guardar dados do perfil.");
+    }
+  }
+
+  // Frontend
   return (
     <PortalMenu>
       <div className="formPerfil">
+
         {/* FOTO */}
         <div className="photo-area">
           <div className="circle-photo"></div>
           <button className="btn-photo">{t('alterarFoto').toUpperCase()}</button>
         </div>
+
         {/* TABS */}
         <div className="tabs">
           <div
@@ -41,70 +121,114 @@ function PerfilMenuContent() {
           </div>
         </div>
 
-        
-
         {/* TAB 0 - DADOS PESSOAIS */}
         {activeTab === 0 && (
           <div className="form">
             <label>{t('nomeCompleto')}</label>
-            <input type="text" defaultValue={username} />
+            <input type="text" 
+                   value={formData.nomeCompleto} 
+                   onChange={(e) => setFormData({ ...formData, nomeCompleto: e.target.value })} />
 
             <label>{t('genero')}</label>
-            <select>
-              <option>{t('masculino')}</option>
-              <option>{t('feminino')}</option>
-              <option>{t('generoOutro')}</option>
+            <select value={formData.genero} 
+                    onChange={(e) => setFormData({ ...formData, genero: e.target.value })}>
+
+              <option value="Masculino"> {t('masculino')} </option>
+              <option value="Feminino"> {t('feminino')} </option>
+              <option value="Outro"> {t('generoOutro')} </option>
             </select>
 
             <label>{t('nacionalidade')}</label>
-            <select>
-              <option>{t('portuguesa')}</option>
+            <select value={formData.nacionalidade} 
+                    onChange={(e) => setFormData({ ...formData, nacionalidade: e.target.value })}>
+              <option value="Portuguesa">{t('portuguesa')}</option>
             </select>
 
             <label>{t('nif')}</label>
-            <input type="text" defaultValue={nif} />
+            <input type="text" 
+                   inputMode='numeric' 
+                   placeholder={t('nif')} 
+                   maxLength={9} 
+                   value={formData.nif} 
+                   onChange={(e) => {
+                     const onlyNumbers = e.target.value.replace(/\D/g, "");
+                     setFormData({ ...formData, nif: onlyNumbers });
+                   }} />
 
             <label>{t('dataNascimento')}</label>
             <div className="row">
-              <select>
-                <option>01</option>
+              <select value={formData.diasNascimento} 
+                      onChange={(e) => setFormData({ ...formData, diasNascimento: e.target.value })}>
+                {dias.map(d => 
+                      <option key={d} value={d}>{d}</option>)}
               </select>
-              <select>
-                <option>05</option>
+
+              <select value={formData.mesesNascimento} 
+                      onChange={(e) => setFormData({ ...formData, mesesNascimento: e.target.value })}>
+                {meses.map(m => 
+                       <option key={m} value={m}>{m}</option>)}
               </select>
-              <select>
-                <option>1986</option>
+
+              <select value={formData.anosNascimento} 
+                      onChange={(e) => setFormData({ ...formData, anosNascimento: e.target.value })}>
+                {anos.map(a => 
+                       <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
 
             <label>{t('tipoDocumentoIdentificacao')}</label>
             <div className="doc-type">
               <label>
-                {t('cartãoCidadao')} <input className="radio"type="radio" name="doc" /> 
+                {t('cartãoCidadao')} 
+                <input className="radio" 
+                       type="radio" 
+                       name="doc"
+                       value="CC"
+                       checked={formData.tipoDocumentoIdentificacao === "CC"}
+                       onChange={(e) => setFormData({ ...formData, tipoDocumentoIdentificacao: e.target.value })}/> 
               </label>
 
               <label>
-                {t('cartaConducao')} <input className="radio"type="radio" name="doc" defaultChecked /> 
+                {t('cartaConducao')} 
+                <input className="radio"
+                       type="radio" 
+                       name="doc" 
+                       value="CARTA"
+                       checked={formData.tipoDocumentoIdentificacao === "CARTA"}
+                       onChange={(e) => setFormData({ ...formData, tipoDocumentoIdentificacao: e.target.value })}/> 
               </label>
             </div>
 
             <label>{t('numeroDocumentoIdentificacao')}</label>
-            <input type="text" />
+            <input type="text" 
+                   value={formData.numeroDocumentoIdentificacao} 
+                   onChange={(e) => setFormData({ ...formData, numeroDocumentoIdentificacao: e.target.value })} />
 
             <label>{t('validadeDocumentoIdentificacao')}</label>
             <div className="row">
-              <select>
-                <option>17</option>
+              {/* Validade - Dia */}
+              <select value={formData.diasNascimento} 
+                      onChange={(e) => setFormData({ ...formData, diasNascimento: e.target.value })}>
+                {dias.map(d => 
+                      <option key={d} value={d}>{d}</option>)}
               </select>
-              <select>
-                <option>03</option>
+
+              {/* Validade - Mês */}
+              <select value={formData.mesesNascimento} 
+                      onChange={(e) => setFormData({ ...formData, mesesNascimento: e.target.value })}>
+                {meses.map(m => 
+                       <option key={m} value={m}>{m}</option>)}
               </select>
-              <select>
-                <option>2027</option>
+              
+              {/* Validade - Ano */}
+              <select value={formData.anosId} 
+                      onChange={(e) => setFormData({ ...formData, anosId: e.target.value })}>
+                {anosId.map(a => 
+                       <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
 
-            <button className="save-btn">{t('guardar').toUpperCase()}</button>
+            <button className="save-btn" onClick={handleSave}> {t('guardar').toUpperCase()} </button>
           </div>
         )}
 
@@ -112,15 +236,29 @@ function PerfilMenuContent() {
         {activeTab === 1 && (
           <div className="form">
             <label>{t('morada')}</label>
-            <input type="text" placeholder={t('aSuaMorada')} />
+            <input type="text" 
+                   value={formData.morada} 
+                   placeholder={t('aSuaMorada')}
+                   onChange={(e) => setFormData({ ...formData, morada: e.target.value })} />
+
             <label>{t('codigoPostal')}</label>
-            <input type="text" placeholder={t('oSeuCodigoPostal')} />
+            <input type="text" 
+                   placeholder={t('oSeuCodigoPostal')} 
+                   value={formData.codigoPostal} 
+                   onChange={(e) => setFormData({ ...formData, codigoPostal: e.target.value })} />
+
             <label>{t('localidade')}</label>
-            <input type="text" placeholder={t('aSuaLocalidade')} />
+            <input type="text" 
+                   placeholder={t('aSuaLocalidade')} 
+                   value={formData.localidade} 
+                   onChange={(e) => setFormData({ ...formData, localidade: e.target.value })} />
+
             <label>{t('paisResidencia')}</label>
-            <select>
-              <option>Portugal</option>
-              <option>Angola</option>
+            <select value={formData.paisResidencia} 
+                    onChange={(e) => setFormData({ ...formData, paisResidencia: e.target.value })}>
+
+              <option value="Portugal">Portugal</option>
+              <option value="Angola">Angola</option>
             </select>
           </div>
         )}
@@ -129,13 +267,23 @@ function PerfilMenuContent() {
         {activeTab === 2 && (
           <div className="form">
             <label>Email</label>
-            <input type="text" placeholder={t('oSeuEmail')} />
+            <input type="text" 
+                   value={formData.email} 
+                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                   placeholder={t('oSeuEmail')} />
+
             <label>{t('telemovel')}</label>
-            <input type="text" placeholder={t('oSeuTelemovel')} />
+            <input type="text" 
+                   value={formData.telemovel} 
+                   onChange={(e) => setFormData({ ...formData, telemovel: e.target.value })} 
+                   placeholder={t('oSeuTelemovel')} />
+
             <label>{t('contactoPreferencial')}</label>
-            <select>
-              <option>Email</option>
-              <option>{t('telemovel')}</option>
+            <select value={formData.contactoPreferencial} 
+                    onChange={(e) => setFormData({ ...formData, contactoPreferencial: e.target.value })}>
+
+              <option value="Email">Email</option>
+              <option value="Telemovel">{t('telemovel')}</option>
             </select>
           </div>
         )}
