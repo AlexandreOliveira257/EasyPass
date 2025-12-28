@@ -10,7 +10,12 @@ include "DBConnection.php";
 
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
-
+$tipo_id = $data['$tipo_id'] ?? null;
+$pessoa_id = $data['$pessoa_id'] ?? null;
+$passo_estado_id = $data['$passo_estado_id'] ?? null;
+$data_validade = $data['$data_validade'] ?? null;
+$data_emissao = $data['$data_emissao'] ?? null;
+$saldo = $data['$saldo'] ?? 0;
 $pdo = estabelerConexao();
 
 $stmt = $pdo->prepare(
@@ -21,9 +26,9 @@ $stmt = $pdo->prepare(
 $stmt->execute([$tipo_id, $pessoa_id, $passo_estado_id, $data_validade, $data_emissao, $saldo]);
 $user = $stmt->fetch();
 if ($passe) {
-    json_encode([
+    echo json_encode([
         "informacao" => "Passe criado com sucesso!"
     ]);
 } else {
-    json_encode(["informacao" => "Ocorreu algum erro na criação do passe!"]);
+    echo json_encode(["informacao" => "Ocorreu algum erro na criação do passe!"]);
 }
