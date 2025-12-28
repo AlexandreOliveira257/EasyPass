@@ -22,12 +22,18 @@ if (!$data) {
 $pdo = estabelerConexao();
 
 // extrair dados do JSON
-$tipo_id = $data['$tipo_id'] ?? null;
-$pessoa_id = $data['$pessoa_id'] ?? null;
-$passo_estado_id = $data['$passo_estado_id'] ?? null;
-$data_validade = $data['$data_validade'] ?? null;
-$data_emissao = $data['$data_emissao'] ?? null;
-$saldo = $data['$saldo'] ?? 0;
+$tipo_id = $data['tipo_id'] ?? null;
+$pessoa_id = $data['pessoa_id'] ?? null;
+$passo_estado_id = $data['passo_estado_id'] ?? null;
+$data_validade = $data['data_validade'] ?? null;
+$data_emissao = $data['data_emissao'] ?? null;
+$saldo = $data['saldo'] ?? 0;
+
+//pequena validação de dados
+if (!$tipo_id || !$pessoa_id || !$passo_estado_id || !$data_validade || !$data_emissao) {
+    echo json_encode(["erro" => "Dados obrigatórios em falta"]);
+    exit;
+}
 
 try {
     $stmt = $pdo->prepare(
@@ -46,9 +52,23 @@ try {
     ]);
 
     if ($ok) {
-        echo json_encode([
-            "informacao" => "Passe criado com sucesso!"
+        $stmt = $pdo->prepare(
+            "INSERT INTO NOTIFICACAO 
+        (pessoa_id, titulo, mensagem, data_envio, lida) 
+        VALUES (?, ?, ?, ?, ?)"
+        );
+        $okNotification = $stmt->execute([
+            $pessoa_id,
+            "Pagamento confirmado",
+            "O pagamento foi processado com sucesso!",
+            $data_emissao,
+            0
         ]);
+        if ($okNotification) {
+            echo json_encode([
+                "informacao" => "Passe criado com sucesso!"
+            ]);
+        }
     } else {
         echo json_encode([
             "informacao" => "Erro ao criar o passe"

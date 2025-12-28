@@ -2,7 +2,38 @@ import { useTranslation } from "react-i18next"
 import { useUser } from "../Contexts/UserContext"
 
 function VerificarPasseJovem({setView}){
-    const {t} = useTranslation()
+      const { t } = useTranslation();
+  const { idpessoa } = useUser();
+
+  async function BtnHandlerPagamento() {
+    const url = "https://migale.antrob.eu/backend/pagamento.php";
+    console.log("Clicou")
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tipo_id: 1,
+          pessoa_id: idpessoa,
+          passo_estado_id: 1,
+          data_validade: Validade(),
+          data_emissao: Emissao(),
+          saldo: 0
+        })
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.informacao === "Passe criado com sucesso!") {
+        setView("passeAutocarroFinal");
+      }
+
+    } catch (error) {
+      console.log("Erro no pagamento:", error);
+    }
+  }
+
     return(
         <div className="formPerfil">
         <div className="flex">
@@ -32,36 +63,12 @@ function VerificarPasseJovem({setView}){
             <p>{t('passeDigital')}: 5€</p>
             <p>{t('modalidade')}: 5€</p>
             <p>Total: 10€</p>
-            <button onClick={()=>BtnHandlerPagamento({setView})} className="save-btn">{t('pagamento').toUpperCase()}</button>
+            <button onClick={()=>BtnHandlerPagamento()} className="save-btn">{t('pagamento').toUpperCase()}</button>
           </div>
           </div>
     )
 }export default VerificarPasseJovem
 
-function BtnHandlerPagamento({setView}){
-  const url = "https://migale.antrob.eu/backend/pagamento.php";
-  const {idpessoa} = useUser()
-  try{
-  fetch(url, {method:"POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      $tipo_id: 1, 
-      $pessoa_id: idpessoa,
-      $passo_estado_id: 1, 
-      $data_validade: Validade(), 
-      $data_emissao: Emissao(), 
-      $saldo: 0
-    })}).then(res => res.JSON()).then(data => {
-      console.log(data)
-      if(data.informacao === "Passe criado com sucesso!"){
-        setView("passeAutocarroFinal")
-      }
-    })
-  } catch (error) {
-    console.log("Ocorreu o seguinte erro: " + error)
-  } 
-  
-  
-}
 
 function Emissao(){
   var today = new Date();
