@@ -5,11 +5,7 @@ import { useUser } from "../Contexts/UserContext"
 function Menu(){
     const {t} = useTranslation();
     const {username, setUsername,email} = useUser();
-<<<<<<< HEAD
     const navigate = useNavigate()
-=======
-    const navigate = new useNavigate()
->>>>>>> af97e017bac21e78282bc2677ba999ff0e5283cd
     async function NavigationHandler(route) {
         const url = "https://migale.antrob.eu/backend/PMP.php"
         try{
