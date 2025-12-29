@@ -24,28 +24,6 @@ $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
 if ($user) {
-    // busca pedidos
-    $stmt1 = $pdo->prepare("
-        SELECT mensagem, ESTADO_PEDIDO.estado_pedido_descricao, data_emissao
-        FROM PEDIDO 
-        INNER JOIN PESSOA ON PESSOA.id_pessoa = PEDIDO.pessoa_id 
-        INNER JOIN ESTADO_PEDIDO on PEDIDO.pedido_estado_id = ESTADO_PEDIDO.id_estado_pedido
-        WHERE PESSOA.email = ?
-    ");
-    $stmt1->execute([$email]);
-    $userPedidos = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-    // busca movimentos
-    $stmt2 = $pdo->prepare("
-        SELECT data_hora, valor, descricao, saldo_anterior, saldo_posterior, TIPOPASSE.nome_tipo
-        FROM MOVIMENTOPASSE 
-        INNER JOIN PASSE ON MOVIMENTOPASSE.passe_id = PASSE.id_passe
-        INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
-        INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
-        WHERE PESSOA.email = ?
-    ");
-    $stmt2->execute([$email]);
-    $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
     // busca passes
     $stmt3 = $pdo->prepare("
         SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo
@@ -69,8 +47,6 @@ if ($user) {
         "result" => "Login com sucesso!",
         "nome" => $user['nome'],
         "id_pessoa" => $user['id_pessoa'],
-        "pedidos" => $userPedidos,
-        "movimentos" => $userMovimentos,
         "passes" => $userPasses,
         "notifications" => $userNotifications
     ]);

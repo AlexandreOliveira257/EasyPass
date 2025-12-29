@@ -43,11 +43,18 @@ if ($user) {
     ");
         $stmt2->execute([$email]);
         $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
+        $stmt4 = $pdo->prepare("
+        SELECT titulo, mensagem, data_envio, lida FROM NOTIFICACAO 
+        INNER JOIN PESSOA ON NOTIFICACAO.pessoa_id = PESSOA.id_pessoa
+        WHERE PESSOA.email = ?
+    ");
+        $stmt4->execute([$email]);
+        $userNotifications = $stmt4->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode([
-            "informacao" => "Pedidos e movimentos obtidos com sucesso!",
+            "informacao" => "Pedidos, Movimentos e notificações obtidos com sucesso!",
             "pedidos" => $userPedidos,
-            "movimentos" => $userMovimentos
+            "movimentos" => $userMovimentos,
+            "notifications" => $userNotifications
         ]);
     } catch (PDOException $e) {
         http_response_code(500);

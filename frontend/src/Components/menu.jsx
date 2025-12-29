@@ -4,7 +4,7 @@ import { Link, useNavigate} from "react-router-dom"
 import { useUser } from "../Contexts/UserContext"
 function Menu(){
     const {t} = useTranslation();
-    const {username, setUsername, setPedidos, setMovimentos} = useUser();
+    const {username, setUsername, setPedido, setMovimentos} = useUser();
     const navigate = useNavigate()
     async function NavigationHandler(route) {
         if (!username) {
@@ -24,7 +24,7 @@ function Menu(){
         const data = await response.json();
         console.log(data);
         if (data.informacao === "Pedidos e movimentos obtidos com sucesso!") {
-            setPedidos(data.pedidos)
+            setPedido(data.pedidos)
             setMovimentos(data.movimentos)
             navigate(route);
         }
