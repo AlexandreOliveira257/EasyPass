@@ -22,16 +22,15 @@ if (!$data) {
 $pdo = estabelerConexao();
 
 // extrair dados do JSON
-$id = $data['idpessoa'] ?? "";
 $tipo_id = $data['tipo_id'] ?? null;
-$pessoa_id = $data['pessoa_id'] ?? null;
+$id_pessoa = $data['id_pessoa'] ?? null;
 $passo_estado_id = $data['passo_estado_id'] ?? null;
 $data_validade = $data['data_validade'] ?? null;
 $data_emissao = $data['data_emissao'] ?? null;
 $saldo = $data['saldo'] ?? 0;
 
 //pequena validação de dados
-if (!isset($tipo_id, $pessoa_id, $passo_estado_id, $data_validade, $data_emissao)) {
+if (!isset($tipo_id, $id_pessoa, $passo_estado_id, $data_validade, $data_emissao)) {
     echo json_encode(["erro" => "Dados obrigatórios em falta"]);
     exit;
 }
@@ -45,7 +44,7 @@ try {
 
     $ok = $stmt->execute([
         $tipo_id,
-        $pessoa_id,
+        $id_pessoa,
         $passo_estado_id,
         $data_validade,
         $data_emissao,
@@ -59,7 +58,7 @@ try {
         VALUES (?, ?, ?, ?, ?)"
         );
         $okNotification = $stmt->execute([
-            $pessoa_id,
+            $id_pessoa,
             "Pagamento confirmado",
             "O pagamento foi processado com sucesso!",
             $data_emissao,
@@ -74,7 +73,7 @@ try {
                 INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
                 WHERE PESSOA.id_pessoa = ?"
             );
-            $stmt1->execute([$id]);
+            $stmt1->execute([$id_pessoa]);
             $passesAtualizado = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
             echo json_encode([
