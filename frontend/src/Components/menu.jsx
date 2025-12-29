@@ -23,7 +23,7 @@ function Menu(){
         });
         const data = await response.json();
         console.log(data);
-        if (data.informacao === "Pedidos e movimentos obtidos com sucesso!") {
+        if (data.informacao === "Pedidos, Movimentos e notificações obtidos com sucesso!") {
             setPedido(data.pedidos)
             setMovimentos(data.movimentos)
             navigate(route);
