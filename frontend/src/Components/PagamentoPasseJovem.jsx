@@ -13,7 +13,7 @@ function VerificarPasseJovem({setView}){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tipo_id: 1,
-          pessoa_id: idpessoa,
+          id_pessoa: idpessoa,
           passo_estado_id: 1,
           data_validade: Validade(),
           data_emissao: Emissao(),
