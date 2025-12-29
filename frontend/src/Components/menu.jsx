@@ -4,16 +4,21 @@ import { Link, useNavigate} from "react-router-dom"
 import { useUser } from "../Contexts/UserContext"
 function Menu(){
     const {t} = useTranslation();
-    const {username, setUsername, setPedidos, setMovimentos, email} = useUser();
+    const {username, setUsername, setPedidos, setMovimentos} = useUser();
     const navigate = useNavigate()
     async function NavigationHandler(route) {
+        if (!username) {
+        console.warn("Username não definido");
+        return;
+        }
+
         const url = "https://migale.antrob.eu/backend/PMP.php"
         try{
             const response = await fetch(url, {
                 method:"POST",
                 headers:{ "Content-Type": "application/json" },
                 body: JSON.stringify({
-                email: email
+                username
                 })
         });
         const data = await response.json();

@@ -16,9 +16,9 @@ $data = json_decode($input, true);
 
 $pdo = estabelerConexao();
 
-$email = $data['email'] ?? "";
-$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE email = ?");
-$stmt->execute([$email]);
+$username = $data['username'] ?? "";
+$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE nome = ?");
+$stmt->execute([$username]);
 $user = $stmt->fetch();
 
 if ($user) {
@@ -57,6 +57,6 @@ if ($user) {
     }
 } else {
     echo json_encode([
-        "informacao" => "Erro na obtenção dos pedidos e movimentos deste utilizador"
+        "informacao" => "Utilizador não encontrado"
     ]);
 }
