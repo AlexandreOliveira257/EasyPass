@@ -17,8 +17,7 @@ $data = json_decode($input, true);
 $pdo = estabelerConexao();
 
 $email = $data['email'] ?? "";
-
-$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE email = ?");
 $stmt->execute([$email, $pass]);
 $user = $stmt->fetch();
 
