@@ -11,10 +11,13 @@ import Perfil from "../Routes-Menu/Perfil";
 import CriarPasse from "../Routes-Menu/CriarPasse";
 import LocalizarTransporte from "../Routes-Menu/Transportes";
 import Sobre from "../Routes-Menu/Sobre";
+import { useUser } from "../Contexts/UserContext"
 
 function App(){
+    const {loading} = useUser()
     return(
         <div className="bgImg">
+            {loading ? <div className="portal-loading"><img alt="A Carregar" src="loading.gif"/></div> : <></>}
             <Routes>
                 <Route path="/" element={<Iniciar/>}/>
                 <Route path="/passes" element={<PortalPage/>}/>

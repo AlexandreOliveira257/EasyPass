@@ -9,6 +9,7 @@ export function UserProvider({ children }) {
   const [passes, setPasses] = useState([])
   const [notifications, setNotifications] = useState([])
   const [idpessoa, setIdPessoa] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   return (
     <UserContext.Provider value={
@@ -17,7 +18,8 @@ export function UserProvider({ children }) {
         movimentos, setMovimentos,
         passes, setPasses,
         notifications,setNotifications,
-        idpessoa,setIdPessoa}}>
+        idpessoa,setIdPessoa,
+        loading, setLoading}}>
       {children}
     </UserContext.Provider>
   );
