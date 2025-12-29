@@ -4,7 +4,7 @@ import { Link, useNavigate} from "react-router-dom"
 import { useUser } from "../Contexts/UserContext"
 function Menu(){
     const {t} = useTranslation();
-    const {username, setUsername,email} = useUser();
+    const {username, setUsername, setPedidos, setMovimentos, email} = useUser();
     const navigate = useNavigate()
     async function NavigationHandler(route) {
         const url = "https://migale.antrob.eu/backend/PMP.php"
@@ -19,7 +19,9 @@ function Menu(){
         const data = await response.json();
         console.log(data);
         if (data.informacao === "Pedidos e movimentos obtidos com sucesso!") {
-        navigate(route);
+            setPedidos(data.pedidos)
+            setMovimentos(data.movimentos)
+            navigate(route);
         }
         }catch(error){
             console.log("Ocorreu um erro:" + error)
