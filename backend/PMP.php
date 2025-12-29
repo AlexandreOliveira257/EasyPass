@@ -28,9 +28,9 @@ if ($user) {
         FROM PEDIDO 
         INNER JOIN PESSOA ON PESSOA.id_pessoa = PEDIDO.pessoa_id 
         INNER JOIN ESTADO_PEDIDO on PEDIDO.pedido_estado_id = ESTADO_PEDIDO.id_estado_pedido
-        WHERE PESSOA.email = ?
+        WHERE PESSOA.nome = ?
     ");
-        $stmt1->execute([$email]);
+        $stmt1->execute([$username]);
         $userPedidos = $stmt1->fetchAll(PDO::FETCH_ASSOC);
         // busca movimentos
         $stmt2 = $pdo->prepare("
@@ -39,16 +39,16 @@ if ($user) {
         INNER JOIN PASSE ON MOVIMENTOPASSE.passe_id = PASSE.id_passe
         INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
         INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
-        WHERE PESSOA.email = ?
+        WHERE PESSOA.nome = ?
     ");
-        $stmt2->execute([$email]);
+        $stmt2->execute([$username]);
         $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         $stmt4 = $pdo->prepare("
         SELECT titulo, mensagem, data_envio, lida FROM NOTIFICACAO 
         INNER JOIN PESSOA ON NOTIFICACAO.pessoa_id = PESSOA.id_pessoa
-        WHERE PESSOA.email = ?
+        WHERE PESSOA.nome = ?
     ");
-        $stmt4->execute([$email]);
+        $stmt4->execute([$username]);
         $userNotifications = $stmt4->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode([
             "informacao" => "Pedidos, Movimentos e notificações obtidos com sucesso!",
