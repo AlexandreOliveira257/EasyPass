@@ -18,7 +18,7 @@ $pdo = estabelerConexao();
 
 $email = $data['email'] ?? "";
 $stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE email = ?");
-$stmt->execute([$email, $pass]);
+$stmt->execute([$email]);
 $user = $stmt->fetch();
 
 if ($user) {
