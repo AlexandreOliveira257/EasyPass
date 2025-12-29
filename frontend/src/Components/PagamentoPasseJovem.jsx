@@ -63,7 +63,7 @@ function VerificarPasseJovem({setView}){
             <p>{t('passeDigital')}: 5€</p>
             <p>{t('modalidade')}: 5€</p>
             <p>Total: 10€</p>
-            <button onClick={()=>BtnHandlerPagamento()} className="save-btn">{t('pagamento').toUpperCase()}</button>
+            <button onClick={BtnHandlerPagamento} className="save-btn">{t('pagamento').toUpperCase()}</button>
           </div>
           </div>
     )
