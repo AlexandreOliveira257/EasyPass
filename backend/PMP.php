@@ -40,7 +40,7 @@ try {
     $stmt2->execute([$email]);
     $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($userPedidos && $userMovimentos) {
+    if ($userPedidos || $userMovimentos) {
         echo json_encode([
             "informacao" => "Pedidos e movimentos obtidos com sucesso!"
         ]);
