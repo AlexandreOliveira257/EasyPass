@@ -24,33 +24,29 @@ function App(){
     return(
         // Loading Screen
         <div className="bgImg">
-            {loading && (
-                <div className="portal-loading">
-                    <img alt="A Carregar" src="loading.gif"/>
-                </div>
-            )}
-            
+            {loading ? <div className="portal-loading">
+                            <img alt="A Carregar" src="loading.gif"/>
+                        </div> : <></>}
             <Routes>
-                {/* Página Inicial */}
+                {/* If logged in, a página inicial redireciona para passes */}
                 <Route path="/" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
-
-                {/* Routes Protegidas (Apenas uma definição para cada) */}
                 <Route path="/iniciar" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
+
+                {/* Routes Protegidas */}
                 <Route path="/passes" element={isAuth ? <PortalPage /> : <Navigate to="/iniciar" />} />
                 <Route path="/perfil" element={isAuth ? <Perfil /> : <Navigate to="/iniciar" />} />
 
-                {/* Outras Routes (Removidas as duplicadas) */}
+                {/* Outras Routes */}
                 <Route path="/pedidos" element={<Pedidos/>}/>
                 <Route path="/movimentos" element={<Movimentos/>}/>
                 <Route path="/definicoes" element={<Definicoes/>}/>
                 <Route path="/sobre" element={<Sobre/>}/>
                 <Route path="/idiomas" element={<Idiomas/>}/>
                 <Route path="/horarios" element={<Horarios/>}/>
+                <Route path="/perfil" element={<Perfil/>}/>
                 <Route path="/criarPasse" element={<CriarPasse/>}/>
+                <Route path="/iniciar" element={<Iniciar/>}/>
                 <Route path="/localizarTransporte" element={<LocalizarTransporte/>}/>
-                
-                {/* Fallback para rotas não encontradas */}
-                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </div>
     )
