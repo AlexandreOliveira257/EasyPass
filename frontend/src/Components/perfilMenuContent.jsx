@@ -12,7 +12,7 @@ function PerfilMenuContent() {
   const dias = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const anos = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i).reverse();
-  const anosId = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
+  const anosValidade = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
 
   const [formData, setFormData] = useState({
     // Dados pessoais
@@ -24,10 +24,13 @@ function PerfilMenuContent() {
     diasNascimento: "01",
     mesesNascimento: "01",
     anosNascimento: "2000",
-    anosId: "2030",
     tipoDocumentoIdentificacao: "CARTA",
     numeroDocumentoIdentificacao: "",
     validadeDocumentoIdentificacao: "",
+    diaValidade: "01",
+    mesValidade: "01",
+    anoValidade: "2030",
+
 
     // Morada
     morada: "",
@@ -52,10 +55,12 @@ function PerfilMenuContent() {
       diasNascimento: formData.diasNascimento,
       mesesNascimento: formData.mesesNascimento,
       anosNascimento: formData.anosNascimento,
-      anosId: formData.anosId,
       tipoDocumentoIdentificacao: formData.tipoDocumentoIdentificacao,
       numeroDocumentoIdentificacao: formData.numeroDocumentoIdentificacao,
       validadeDocumentoIdentificacao: formData.validadeDocumentoIdentificacao,
+      diaValidade: formData.diaValidade,
+      mesValidade: formData.mesValidade,
+      anoValidade: formData.anoValidade,
 
       morada: formData.morada,
       codigoPostal: formData.codigoPostal,
@@ -68,7 +73,7 @@ function PerfilMenuContent() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/update_perfil.php', {
+      const response = await fetch('https://migale.antrob.eu/backend/update_perfil.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -207,23 +212,23 @@ function PerfilMenuContent() {
             <label>{t('validadeDocumentoIdentificacao')}</label>
             <div className="row">
               {/* Validade - Dia */}
-              <select value={formData.diasNascimento} 
-                      onChange={(e) => setFormData({ ...formData, diasNascimento: e.target.value })}>
+              <select value={formData.diaValidade} 
+                      onChange={(e) => setFormData({ ...formData, diaValidade: e.target.value })}>
                 {dias.map(d => 
                       <option key={d} value={d}>{d}</option>)}
               </select>
 
               {/* Validade - Mês */}
-              <select value={formData.mesesNascimento} 
-                      onChange={(e) => setFormData({ ...formData, mesesNascimento: e.target.value })}>
+              <select value={formData.mesValidade} 
+                      onChange={(e) => setFormData({ ...formData, mesValidade: e.target.value })}>
                 {meses.map(m => 
                        <option key={m} value={m}>{m}</option>)}
               </select>
               
               {/* Validade - Ano */}
-              <select value={formData.anosId} 
-                      onChange={(e) => setFormData({ ...formData, anosId: e.target.value })}>
-                {anosId.map(a => 
+              <select value={formData.anoValidade} 
+                      onChange={(e) => setFormData({ ...formData, anoValidade: e.target.value })}>
+                {anosValidade.map(a => 
                        <option key={a} value={a}>{a}</option>)}
               </select>
             </div>

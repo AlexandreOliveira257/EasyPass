@@ -21,37 +21,77 @@ try {
             $moradaId = $pessoaAtual['morada_id'] ?? null;
 
             if ($moradaId) {
-                // se tiver ID, atualizar morada existente
-                $sqlM = "UPDATE MORADA SET rua = :rua, codigo_postal = :cp, concelho = :concelho, pais_residente = :pais WHERE id_morada = :id";
+                // se tiver morada_id, atualizar morada existente
+                $sqlM = "UPDATE MORADA SET rua = :rua, 
+                                           codigo_postal = :cp, 
+                                           concelho = :concelho, 
+                                           pais_residente = :pais 
+                                           WHERE 
+                                           id_morada = :id";
                 $stmtM = $pdo->prepare($sqlM);
                 $stmtM->execute([
                     ':rua' => $dados['morada'],
-                    ':cp'  => $dados['codPostal'],
+                    ':cp'  => $dados['codigoPostal'],
                     ':concelho' => $dados['localidade'],
-                    ':pais' => $dados['pais'],
-                    ':id'  => $moradaId
+                    ':pais' => $dados['paisResidencia'],
+                    ':id' => $moradaId
                 ]);
             } else {
                 // se nao tiver, inserir nova morada e guardar ID
-                $sqlM = "INSERT INTO MORADA (rua, codigo_postal, concelho, pais_residente) VALUES (:rua, :cp, :concelho, :pais)";
+                $sqlM = "INSERT INTO MORADA (rua, codigo_postal, concelho, pais_residente) 
+                         VALUES (:rua, :cp, :concelho, :pais)";
                 $stmtM = $pdo->prepare($sqlM);
                 $stmtM->execute([
                     ':rua' => $dados['morada'],
-                    ':cp'  => $dados['codPostal'],
+                    ':cp'  => $dados['codigoPostal'],
                     ':concelho' => $dados['localidade'],
-                    ':pais' => $dados['pais']
+                    ':pais' => $dados['paisResidencia']
                 ]);
                 $moradaId = $pdo->lastInsertId();
             }
 
-            // Género: 'Masculino' -> 1, 'Feminino' -> 2 (confirmar IDs  tabela GENERO)
-            $genero_id = ($dados['genero'] === 'Masculino') ? 1 : 2; 
-            
-            // Tipo Documento: 'CC' -> 1, 'CARTA' -> 2 (confirmar na tabela TIPODOCUMENTO)
-            $tipo_doc_id = ($dados['tipoDocumento'] === 'CC') ? 1 : 2;
+            // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
+            switch ($dados['genero']) {
+                case 'Masculino':
+                    $genero_id = '1';
+                    break;
+                case 'Feminino':
+                    $genero_id = '2';
+                    break;
+                default:
+                    $genero_id = '3';
+            }
 
-            // tabela PESSOA
-            $dataNasc = $dados['anoNasc'] . "-" . $dados['mesNasc'] . "-" . $dados['diaNasc'];
+            // Tabela TIPODOCUMENTO (validade)
+            $dataValidade = $dados['anoValidade'] . "-" . 
+                            $dados['mesValidade'] . "-" . 
+                            $dados['diaValidade'];
+            
+            if ($docId) {
+                // Atualiza a validade no documento já associado à pessoa
+                $sqlV = "UPDATE TIPODOCUMENTO SET validade = :val WHERE id_documento = :id";
+                $pdo->prepare($sqlV)->execute([':val' => $dataValidade, ':id' => $docId]);
+            }
+
+            // Tabela PESSOA
+            $dataNasc = $dados['anosNascimento'] . "-" . 
+                        $dados['mesesNascimento'] . "-" . 
+                        $dados['diasNascimento'];
+
+            // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
+            switch ($dados['genero']) {
+                case 'Masculino':
+                    $genId = 1;
+                    break;
+                case 'Feminino':
+                    $genId = 2;
+                    break;
+                default:
+                    $genId = 3;
+            }
+
+            // Tipo Documento Identificação: 'Cartão Cidadão' -> 1, 'Carta Condução' -> 2
+            $tipoDocumento = ($dados['tipoDocumentoIdentificacao'] === 'CC') ? 1 : 2;
 
             $sqlP = "UPDATE PESSOA SET 
                         nome = :nome, 
@@ -64,12 +104,11 @@ try {
                         email = :email
                      WHERE nif = :nif";
 
-            $stmtP = $pdo->prepare($sqlP);
-            $stmtP->execute([
+            $pdo->prepare($sqlP)->execute([
                 ':nome'      => $dados['nomeCompleto'],
                 ':data_nasc' => $dataNasc,
-                ':gen_id'    => $genero_id,
-                ':doc_id'    => $tipo_doc_id,
+                ':gen_id'    => $genId,
+                ':doc_id'    => $tipoDocumento,
                 ':mor_id'    => $moradaId,
                 ':nacio'     => $dados['nacionalidade'],
                 ':tele'      => $dados['telemovel'],
