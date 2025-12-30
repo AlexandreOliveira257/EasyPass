@@ -200,7 +200,7 @@ export default function EasyPassLogin() {
         setPasses(data.passes || []);
         setNotifications(data.notifications || []);
 
-        window.location.href = "/passes";
+        navigate("/passes");  
       } else {
         alert(data.result);
       }

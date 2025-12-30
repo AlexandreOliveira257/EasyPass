@@ -16,7 +16,7 @@ function Menu() {
     localStorage.clear();
 
     // Redireciona para o login
-    window.location.href = "/iniciar"; 
+    navigate("/iniciar"); 
   };
 
    async function NavigationHandler(route) {

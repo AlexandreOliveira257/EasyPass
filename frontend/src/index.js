@@ -9,7 +9,7 @@ import { UserProvider } from './Contexts/UserContext';
 ReactDOM.createRoot(document.querySelector("#root")).render(
         <HashRouter>
             <UserProvider>
-            <App />
+                <App/>
             </UserProvider>
         </HashRouter>
 );
