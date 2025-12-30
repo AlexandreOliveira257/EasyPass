@@ -53,45 +53,37 @@ try {
             // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
             switch ($dados['genero']) {
                 case 'Masculino':
-                    $genero_id = '1';
+                    $genId = '1';
                     break;
                 case 'Feminino':
-                    $genero_id = '2';
+                    $genId = '2';
                     break;
                 default:
-                    $genero_id = '3';
+                    $genId = '3';
             }
+
+            // Tipo Documento Identificação: 'Cartão Cidadão' -> 1, 'Carta Condução' -> 2
+            $tipoDocumento = $dados['tipoDocumentoIdentificacao']; // 'CC' ou 'CARTA'
+            $idDocFinal = ($tipoDocumento === 'CC') ? 1 : 2;
 
             // Tabela TIPODOCUMENTO (validade)
             $dataValidade = $dados['anoValidade'] . "-" . 
                             $dados['mesValidade'] . "-" . 
                             $dados['diaValidade'];
             
-            if ($docId) {
-                // Atualiza a validade no documento já associado à pessoa
-                $sqlV = "UPDATE TIPODOCUMENTO SET validade = :val WHERE id_documento = :id";
-                $pdo->prepare($sqlV)->execute([':val' => $dataValidade, ':id' => $docId]);
-            }
+            $stmtV = $pdo->prepare("UPDATE TIPODOCUMENTO 
+                                    SET validade = :val 
+                                    WHERE id_documento = :id");
+            $stmtV->execute([
+                ':val' => $dataValidade,
+                ':id'  => $idDocFinal
+            ]);
 
             // Tabela PESSOA
+            // Formatar data de nascimento
             $dataNasc = $dados['anosNascimento'] . "-" . 
                         $dados['mesesNascimento'] . "-" . 
                         $dados['diasNascimento'];
-
-            // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
-            switch ($dados['genero']) {
-                case 'Masculino':
-                    $genId = 1;
-                    break;
-                case 'Feminino':
-                    $genId = 2;
-                    break;
-                default:
-                    $genId = 3;
-            }
-
-            // Tipo Documento Identificação: 'Cartão Cidadão' -> 1, 'Carta Condução' -> 2
-            $tipoDocumento = ($dados['tipoDocumentoIdentificacao'] === 'CC') ? 1 : 2;
 
             $sqlP = "UPDATE PESSOA SET 
                         nome = :nome, 
@@ -108,7 +100,7 @@ try {
                 ':nome'      => $dados['nomeCompleto'],
                 ':data_nasc' => $dataNasc,
                 ':gen_id'    => $genId,
-                ':doc_id'    => $tipoDocumento,
+                ':doc_id'    => $idDocFinal,
                 ':mor_id'    => $moradaId,
                 ':nacio'     => $dados['nacionalidade'],
                 ':tele'      => $dados['telemovel'],
