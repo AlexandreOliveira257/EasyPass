@@ -1,18 +1,31 @@
 import { useTranslation } from "react-i18next";
 import PortalMenu from "./portalMenu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { useUser } from "../Contexts/UserContext";
+
 function PortalMenuContent(){
     const {t} = useTranslation()
     const [showNotifications, setShowNotifications] = useState(false);
-    const {username, passes, notifications, setNotifications, loading, setLoading} = useUser();
+    const {username, setUsername, passes, setPasses, notifications, setNotifications, loading, setLoading} = useUser();
+
+    // Recuperar sessão se o context estiver vazio
+    useEffect(() => {
+        if (!username) {
+            const storedName = localStorage.getItem("userName");
+            if (storedName && setUsername) {
+                setUsername(storedName);
+            }
+        }
+    }, [username, setUsername]);
+
     async function NavigationHandler() {
     if (!username){
         alert("Não existe nenhum username definido!")
     return;     
     }  //a function para de executar no momento em que o username nao existe
-    if (loading) return;    //bloqueia múltiplos cliques 
+
+    if (loading) return; //bloqueia múltiplos cliques 
 
     setLoading(true);
     const url = "https://migale.antrob.eu/backend/PMP.php";
@@ -42,7 +55,7 @@ function PortalMenuContent(){
         {!showNotifications && (
             <>
         <div className="flex">
-        <h1>{t('welcome')} {username}</h1>
+        <h1>{t('welcome')}, {username || localStorage.getItem("userName")}</h1>
         <nav className="navPortal">
             <div className="flex">
             <a onClick={NavigationHandler} className="btnPortal">{t('notificacoes')}</a><img src="icons/notifications.svg"/>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next"
 import PortalMenu from "./portalMenu";
 import "../Perfil.css"
@@ -17,7 +17,7 @@ function PerfilMenuContent() {
   const [formData, setFormData] = useState({
     // Dados pessoais
     nomeCompleto: nomeCompleto || "",
-    genero: "Selecionar",
+    genero: "1",
     nacionalidade: "Portuguesa",
     nif: nif || "",
     dataNascimento: "",
@@ -31,7 +31,6 @@ function PerfilMenuContent() {
     mesValidade: "01",
     anoValidade: "2030",
 
-
     // Morada
     morada: "",
     codigoPostal: "",
@@ -43,6 +42,78 @@ function PerfilMenuContent() {
     telemovel: "",
     contactoPreferencial: "Email"
   });
+
+  // Carregar dados do utilizador 
+  useEffect(() => {
+    const carregarDadosDoServidor = async () => {
+        // usar o nif guardado no localStorage para pedir os dados do perfil
+        const nifSalvo = localStorage.getItem("userNif");
+        console.log("NIF do perfil:", nifSalvo);
+
+        // Se for undefined ou null, não faz o pedido ao servidor
+        if (!nifSalvo || nifSalvo === "undefined" || nifSalvo === "null") {
+            console.error("Não foi possível carregar o perfil: NIF em falta.");
+            return; 
+        }
+        
+        if (nifSalvo) {
+            try {
+                const response = await fetch(`https://migale.antrob.eu/backend/get_perfil.php?nif=${nifSalvo}`);
+                const result = await response.json();
+
+                if (!nifSalvo) return;
+
+                if (result.status === "success") {
+                    const u = result.data;
+                    
+                    // Preenche o form com os dados do utilizador 
+                    setFormData(prev => {
+                        // Tratamento da Data de Nascimento (AAAA-MM-DD)
+                        const dataN = u.data_nascimento ? u.data_nascimento.split('-') : ["2000", "01", "01"];
+                        
+                        // Tratamento da Data de Validade do Documento (AAAA-MM-DD)
+                        // 'data_validade' -> JOIN do get_perfil.php
+                        const dataV = u.data_validade ? u.data_validade.split('-') : ["2030", "01", "01"];
+
+                        return {
+                            ...prev,
+                            // Dados Pessoais
+                            nomeCompleto: u.nome || "",
+                            email: u.email || "",
+                            nif: u.nif || "",
+                            telemovel: u.telemovel || "",
+                            nacionalidade: u.nacionalidade || "Portuguesa",
+                            genero: u.genero_id || "", // assumir que o backend devolve o id do género
+
+                            // Morada
+                            morada: u.rua || "",
+                            codigoPostal: u.codigo_postal || "",
+                            localidade: u.concelho || "",
+                            paisResidencia: u.pais_residente || "Portugal",
+
+                            // Data de Nascimento (Selects)
+                            anosNascimento: dataN[0],
+                            mesesNascimento: dataN[1],
+                            diasNascimento: dataN[2],
+
+                            // Documento de Identificação
+                            tipoDocumentoIdentificacao: u.documento_id == 1 ? "CC" : (u.documento_id == 2 ? "Passaporte" : ""),
+                            
+                            // Data de Validade (Selects)
+                            anosId: dataV[0],
+                            mesValidade: dataV[1],
+                            diaValidade: dataV[2]
+                        };
+                    });
+                }
+            } catch (error) {
+                console.error("Erro em aceder ao servidor:", error);
+            }
+        }
+    };
+
+    carregarDadosDoServidor(); // Executar apenas uma vez ao abrir a página
+}, []); 
 
   // enviar dados ao backend
   const handleSave = async () => {
@@ -138,9 +209,9 @@ function PerfilMenuContent() {
             <select value={formData.genero} 
                     onChange={(e) => setFormData({ ...formData, genero: e.target.value })}>
 
-              <option value="Masculino"> {t('masculino')} </option>
-              <option value="Feminino"> {t('feminino')} </option>
-              <option value="Outro"> {t('generoOutro')} </option>
+              <option value="1"> {t('masculino')} </option>
+              <option value="2"> {t('feminino')} </option>
+              <option value="3"> {t('generoOutro')} </option>
             </select>
 
             <label>{t('nacionalidade')}</label>
@@ -152,7 +223,6 @@ function PerfilMenuContent() {
             <label>{t('nif')}</label>
             <input type="text" 
                    inputMode='numeric' 
-                   placeholder={t('nif')} 
                    maxLength={9} 
                    value={formData.nif} 
                    onChange={(e) => {

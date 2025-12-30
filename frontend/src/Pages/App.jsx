@@ -1,5 +1,5 @@
 import "../App.css"
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import PortalPage from "./PortalPage"
 import Pedidos from "../Routes-Menu/Pedidos";
 import Iniciar from "./Iniciar";
@@ -12,15 +12,31 @@ import CriarPasse from "../Routes-Menu/CriarPasse";
 import LocalizarTransporte from "../Routes-Menu/Transportes";
 import Sobre from "../Routes-Menu/Sobre";
 import { useUser } from "../Contexts/UserContext"
+import React, { useState, useEffect } from 'react';
 
 function App(){
-    const {loading} = useUser()
+    const {loading} = useUser();
+
+    const [isAuth, setIsAuth] = useState(() => {
+        return localStorage.getItem("isLoggedIn") === "true";
+    });
+
     return(
+        // Loading Screen
         <div className="bgImg">
-            {loading ? <div className="portal-loading"><img alt="A Carregar" src="loading.gif"/></div> : <></>}
+            {loading ? <div className="portal-loading">
+                            <img alt="A Carregar" src="loading.gif"/>
+                        </div> : <></>}
             <Routes>
-                <Route path="/" element={<Iniciar/>}/>
-                <Route path="/passes" element={<PortalPage/>}/>
+                {/* If logged in, a página inicial redireciona para passes */}
+                <Route path="/" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
+                <Route path="/iniciar" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
+
+                {/* Routes Protegidas */}
+                <Route path="/passes" element={isAuth ? <PortalPage /> : <Navigate to="/iniciar" />} />
+                <Route path="/perfil" element={isAuth ? <Perfil /> : <Navigate to="/iniciar" />} />
+
+                {/* Outras Routes */}
                 <Route path="/pedidos" element={<Pedidos/>}/>
                 <Route path="/movimentos" element={<Movimentos/>}/>
                 <Route path="/definicoes" element={<Definicoes/>}/>

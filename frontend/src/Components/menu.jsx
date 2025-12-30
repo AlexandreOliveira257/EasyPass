@@ -9,7 +9,16 @@ function Menu() {
   const { t } = useTranslation();
   const { username, setUsername, setPedido, setMovimentos, loading, setLoading } = useUser();
   const navigate = useNavigate();
-  
+
+  // Função para terminar sessão
+  const handleLogout = () => {
+    // Limpa todos os dados guardados
+    localStorage.clear();
+
+    // Redireciona para o login
+    window.location.href = "/iniciar"; 
+  };
+
    async function NavigationHandler(route) {
     if (!username){
         alert("Não existe nenhum username definido!")
@@ -85,9 +94,8 @@ function Menu() {
         {t("settings")}
         </Link>
 
-        <Link onClick={() => setUsername(undefined)} to="/iniciar" className="terminarSessao">
-          <img src="icons/logout.svg" />
-          {t("logout")}
+        <Link onClick={handleLogout} className="terminarSessao">
+          <img src="icons/logout.svg" />{t("logout")}
         </Link>
       </nav>
     </div>

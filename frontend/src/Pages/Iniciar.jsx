@@ -175,22 +175,39 @@ export default function EasyPassLogin() {
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      console.log("response: ", data); 
 
       if (data.result === "Login com sucesso!") {
-        setUsername(data.nome);
-        setIdPessoa(data.id_pessoa)
-        setPedido(data.pedidos);
-        setMovimentos(data.movimentos)
-        setPasses(data.passes)
-        setNotifications(data.notifications)
-        navigate("/passes");
+        // apanhar o NIF (prevenção contra maiúsculas/minúsculas)
+        const nifRecebido = data.nif || data.NIF || "";
+
+        if (!nifRecebido) {
+            console.error("ERRO: O servidor não enviou o campo 'nif'. Chaves recebidas:", Object.keys(data));
+            alert("Erro: O servidor não enviou o NIF. Verifique a consola.");
+            return;
+        }
+
+        // 3. Gravar no LocalStorage (sempre como string)
+        localStorage.setItem("userNif", String(nifRecebido));
+        localStorage.setItem("userName", data.nome || "");
+        localStorage.setItem("isLoggedIn", "true");
+
+        setNif(String(nifRecebido)); 
+        setUsername(data.nome || "");
+        setIdPessoa(data.id_pessoa || "");
+        setPedido(data.pedidos || []);
+        setMovimentos(data.movimentos || []);
+        setPasses(data.passes || []);
+        setNotifications(data.notifications || []);
+
+        window.location.href = "/passes";
+      } else {
+        alert(data.result);
       }
     })
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(err => console.error("Erro no Fetch:", err));
 }
+
   function SignUpSubmit(){
       const url = "https://migale.antrob.eu/backend/signup.php";
     fetch(url, {
