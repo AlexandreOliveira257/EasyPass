@@ -63,7 +63,6 @@ function PortalMenuContent(){
                     <span>{el.data_validade}</span>
                     <span>{el.estado_passe_descricao}</span>
                     <span>{el.nome_tipo}</span>
-                    <span>{el.preco}</span>
                     <span>{el.saldo}</span>
                 </div>
                 ))

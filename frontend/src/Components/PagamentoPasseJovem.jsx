@@ -3,18 +3,17 @@ import { useUser } from "../Contexts/UserContext"
 
 function VerificarPasseJovem({setView}){
       const { t } = useTranslation();
-  const { idpessoa } = useUser();
+  const { idpessoa, username, setPasses } = useUser();
 
   async function BtnHandlerPagamento() {
     const url = "https://migale.antrob.eu/backend/pagamento.php";
-    console.log("Clicou")
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tipo_id: 1,
-          pessoa_id: idpessoa,
+          id_pessoa: idpessoa,
           passo_estado_id: 1,
           data_validade: Validade(),
           data_emissao: Emissao(),
@@ -26,6 +25,7 @@ function VerificarPasseJovem({setView}){
       console.log(data);
 
       if (data.informacao === "Passe criado com sucesso!") {
+        setPasses(data.passesAtualizado)
         setView("passeAutocarroFinal");
       }
 
