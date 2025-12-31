@@ -154,7 +154,7 @@ function PerfilMenuContent() {
 
       const result = await response.json();
       console.log('Success:', result);
-      alert("Dados perfil guardados com sucesso!");
+      alert("Dados guardados com sucesso!");
 
     } catch (error) {
       console.error('Error:', error);

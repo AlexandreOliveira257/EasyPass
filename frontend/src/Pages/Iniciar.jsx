@@ -179,15 +179,14 @@ export default function EasyPassLogin() {
 
       if (data.result === "Login com sucesso!") {
         // apanhar o NIF (prevenção contra maiúsculas/minúsculas)
-        const nifRecebido = data.nif || data.NIF || "";
+        const nifRecebido = data.nif || "";
 
         if (!nifRecebido) {
-            console.error("ERRO: O servidor não enviou o campo 'nif'. Chaves recebidas:", Object.keys(data));
-            alert("Erro: O servidor não enviou o NIF. Verifique a consola.");
+            console.error("Error: nif not received.");
             return;
         }
 
-        // 3. Gravar no LocalStorage (sempre como string)
+        // Gravar no LocalStorage (sempre como string)
         localStorage.setItem("userNif", String(nifRecebido));
         localStorage.setItem("userName", data.nome || "");
         localStorage.setItem("isLoggedIn", "true");
@@ -228,7 +227,7 @@ export default function EasyPassLogin() {
         setShowLogin(true)
       }
 }).catch(err => {
-      console.error(err);
+      console.error("Error during sign up:", err);
     });
   }
 }

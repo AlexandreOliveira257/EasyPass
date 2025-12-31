@@ -12,11 +12,14 @@ function Menu() {
 
   // Função para terminar sessão
   const handleLogout = () => {
-    // Limpa todos os dados guardados
-    localStorage.clear();
+    // Limpar dados do utilizador
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("nif");
+    setUsername("");
 
     // Redireciona para o login
-    navigate("/iniciar"); 
+    navigate("/iniciar");
   };
 
    async function NavigationHandler(route) {

@@ -15,11 +15,9 @@ import { useUser } from "../Contexts/UserContext"
 import React, { useState, useEffect } from 'react';
 
 function App(){
-    const {loading} = useUser();
+    const {loading, user} = useUser();
 
-    const [isAuth, setIsAuth] = useState(() => {
-        return localStorage.getItem("isLoggedIn") === "true";
-    });
+    const isAuth = localStorage.getItem("isLoggedIn") === "true";
 
     return(
         // Loading Screen
@@ -29,8 +27,8 @@ function App(){
                         </div> : <></>}
             <Routes>
                 {/* If logged in, a página inicial redireciona para passes */}
-                <Route path="/" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
-                <Route path="/iniciar" element={isAuth ? <Navigate to="/passes" /> : <Iniciar />} />
+                <Route path="/" element={isAuth ? <Navigate to="/passes"/> : <Iniciar />} />
+                <Route path="/iniciar" element={isAuth ? <Navigate to="/passes"/> : <Iniciar />} />
 
                 {/* Routes Protegidas */}
                 <Route path="/passes" element={isAuth ? <PortalPage /> : <Navigate to="/iniciar" />} />
