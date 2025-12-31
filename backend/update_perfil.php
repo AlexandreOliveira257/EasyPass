@@ -1,7 +1,13 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Se o pedido for OPTIONS (preflight), paramos aqui
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit;
+}
 
 include "DBConnection.php";
 
@@ -50,12 +56,14 @@ try {
                 $moradaId = $pdo->lastInsertId();
             }
 
+            // Remove espaços e garante que comparamos corretamente
+            $genero_recebido = trim($dados['genero']);      
             // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
-            switch ($dados['genero']) {
-                case 'Masculino':
+            switch ($genero_recebido) {
+                case 'Masculino' || 'Male':
                     $genId = '1';
                     break;
-                case 'Feminino':
+                case 'Feminino' || 'Female':
                     $genId = '2';
                     break;
                 default:
