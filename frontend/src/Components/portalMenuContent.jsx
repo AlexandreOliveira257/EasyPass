@@ -55,7 +55,9 @@ function PortalMenuContent(){
         {!showNotifications && (
             <>
         <div className="flex">
-        <h1>{t('welcome')}, {username || localStorage.getItem("userName")}</h1>
+            {/* trim -> tirar espaços desnecessários */}
+            {/* split -> dividir o nome em partes -> array para selecionar nome [0] */}
+        <h1>{t('welcome')}, {(username || localStorage.getItem("userName") || "").trim().split(" ")[0]}</h1>
         <nav className="navPortal">
             <div className="flex">
             <a onClick={NavigationHandler} className="btnPortal">{t('notificacoes')}</a><img src="icons/notifications.svg"/>
