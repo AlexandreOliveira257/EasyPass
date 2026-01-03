@@ -13,7 +13,7 @@ import LocalizarTransporte from "../Routes-Menu/Transportes";
 import Sobre from "../Routes-Menu/Sobre";
 import { useUser } from "../Contexts/UserContext"
 import React, { useState, useEffect } from 'react';
-
+import { ToastContainer, Bounce } from "react-toastify";
 function App(){
     const {loading, user} = useUser();
 
@@ -46,6 +46,18 @@ function App(){
                 <Route path="/iniciar" element={<Iniciar/>}/>
                 <Route path="/localizarTransporte" element={<LocalizarTransporte/>}/>
             </Routes>
+            <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}/>
         </div>
     )
 }

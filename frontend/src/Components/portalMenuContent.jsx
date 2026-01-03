@@ -9,7 +9,6 @@ function PortalMenuContent(){
     const [showNotifications, setShowNotifications] = useState(false);
     const {username, setUsername, passes, setPasses, notifications, setNotifications, loading, setLoading} = useUser();
     const userPasses = JSON.parse(localStorage.getItem("userPasses"))
-    var cardStyle = ""
     // Recuperar sessão se o context estiver vazio
     useEffect(() => {
         if (!username) {

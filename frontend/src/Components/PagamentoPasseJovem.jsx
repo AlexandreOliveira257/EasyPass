@@ -1,11 +1,39 @@
 import { useTranslation } from "react-i18next"
-import { useUser } from "../Contexts/UserContext"
-
+import { toast, Bounce, Slide, Zoom } from 'react-toastify';
+import { useNavigate } from "react-router";
+import { useUser } from "../Contexts/UserContext";
 function VerificarPasseJovem({setView}){
       const { t } = useTranslation();
     const id_pessoa = Number(localStorage.getItem("id_pessoa"));
+const {loading,setLoading} = useUser();
+    const navigate = useNavigate();
 
+  const notify = () =>
+  toast.success("Pagamento confirmado!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+  });
+  const notifyInfo = () => toast.info('Para mais informações consulte as suas notificações!', {
+    position: "bottom-right",
+    autoClose: 9000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+});
   async function BtnHandlerPagamento() {
+       if(loading) return;
+        setLoading(true);
     const url = "https://migale.antrob.eu/backend/pagamento.php";
     try {
       const response = await fetch(url, {
@@ -25,12 +53,18 @@ function VerificarPasseJovem({setView}){
       console.log(data);
 
       if (data.informacao === "Passe criado com sucesso!") {
-        localStorage.setItem("userPasses", JSON.stringify(data.passesAtualizado));
-        setView("passeAutocarroFinal");
+          localStorage.setItem("userPasses", JSON.stringify(data.passesAtualizado));
+            notify();
+            setTimeout(() => {
+              notifyInfo(); // aparece depois
+            }, 1200); 
+            navigate("/passes");
+            setLoading(false);
       }
 
     } catch (error) {
       console.log("Erro no pagamento:", error);
+      setLoading(false);
     }
   }
 

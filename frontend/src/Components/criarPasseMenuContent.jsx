@@ -8,8 +8,7 @@ import EscolherPasseAutocarro from "./escolherPasseAutocarro";
 import VerificarPasseVerde from "./PagamentoPasseVerde";
 import VerificarPasseUrbano from "./PagamentoPasseUrbano";
 import VerificarPasseJovem from "./PagamentoPasseJovem";
-import PasseAutocarroFinal from "./passeAutocarroFinal";
-import PasseComboioFinal from "./passeComboioFinal";
+
 
 function CriarPasseMenuContent(){
 const [view, setView] = useState("none");   
@@ -39,8 +38,6 @@ const {t} = useTranslation()
         {view === "verificarPasseVerde" && <VerificarPasseVerde setView={setView}/>}
         {view === "verificarPasseUrbano" && <VerificarPasseUrbano setView={setView}/>}
         {view === "verificarPasseJovem" && <VerificarPasseJovem setView={setView}/>}
-        {view === "passeAutocarroFinal" && <PasseAutocarroFinal setView={setView}/>}
-        {view === "passeComboioFinal" && <PasseComboioFinal setView={setView}/>}
 
 
         </div>
