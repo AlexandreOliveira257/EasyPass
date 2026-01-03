@@ -1,0 +1,24 @@
+.pedido-image-container{
+    margin-top: 1vw;
+    border-radius: 1vw;
+    background-color: #3D50DF;
+    padding-left: 1vw;
+    padding-top: 0.5vw;
+}
+.pedido-container{
+    border-radius: 1vw;
+    color: #1C1C8A;
+    background-color: #F3F3F3;
+}
+.pedido-image-container img{
+    width: 4vw;
+}
+
+.pedido-container-mensagem{
+    padding: 1vw;
+    display: flex;
+    justify-content: space-between;
+}
+.pedido-container-mensagem span{
+    font-size: 1vw;
+}

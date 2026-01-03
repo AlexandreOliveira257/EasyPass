@@ -1,0 +1,50 @@
+/* Container de cada movimento */
+.movimentos-container {
+    margin-top: 1vw;
+  background-color: #f5f6fa; /* cor de fundo suave */
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 1vw;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
+}
+
+.movimentos-container:hover {
+  background-color: #e9ecef;
+}
+
+/* Linha interna */
+.movimentos-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; /* proporcional às colunas */
+  gap: 10px;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Estilo das colunas específicas */
+.descricao {
+  font-weight: 500;
+}
+
+.tipo,
+.data {
+  text-align: center;
+  color: #34495e;
+}
+
+.valor,
+.saldo-anterior,
+.saldo-posterior {
+  text-align: right;
+  font-weight: 500;
+}
+
+.no-movimentos {
+  text-align: center;
+  padding: 20px;
+  color: #7f8c8d;
+  font-style: italic;
+}
