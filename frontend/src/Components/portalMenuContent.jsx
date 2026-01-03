@@ -3,12 +3,13 @@ import PortalMenu from "./portalMenu";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { useUser } from "../Contexts/UserContext";
-
+import "../Cartoes.css"
 function PortalMenuContent(){
     const {t} = useTranslation()
     const [showNotifications, setShowNotifications] = useState(false);
     const {username, setUsername, passes, setPasses, notifications, setNotifications, loading, setLoading} = useUser();
-
+    const userPasses = JSON.parse(localStorage.getItem("userPasses"))
+    var cardStyle = ""
     // Recuperar sessão se o context estiver vazio
     useEffect(() => {
         if (!username) {
@@ -69,20 +70,55 @@ function PortalMenuContent(){
         </div>
         <div className="hrPortal"></div>
         <h2 className="osSeusPasses">{t('seusPasses')}</h2>
-        <div className="idiomaFlex">
-            {
-                passes.map((el) => (
-                <div key={el.id_passe}>
-                    <span>{el.id_passe}</span>
-                    <span>{el.data_emissao}</span>
-                    <span>{el.data_validade}</span>
-                    <span>{el.estado_passe_descricao}</span>
-                    <span>{el.nome_tipo}</span>
-                    <span>{el.saldo}</span>
-                </div>
-                ))
-            }
-        <Link to="/criarpasse"><img className="criarPasse" src={t('criarpasse')}/></Link>
+        <div>
+            <div className="passes-container">
+  {userPasses.map((el) => (
+    <div className={el.nome_tipo === "Passe Urbano" || el.nome_tipo ===  "Passe Jovem" ? "pass-card": "pass-cardTrain"} key={el.id_passe}>
+      
+      <div className="pass-header">
+        
+        <div className="avatarPass">
+        </div>
+
+        <div className="user-info">
+          <h3>{username}</h3>
+          <p>Identificação: {el.id_passe}</p>
+        </div>
+        {el.nome_tipo === "Passe Urbano" || el.nome_tipo ===  "Passe Jovem" ?  <img className="passIcon" src="bus.svg"/>
+         : <img className="passTrainIcon" src="trainPass.svg"/>
+}
+      </div>
+
+      <div className="pass-body">
+        <div className="pass-row">
+          <span className="label">PassID</span>
+          <span>{el.id_passe}</span>
+        </div>
+
+        <div className="pass-row">
+          <span className="label">Modalidade</span>
+          <span>{el.nome_tipo}</span>
+        </div>
+
+        <div className="pass-row">
+          <span className="label">Emissão</span>
+          <span>{el.data_emissao}</span>
+        </div>
+
+        <div className="pass-row">
+          <span className="label">Validade</span>
+          <span>{el.data_validade}</span>
+        </div>
+        <div className="pass-row">
+        </div>
+      
+      </div>
+    </div>
+  ))}
+  <Link to="/criarpasse"><img className="criarPasse" src={t('criarpasse')}/></Link>
+</div>
+
+        
         </div>
         
         </>

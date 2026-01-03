@@ -1,8 +1,38 @@
 import { useTranslation } from "react-i18next"
-
+import { Validade } from "./PagamentoPasseJovem";
+import { Emissao } from "./PagamentoPasseJovem";
 function VerificarPasseVerde({setView}){
     const {t} = useTranslation()
-
+    const id_pessoa = Number(localStorage.getItem("id_pessoa"));
+      async function BtnHandlerPagamento() {
+        const url = "https://migale.antrob.eu/backend/pagamento.php";
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              tipo_id: 2,
+              id_pessoa: id_pessoa,
+              passo_estado_id: 1,
+              data_validade: Validade(),
+              data_emissao: Emissao(),
+              saldo: 0,
+            })
+          });
+    
+          const data = await response.json();
+          console.log(data);
+    
+          if (data.informacao === "Passe criado com sucesso!") {
+            localStorage.setItem("userPasses", JSON.stringify(data.passesAtualizado));
+            setView("passeComboioFinal");
+          }
+    
+        } catch (error) {
+          console.log("Erro no pagamento:", error);
+        }
+      }
+    
     return(
         <div className="formPerfil">
         <div className="flex">
@@ -13,9 +43,7 @@ function VerificarPasseVerde({setView}){
         </div>
         
 
-          <div className="form">
-            <label>{t('nomeCompleto')}</label>
-            <input type="text" defaultValue="Luís José António" />
+          <div className="form">            
             <label>{t('modalidade')}</label>
             <input disabled type="text" defaultValue="Passe Ferroviário Verde" />
 
@@ -32,7 +60,7 @@ function VerificarPasseVerde({setView}){
             <p>{t('passeDigital')}: 5€</p>
             <p>{t('modalidade')}: 5€</p>
             <p>Total: 10€</p>
-            <button onClick={()=>setView("passeComboioFinal")} className="save-btn">{t('pagamento').toUpperCase()}</button>
+            <button onClick={BtnHandlerPagamento} className="save-btn">{t('pagamento').toUpperCase()}</button>
           </div>
           </div>
     )

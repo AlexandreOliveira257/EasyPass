@@ -3,7 +3,7 @@ import { useUser } from "../Contexts/UserContext"
 
 function VerificarPasseJovem({setView}){
       const { t } = useTranslation();
-  const { idpessoa, username, setPasses } = useUser();
+    const id_pessoa = Number(localStorage.getItem("id_pessoa"));
 
   async function BtnHandlerPagamento() {
     const url = "https://migale.antrob.eu/backend/pagamento.php";
@@ -12,12 +12,12 @@ function VerificarPasseJovem({setView}){
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tipo_id: 1,
-          id_pessoa: idpessoa,
+          tipo_id: 3,
+          id_pessoa: id_pessoa,
           passo_estado_id: 1,
           data_validade: Validade(),
           data_emissao: Emissao(),
-          saldo: 0
+          saldo: 0,          
         })
       });
 
@@ -25,7 +25,7 @@ function VerificarPasseJovem({setView}){
       console.log(data);
 
       if (data.informacao === "Passe criado com sucesso!") {
-        setPasses(data.passesAtualizado)
+        localStorage.setItem("userPasses", JSON.stringify(data.passesAtualizado));
         setView("passeAutocarroFinal");
       }
 
@@ -70,20 +70,20 @@ function VerificarPasseJovem({setView}){
 }export default VerificarPasseJovem
 
 
-function Emissao(){
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-  var yyyy = today.getFullYear();
+export function Emissao() {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
 
-  return today = yyyy + '/' + mm + '/' + dd ;
+  return `${yyyy}-${mm}-${dd}`;
 }
 
-function Validade(){
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-  var yyyy = today.getFullYear()+1;
+export function Validade() {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear() + 1;
 
-  return today = yyyy + '/' + mm + '/' + dd ;
+  return `${yyyy}-${mm}-${dd}`;
 }

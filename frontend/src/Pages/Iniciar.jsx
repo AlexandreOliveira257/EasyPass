@@ -190,13 +190,12 @@ export default function EasyPassLogin() {
         localStorage.setItem("userNif", String(nifRecebido));
         localStorage.setItem("userName", data.nome || "");
         localStorage.setItem("isLoggedIn", "true");
-
+        localStorage.setItem("userPasses", JSON.stringify(data.passes))
+        localStorage.setItem("id_pessoa", data.id_pessoa)
         setNif(String(nifRecebido)); 
         setUsername(data.nome || "");
-        setIdPessoa(data.id_pessoa || "");
         setPedido(data.pedidos || []);
         setMovimentos(data.movimentos || []);
-        setPasses(data.passes || []);
         setNotifications(data.notifications || []);
 
         navigate("/passes");  
