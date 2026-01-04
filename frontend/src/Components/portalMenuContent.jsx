@@ -184,10 +184,15 @@ function PortalMenuContent(){
                         )}
                 {notifications.length >= 1 ? (
                     notifications.map((el, index) => (
-                        <div key={index}>
-                            {el.titulo}
-                            {el.mensagem}
-                            {el.data_envio}
+                      <div className="pedido-container">
+                        <div className="pedido-image-container">
+                          <img src="EasyPass.png"></img>
+                        </div>
+                        <div className="pedido-container-mensagem" key={index}>
+                            <span>{el.titulo}</span>
+                           <span>{el.mensagem}</span>
+                            <span>{el.data_envio}</span>
+                        </div>
                         </div>
                     ))
                 ) : (
