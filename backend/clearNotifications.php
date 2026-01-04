@@ -36,7 +36,12 @@ if (!isset($data['username']) || empty($data['username'])) {
 $username = $data['username'];
 
 try {
-    $sql = "DELETE FROM NOTIFICACAO WHERE PESSOA.nome = ?";
+    $sql = " DELETE FROM NOTIFICACAO 
+        WHERE id_pessoa IN (
+            SELECT id_pessoa 
+            FROM PESSOA 
+            WHERE nome = ?
+        )";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
