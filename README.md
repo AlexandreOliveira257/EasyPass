@@ -16,7 +16,7 @@ Esta aplicação visa resolver algumas dessas inconveniências ao permitir aos u
 <ul>
     <li>React</li>
     <li>PHP</li>
-    <li>MySQL</li>
+    <li>phpMyAdmin</li>
 </ul>
 
 <h2>Modelo ER</h2>
