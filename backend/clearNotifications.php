@@ -34,7 +34,7 @@ if (!isset($data['username']) || empty($data['username'])) {
 }
 
 $username = $data['username'];
-
+$pdo = estabelerConexao();
 try {
     $sql = " DELETE FROM NOTIFICACAO 
         WHERE id_pessoa IN (
