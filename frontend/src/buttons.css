@@ -46,3 +46,20 @@
 .cardJustify{justify-content: space-between;}
 .cardPass,.cardModalidade{margin: 2vw;}
 .cardImageTrain{ margin-left: 2vw;}
+
+.limparNotifications{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.btnLimparNotifications{
+    margin-left: 0.5vw;
+}
+
+.btnLimparNotifications:hover{
+    cursor: pointer;
+}
+.limparNotifications img{
+   width: 1.5vw;
+}
