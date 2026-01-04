@@ -37,7 +37,7 @@ $username = $data['username'];
 $pdo = estabelerConexao();
 try {
     $sql = " DELETE FROM NOTIFICACAO 
-        WHERE id_pessoa IN (
+        WHERE pessoa_id IN (
             SELECT id_pessoa 
             FROM PESSOA 
             WHERE nome = ?
