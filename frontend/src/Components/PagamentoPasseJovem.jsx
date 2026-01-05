@@ -43,7 +43,6 @@ const {loading,setLoading} = useUser();
           tipo_id: 3,
           id_pessoa: id_pessoa,
           passo_estado_id: 1,
-          data_validade: Validade(),
           saldo: 0,          
         })
       });
@@ -75,11 +74,8 @@ const {loading,setLoading} = useUser();
         </div>
         <span></span><img onClick={()=>setView("none")} className="goBackBtn" src="icons/goBackBtn.svg"/>
         </div>
-      
 
           <div className="form">
-            <label>{t('nomeCompleto')}</label>
-            <input type="text" defaultValue="Luís José António" />
             <label>{t('modalidade')}</label>
             <input disabled type="text" defaultValue="Passe Ferroviário Verde" />    
 
@@ -103,11 +99,3 @@ const {loading,setLoading} = useUser();
 }export default VerificarPasseJovem
 
 
-export function Validade() {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear() + 1;
-
-  return `${yyyy}-${mm}-${dd}`;
-}

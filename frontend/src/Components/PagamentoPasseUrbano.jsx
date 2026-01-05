@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import { Validade } from "./PagamentoPasseJovem";
 import { toast, Bounce, Slide, Zoom } from 'react-toastify';
 import { useNavigate } from "react-router";
 import { useUser } from "../Contexts/UserContext";
@@ -44,7 +43,6 @@ function VerificarPasseUrbano({setView}){
               tipo_id: 1,
               id_pessoa: id_pessoa,
               passo_estado_id: 1,
-              data_validade: Validade(),
               saldo: 0,
             })
           });
@@ -77,8 +75,6 @@ function VerificarPasseUrbano({setView}){
         </div>
          
           <div className="form">
-            <label>{t('nomeCompleto')}</label>
-            <input type="text" defaultValue="Luís José António" />
             <label>{t('modalidade')}</label>
             <input disabled type="text" defaultValue="Passe Urbano" />
             

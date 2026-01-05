@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import { Validade } from "./PagamentoPasseJovem";
 import { toast, Bounce, Slide, Zoom } from 'react-toastify';
 import { useNavigate } from "react-router";
 import { useUser } from "../Contexts/UserContext";
@@ -32,8 +31,6 @@ function VerificarPasseVerde({setView}){
     transition: Zoom,
 });
 
-   
-
       async function BtnHandlerPagamento() {
         if(loading) return;
         setLoading(true);
@@ -46,7 +43,6 @@ function VerificarPasseVerde({setView}){
               tipo_id: 2,
               id_pessoa: id_pessoa,
               passo_estado_id: 1,
-              data_validade: Validade(),
               saldo: 0,
             })
           });
