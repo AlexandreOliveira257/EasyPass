@@ -23,7 +23,8 @@ try {
     switch ($action) {
 
         case "apagar":
-            $stmt = $pdo->prepare("DELETE FROM PASSE WHERE id_passe = :id");
+            $stmt = $pdo->prepare("DELETE FROM MOVIMENTOPASSE WHERE passe_id = :id;
+                                    DELETE FROM PASSE WHERE id_passe = :id");
             $stmt->execute(["id" => $idPasse]);
 
             echo json_encode([
