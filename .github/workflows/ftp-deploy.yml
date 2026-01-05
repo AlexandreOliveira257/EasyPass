@@ -19,35 +19,36 @@ jobs:
           node-version: '20'
 
       - name: 📦 Instalar Dependências
-        # Entra na pasta frontend para instalar
         run: npm install
         working-directory: ./frontend
 
       - name: 🔨 Build do Projeto React
-        # Entra na pasta frontend para fazer o build
         run: npm run build
         working-directory: ./frontend
 
-      - name: 📂 Organizar ficheiros para o Servidor
+      - name: 📂 Preparar Build para Deploy
         run: |
-          # 1. Deteta se a pasta de build no frontend é 'dist' ou 'build'
-          if [ -d "frontend/dist" ]; then
-            BUILD_PATH="frontend/dist"
-          else
-            BUILD_PATH="frontend/build"
-          fi
-          echo "Pasta de build detectada em: $BUILD_PATH"
-          
-          # 2. Copia a pasta backend (que está na raiz) para dentro do build
+          # Caminho da build do React
+          BUILD_DIR=frontend/build
+
+          # Limpar pasta temporária para o FTP
+          mkdir -p deploy_temp
+          rm -rf deploy_temp/*
+
+          # Copiar build para a pasta temporária
+          cp -r $BUILD_DIR/* deploy_temp/
+
+          # Copiar backend para dentro da pasta temporária
           if [ -d "backend" ]; then
-            cp -r backend $BUILD_PATH/
+            cp -r backend deploy_temp/
             echo "✅ Pasta backend copiada."
           else
-            echo "⚠️ Pasta backend não encontrada na raiz."
+            echo "⚠️ Pasta backend não encontrada."
           fi
-          
-          # 3. Define o caminho final para o passo de FTP
-          echo "FINAL_DEPLOY_PATH=$BUILD_PATH" >> $GITHUB_ENV
+
+          # Listar para debug
+          echo "📂 Conteúdo da pasta de deploy:"
+          ls -R deploy_temp
 
       - name: ⏫ FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -55,9 +56,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./${{ env.FINAL_DEPLOY_PATH }}/
-          # Mudamos para / para garantir que cai na raiz do teu acesso
+          local-dir: deploy_temp/
           server-dir: /
-          # Como não podes apagar a pasta errada, isto vai pelo menos
-          # colocar os ficheiros certos onde o site os procura.
           dangerous-clean-up: false
