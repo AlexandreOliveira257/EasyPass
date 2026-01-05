@@ -50,7 +50,7 @@ try {
         case "recarregar":
             // exemplo: incrementar saldo
             $stmt = $pdo->prepare("
-                UPDATE passes
+                UPDATE PASSE
                 SET saldo = saldo + :amount
                 WHERE id_passe = :id
             ");
