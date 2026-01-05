@@ -36,17 +36,27 @@ try {
             break;
 
         case "renovar":
-            // exemplo: renovar +30 dias
+            // renovar +30 dias
             $stmt = $pdo->prepare("
-                UPDATE PASSE
-                SET data_validade = DATE_ADD(data_validade, INTERVAL 30 DAY)
-                WHERE id_passe = :id
-            ");
+        UPDATE PASSE
+        SET data_validade = DATE_ADD(data_validade, INTERVAL 30 DAY)
+        WHERE id_passe = :id
+    ");
             $stmt->execute(["id" => $idPasse]);
+
+            // buscar a nova data_validade
+            $stmt2 = $pdo->prepare("
+        SELECT data_validade
+        FROM PASSE
+        WHERE id_passe = :id
+    ");
+            $stmt2->execute(["id" => $idPasse]);
+            $newData = $stmt2->fetch(PDO::FETCH_ASSOC);
 
             echo json_encode([
                 "success" => true,
-                "action" => "renovar"
+                "action" => "renovar",
+                "nova_Data_Validade" => $newData['data_validade'] ?? null
             ]);
             break;
 
