@@ -8,11 +8,51 @@ import "../Cartoes.css"
 
 function PortalMenuContent(){
     const {t} = useTranslation()
+    const [showPassDetails, setShowPassDetails] = useState(false);
+    const [selectedPass, setSelectedPass] = useState(null);
     const [showNotifications, setShowNotifications] = useState(false);
     const {username, setUsername, notifications, setNotifications, loading, setLoading} = useUser();
     const userPasses = JSON.parse(localStorage.getItem("userPasses"))
+   
+
     const notify = () => 
       toast.success("Notificações eliminadas!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+    });
+    const notifyDelete = () => 
+      toast.success("Passe apagado com sucesso!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+    });
+    const notifyRenovar = () => 
+      toast.success("Passe renovado com sucesso!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+    });
+    const notifyRecarregar = () => 
+      toast.success("Passe recarregado com sucesso!", {
     position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: true,
@@ -93,14 +133,76 @@ function PortalMenuContent(){
             } else {
               setLoading(false);
                 alert("Erro ao limpar notificações: " + (data.message || "Erro desconhecido"));
-            }
+            }//if
         } catch (error) {
               setLoading(false);
             console.log("Ocorreu um erro:", error);
-        }
+        }// try-catch
       }//clearNotifications
+
+        async function handlePass(idPasse, action) {
+            if (loading) return;
+            let amount = null;
+        setLoading(true);
+        if(action === "recarregar"){
+             amount = prompt("Insira o valor a recarregar:");
+            if (amount === null || isNaN(amount) || Number(amount) <= 0 ) {
+                alert("Valor inválido para recarregar.");
+                setLoading(false);
+                return;
+            }
+        }
+            try {
+        const response = await fetch("https://migale.antrob.eu/backend/handlePass.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({idPasse, action, amount}),
+        });
+        const data = await response.json();
+            if (data.success) {
+                setSelectedPass(null);
+                setShowPassDetails(false);
+                setLoading(false);
+                // Atualiza userPasses no localStorage
+                    if(action === "apagar") {
+                        const updatedPasses = userPasses.filter(passe => passe.id_passe !== idPasse);
+                        localStorage.setItem("userPasses", JSON.stringify(updatedPasses));
+                    } else if (action === "renovar" || action === "recarregar") {
+                        // Atualiza apenas o passe específico
+                        const updatedPasses = userPasses.map(passe => {
+                            if(passe.id_passe === idPasse) {
+                                if(action === "renovar") passe.data_validade = data.nova_Data_Validade; // opcional, se backend retornar
+                                if(action === "recarregar") passe.saldo = Number(passe.saldo) + Number(amount);
+                            }
+                            return passe;
+                        });
+                        localStorage.setItem("userPasses", JSON.stringify(updatedPasses));
+                    }//if
+    //EXIBIÇÃO DE NOTIFICAÇÕES
+                switch(action) {
+                    case "apagar":
+                        notifyDelete();
+                        break;
+                    case "renovar":
+                        notifyRenovar();
+                        break;  
+                    case "recarregar":
+                        notifyRecarregar();
+                        break; 
+                }//switch
+            } else {
+              setLoading(false);
+                alert("Erro na ação: " + (data.message || "Erro desconhecido"));
+            }//if
+        } catch (error) {
+              setLoading(false);
+            console.log("Ocorreu um erro:", error);
+        }//try-catch
+        }//handlePass
+
+
     return <PortalMenu>
-        {!showNotifications && (
+        {!showNotifications  && !showPassDetails && (
             <>
                 <div className="flex">
                     <h1>{t('welcome')}, {(username || localStorage.getItem("userName") || "").trim().split(" ")[0]}</h1>
@@ -120,7 +222,16 @@ function PortalMenuContent(){
                 <div>
                     <div className="passes-container">
                         {userPasses.map((el) => (
-                            <div className={el.nome_tipo === "Passe Urbano" || el.nome_tipo === "Passe Jovem" ? "pass-card": "pass-cardTrain"} key={el.id_passe}>
+                            <div className={el.nome_tipo === "Passe Urbano" || el.nome_tipo === "Passe Jovem"
+                                    ? "pass-card"
+                                    : "pass-cardTrain"}
+                                key={el.id_passe}
+                                onClick={() => {
+                                    setSelectedPass(el);
+                                    setShowPassDetails(true);
+                                }}
+                                >
+
                                 <div className="pass-header">
                                     <div className="avatarPass"></div>
                                     <div className="user-info">
@@ -200,6 +311,66 @@ function PortalMenuContent(){
                 )}
             </>
         )}
+        {showPassDetails && selectedPass && (
+  <>
+                <div className="flex">
+                <h1>Detalhes do Passe</h1>
+                <img
+                    className="goBackBtn"
+                    src="icons/goBackBtn.svg"
+                    onClick={() => {
+                    setShowPassDetails(false);
+                    setSelectedPass(null);
+                    }}
+                />
+                </div>
+                <hr />
+    <div className="passes-container">
+      <div className={
+        selectedPass.nome_tipo === "Passe Urbano" || selectedPass.nome_tipo === "Passe Jovem"
+          ? "pass-card"
+          : "pass-cardTrain"
+      }>
+        <div className="pass-header">
+          <div className="avatarPass"></div>
+          <div className="user-info">
+            <h3>{username}</h3>
+            <p>Identificação: {selectedPass.id_passe}</p>
+          </div>
+        </div>
+
+        <div className="pass-body">
+                <div className="pass-row">
+                    <span className="label">PassID</span>
+                    <span>{selectedPass.id_passe}</span>
+                 </div>
+          <div className="pass-row">
+            <span className="label">Modalidade</span>
+            <span>{selectedPass.nome_tipo}</span>
+          </div>
+          <div className="pass-row">
+            <span className="label">Emissão</span>
+            <span>{selectedPass.data_emissao}</span>
+          </div>
+          <div className="pass-row">
+            <span className="label">Validade</span>
+            <span>{selectedPass.data_validade}</span>
+          </div>
+        </div>
+      </div>
+       <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "apagar")}>
+          Apagar Passe
+        </button>
+        <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "renovar")}>
+          Renovar
+        </button>
+        <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "recarregar")}>
+          Recarregar Saldo
+        </button>
+    </div>
+  </>
+)}
+
     </PortalMenu>
   }
 

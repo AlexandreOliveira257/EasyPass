@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require "DBConnection.php";
 
-$input = file_get_contents("php://input");
-$data = json_decode($input, true);
+$data = json_decode(file_get_contents("php://input"), true);
 
 if (!$data) {
     echo json_encode(["erro" => "JSON inválido"]);
@@ -21,71 +20,66 @@ if (!$data) {
 
 $pdo = estabelerConexao();
 
-// extrair dados do JSON
+// dados vindos do frontend
 $tipo_id = $data['tipo_id'] ?? null;
 $id_pessoa = $data['id_pessoa'] ?? null;
 $passo_estado_id = $data['passo_estado_id'] ?? null;
-$data_validade = $data['data_validade'] ?? null;
-$data_emissao = $data['data_emissao'] ?? null;
 $saldo = $data['saldo'] ?? 0;
 
-//pequena validação de dados
-if (!isset($tipo_id, $id_pessoa, $passo_estado_id, $data_validade, $data_emissao)) {
+// validação mínima
+if (!isset($tipo_id, $id_pessoa, $passo_estado_id)) {
     echo json_encode(["erro" => "Dados obrigatórios em falta"]);
     exit;
 }
 
 try {
+    // PASSE → datas calculadas no SQL
     $stmt = $pdo->prepare(
         "INSERT INTO PASSE 
-        (tipo_id, pessoa_id, passe_estado_id, data_validade, data_emissao, saldo) 
-        VALUES (?, ?, ?, ?, ?, ?)"
+        (tipo_id, pessoa_id, passe_estado_id, data_emissao, data_validade, saldo) 
+        VALUES (?, ?, ?, CURRENT_DATE, CURRENT_DATE + INTERVAL 30 DAY, ?)"
     );
 
-    $ok = $stmt->execute([
+    $stmt->execute([
         $tipo_id,
         $id_pessoa,
         $passo_estado_id,
-        $data_validade,
-        $data_emissao,
         $saldo
     ]);
 
-    if ($ok) {
-        $stmt = $pdo->prepare(
-            "INSERT INTO NOTIFICACAO 
+    // NOTIFICACAO → data_envio no SQL
+    $stmt = $pdo->prepare(
+        "INSERT INTO NOTIFICACAO 
         (pessoa_id, titulo, mensagem, data_envio, lida) 
-        VALUES (?, ?, ?, ?, ?)"
-        );
-        $okNotification = $stmt->execute([
-            $id_pessoa,
-            "Pagamento confirmado",
-            "O pagamento foi processado com sucesso!",
-            $data_emissao,
-            0
-        ]);
-        if ($okNotification) {
-            $stmt1 = $pdo->prepare(
-                "SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo
-                FROM PASSE 
-                INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
-                INNER JOIN ESTADO_PASSE ON PASSE.passe_estado_id = ESTADO_PASSE.id_estado_passe
-                INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
-                WHERE PESSOA.id_pessoa = ?"
-            );
-            $stmt1->execute([$id_pessoa]);
-            $passesAtualizado = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+        VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?)"
+    );
 
-            echo json_encode([
-                "informacao" => "Passe criado com sucesso!",
-                "passesAtualizado" => $passesAtualizado
-            ]);
-        }
-    } else {
-        echo json_encode([
-            "informacao" => "Erro ao criar o passe"
-        ]);
-    }
+    $stmt->execute([
+        $id_pessoa,
+        "Pagamento confirmado",
+        "O pagamento foi processado com sucesso!",
+        0
+    ]);
+
+    // buscar passes atualizados
+    $stmt = $pdo->prepare(
+        "SELECT id_passe, data_validade, data_emissao, saldo, preco,
+                ESTADO_PASSE.estado_passe_descricao,
+                TIPOPASSE.nome_tipo
+        FROM PASSE
+        INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
+        INNER JOIN ESTADO_PASSE ON PASSE.passe_estado_id = ESTADO_PASSE.id_estado_passe
+        INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
+        WHERE PESSOA.id_pessoa = ?"
+    );
+
+    $stmt->execute([$id_pessoa]);
+    $passesAtualizado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode([
+        "informacao" => "Passe criado com sucesso!",
+        "passesAtualizado" => $passesAtualizado
+    ]);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode([

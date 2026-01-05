@@ -44,7 +44,6 @@ const {loading,setLoading} = useUser();
           id_pessoa: id_pessoa,
           passo_estado_id: 1,
           data_validade: Validade(),
-          data_emissao: Emissao(),
           saldo: 0,          
         })
       });
@@ -103,15 +102,6 @@ const {loading,setLoading} = useUser();
     )
 }export default VerificarPasseJovem
 
-
-export function Emissao() {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-
-  return `${yyyy}-${mm}-${dd}`;
-}
 
 export function Validade() {
   const today = new Date();
