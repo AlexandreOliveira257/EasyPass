@@ -180,9 +180,9 @@
 .login-container {
   height: 100%;
   display: flex;
-  align-items: center;
+  align-self: center;
   justify-content: center;
-  padding: 3rem;
+  padding: 2rem;
 }
 
 .login-card {
@@ -193,6 +193,7 @@
   width: 100%;
   max-width: 28rem;
   position: relative;
+  height: 70vh;
 }
 
 .backBtn {
@@ -249,7 +250,7 @@
   padding: 1rem 1rem;
   border-radius: 1.1rem;
   border-color: white;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   box-sizing: border-box;
   margin-bottom: 0;
 }
@@ -281,10 +282,28 @@
   width: 75%;
   background: #1C1C8A;
   color: #E1E8F6;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border: none;
   border-radius: 0.75rem;
   font-weight: 400;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 50%;
+  background: #1C1C8A;
+  color: #E1E8F6;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
   gap: 0.5rem;
   cursor: pointer;
   transition: 0.2s;
@@ -345,7 +364,7 @@
 
 .register-prompt {
   text-align: center;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 .register-prompt p {
@@ -354,23 +373,7 @@
   margin: 0 0 0.5rem 0;
 }
 
-.btn-register {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 50%;
-  background: #1C1C8A;
-  color: #E1E8F6;
-  padding: 0.5rem 1.5rem;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 1.5px;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: 0.2s;
-}
+
 
   .btn-register img{
     width: 2.3rem;

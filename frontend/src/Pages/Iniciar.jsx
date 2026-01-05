@@ -79,14 +79,6 @@ export default function EasyPassLogin() {
               </span>
             </button>
 
-            <div className="divider">
-              <span>OU ENTRE COM UMA DAS SEGUINTES CONTAS:</span>
-            </div>
-
-            <button className="btn-google">
-              <img src="./icons/googleRegisterIcon.svg" alt="Registar com Google" />
-            </button>
-
             <div className="register-prompt">
               <p>Ainda não tem conta na EasyPass?</p>
               <button className="btn-register">
