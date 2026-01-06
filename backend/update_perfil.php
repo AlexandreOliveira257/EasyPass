@@ -78,15 +78,7 @@ try {
             $dataValidade = $dados['anoValidade'] . "-" . 
                             $dados['mesValidade'] . "-" . 
                             $dados['diaValidade'];
-            
-            $stmtV = $pdo->prepare("UPDATE TIPODOCUMENTO 
-                                    SET validade = :val 
-                                    WHERE id_documento = :id");
-            $stmtV->execute([
-                ':val' => $dataValidade,
-                ':id'  => $idDocFinal
-            ]);
-
+              
             // Tabela PESSOA
             // Formatar data de nascimento
             $dataNasc = $dados['anosNascimento'] . "-" . 
@@ -94,21 +86,25 @@ try {
                         $dados['diasNascimento'];
 
             $sqlP = "UPDATE PESSOA SET 
-                        nome = :nome, 
-                        data_nascimento = :data_nasc, 
-                        genero_id = :gen_id, 
-                        documento_id = :doc_id, 
-                        morada_id = :mor_id,
-                        nacionalidade = :nacio,
-                        telemovel = :tele,
-                        email = :email
-                     WHERE nif = :nif";
+                    nome = :nome, 
+                    data_nascimento = :data_nasc, 
+                    genero_id = :gen_id, 
+                    documento_id = :doc_id, 
+                    data_validade_id = :data_val, 
+                    num_identificacao = :num_id,
+                    morada_id = :mor_id,
+                    nacionalidade = :nacio,
+                    telemovel = :tele,
+                    email = :email
+                WHERE nif = :nif";
 
             $pdo->prepare($sqlP)->execute([
                 ':nome'      => $dados['nomeCompleto'],
                 ':data_nasc' => $dataNasc,
                 ':gen_id'    => $genId,
                 ':doc_id'    => $idDocFinal,
+                ':data_val'  => $dataValidade,
+                ':num_id'    => $dados['numeroDocumento'], 
                 ':mor_id'    => $moradaId,
                 ':nacio'     => $dados['nacionalidade'],
                 ':tele'      => $dados['telemovel'],
