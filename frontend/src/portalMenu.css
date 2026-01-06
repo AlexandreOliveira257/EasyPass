@@ -36,12 +36,11 @@
 .criarPasse{
     border-radius: 1vw;
     width: 20vw;
+    transition: all 0.5s cubic-bezier(0.022, 0.736, 0.198, 0.997);
 }
 .criarPasse:hover{
-transform: scale(1.05, 1.05);
-transition: all 0.5s;
-transition-timing-function: cubic-bezier(0.022, 0.736, 0.198, 0.997);
-box-shadow: 0px 0px 15px rgb(205, 205, 205) ;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px rgb(205, 205, 205);
 }
 
 .criarPasseh3{
