@@ -102,7 +102,8 @@ try {
                         email = :email
                 WHERE nif = :nif";
 
-            $pdo->prepare($sqlP)->execute([
+            $stmtP = $pdo->prepare($sqlP);
+            $stmtP->execute([
                 ':nome'      => $dados['nomeCompleto'],
                 ':data_nasc' => $dataNasc,
                 ':gen_id'    => $genId,

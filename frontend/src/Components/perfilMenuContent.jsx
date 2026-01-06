@@ -73,7 +73,9 @@ function PerfilMenuContent() {
                         
                         // Tratamento da Data de Validade do Documento (AAAA-MM-DD)
                         // 'data_validade' -> JOIN do get_perfil.php
-                        const dataV = u.data_validade ? u.data_validade.split('-') : ["2030", "01", "01"];
+                        const dataV = u.data_validade 
+                                    ? u.data_validade.split(' ')[0].split('-') 
+                                    : ["2030", "01", "01"];
 
                         return {
                             ...prev,
@@ -98,11 +100,15 @@ function PerfilMenuContent() {
 
                             // Documento de Identificação
                             tipoDocumentoIdentificacao: u.documento_id == 1 ? "CC" : (u.documento_id == 2 ? "Passaporte" : ""),
+
+                            // Número do Documento de Identificação
+                            numeroDocumentoIdentificacao: u.num_documento || "",
                             
                             // Data de Validade (Selects)
-                            anosId: dataV[0],
+                            anoValidade: dataV[0],
                             mesValidade: dataV[1],
                             diaValidade: dataV[2]
+                            
                         };
                     });
                 }
@@ -127,7 +133,7 @@ function PerfilMenuContent() {
       mesesNascimento: formData.mesesNascimento,
       anosNascimento: formData.anosNascimento,
       tipoDocumentoIdentificacao: formData.tipoDocumentoIdentificacao,
-      numeroDocumentoIdentificacao: formData.numeroDocumentoIdentificacao,
+      numeroDocumento: formData.numeroDocumentoIdentificacao,
       validadeDocumentoIdentificacao: formData.validadeDocumentoIdentificacao,
       diaValidade: formData.diaValidade,
       mesValidade: formData.mesValidade,
