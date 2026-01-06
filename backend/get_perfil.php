@@ -17,7 +17,8 @@ if (!$nif) {
 try {
     // Vai à BD buscar os dados da Pessoa e junta a Morada (caso ela exista)
     $sql = "SELECT p.*, m.rua, m.concelho, m.codigo_postal, m.pais_residente, 
-                td.validade as data_validade
+                   td.validade as data_validade,
+                   td.num_documento as num_documento
             FROM PESSOA p 
             LEFT JOIN MORADA m ON p.morada_id = m.id_morada 
             LEFT JOIN TIPODOCUMENTO td ON p.documento_id = td.id_documento 

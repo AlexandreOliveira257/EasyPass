@@ -27,6 +27,7 @@ function PortalMenuContent(){
     theme: "light",
     transition: Zoom,
     });
+
     const notifyDelete = () => 
       toast.success("Passe apagado com sucesso!", {
     position: "bottom-right",
@@ -39,6 +40,7 @@ function PortalMenuContent(){
     theme: "light",
     transition: Zoom,
     });
+
     const notifyRenovar = () => 
       toast.success("Passe renovado com sucesso!", {
     position: "bottom-right",
@@ -51,6 +53,7 @@ function PortalMenuContent(){
     theme: "light",
     transition: Zoom,
     });
+
     const notifyRecarregar = () => 
       toast.success("Passe recarregado com sucesso!", {
     position: "bottom-right",
@@ -163,11 +166,13 @@ function PortalMenuContent(){
                 setSelectedPass(null);
                 setShowPassDetails(false);
                 setLoading(false);
+                
                 // Atualiza userPasses no localStorage
                     if(action === "apagar") {
                         const updatedPasses = userPasses.filter(passe => passe.id_passe !== idPasse);
                         localStorage.setItem("userPasses", JSON.stringify(updatedPasses));
                     } else if (action === "renovar" || action === "recarregar") {
+
                         // Atualiza apenas o passe específico
                         const updatedPasses = userPasses.map(passe => {
                             if(passe.id_passe === idPasse) {

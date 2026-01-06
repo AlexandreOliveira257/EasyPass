@@ -60,38 +60,36 @@ try {
             $genero_recebido = trim($dados['genero']);      
             // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
             switch ($genero_recebido) {
-                case 'Masculino' || 'Male':
-                    $genId = '1';
+                case 'Masculino':
+                case 'Male':
+                    $genId = 1;
                     break;
-                case 'Feminino' || 'Female':
-                    $genId = '2';
+                case 'Feminino':
+                case 'Female':
+                    $genId = 2;
                     break;
                 default:
-                    $genId = '3';
+                    $genId = 3;
             }
 
-            // Tipo Documento Identificação: 'Cartão Cidadão' -> 1, 'Carta Condução' -> 2
-            $tipoDocumento = $dados['tipoDocumentoIdentificacao']; // 'CC' ou 'CARTA'
+            // Definir as datas 
+            $dataValidade = $dados['anoValidade'] . "-" . $dados['mesValidade'] . "-" . $dados['diaValidade'];
+            $dataNasc = $dados['anosNascimento'] . "-" . $dados['mesesNascimento'] . "-" . $dados['diasNascimento'];
+
+            // Definir o ID do Documento (CC ou Carta)
+            $tipoDocumento = $dados['tipoDocumentoIdentificacao']; 
             $idDocFinal = ($tipoDocumento === 'CC') ? 1 : 2;
 
-            // Tabela TIPODOCUMENTO (validade)
-            $dataValidade = $dados['anoValidade'] . "-" . 
-                            $dados['mesValidade'] . "-" . 
-                            $dados['diaValidade'];
-            
-            $stmtV = $pdo->prepare("UPDATE TIPODOCUMENTO 
-                                    SET validade = :val 
+            // Atualizar TIPODOCUMENTO
+            $stmtV = $pdo->prepare("UPDATE TIPODOCUMENTO SET 
+                                        validade = :val, 
+                                        num_documento = :num 
                                     WHERE id_documento = :id");
             $stmtV->execute([
                 ':val' => $dataValidade,
+                ':num' => $dados['numeroDocumento'], // Certifica-te que o React envia esta chave
                 ':id'  => $idDocFinal
             ]);
-
-            // Tabela PESSOA
-            // Formatar data de nascimento
-            $dataNasc = $dados['anosNascimento'] . "-" . 
-                        $dados['mesesNascimento'] . "-" . 
-                        $dados['diasNascimento'];
 
             $sqlP = "UPDATE PESSOA SET 
                         nome = :nome, 
@@ -102,9 +100,10 @@ try {
                         nacionalidade = :nacio,
                         telemovel = :tele,
                         email = :email
-                     WHERE nif = :nif";
+                WHERE nif = :nif";
 
-            $pdo->prepare($sqlP)->execute([
+            $stmtP = $pdo->prepare($sqlP);
+            $stmtP->execute([
                 ':nome'      => $dados['nomeCompleto'],
                 ':data_nasc' => $dataNasc,
                 ':gen_id'    => $genId,
