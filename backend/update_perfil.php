@@ -59,19 +59,16 @@ try {
             // Remove espaços e garante que comparamos corretamente
             $genero_recebido = trim($dados['genero']);
             // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
-            switch ($genero_recebido) {
-                case 'Masculino':
-                case 'Male':
+            switch ($dados['genero']) {
+                case '1':
                     $genId = 1;
                     break;
-                case 'Feminino':
-                case 'Female':
+                case '2':
                     $genId = 2;
                     break;
                 default:
                     $genId = 3;
             }
-
             // Definir as datas 
             $dataValidade = $dados['anoValidade'] . "-" . $dados['mesValidade'] . "-" . $dados['diaValidade'];
             $dataNasc = $dados['anosNascimento'] . "-" . $dados['mesesNascimento'] . "-" . $dados['diasNascimento'];
