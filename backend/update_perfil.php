@@ -57,7 +57,7 @@ try {
             }
 
             // Remove espaços e garante que comparamos corretamente
-            $genero_recebido = trim($dados['genero']);      
+            $genero_recebido = trim($dados['genero']);
             // Género: 'Masculino' -> 1, 'Feminino' -> 2, 'Outro' -> 3
             switch ($genero_recebido) {
                 case 'Masculino':
@@ -77,7 +77,7 @@ try {
             $dataNasc = $dados['anosNascimento'] . "-" . $dados['mesesNascimento'] . "-" . $dados['diasNascimento'];
 
             // Definir o ID do Documento (CC ou Carta)
-            $tipoDocumento = $dados['tipoDocumentoIdentificacao']; 
+            $tipoDocumento = $dados['tipoDocumentoIdentificacao'];
             $idDocFinal = ($tipoDocumento === 'CC') ? 1 : 2;
 
             // Atualizar TIPODOCUMENTO
@@ -99,7 +99,8 @@ try {
                         morada_id = :mor_id,
                         nacionalidade = :nacio,
                         telemovel = :tele,
-                        email = :email
+                        email = :email,
+                        foto_perfil = :foto
                 WHERE nif = :nif";
 
             $stmtP = $pdo->prepare($sqlP);
@@ -112,7 +113,8 @@ try {
                 ':nacio'     => $dados['nacionalidade'],
                 ':tele'      => $dados['telemovel'],
                 ':email'     => $dados['email'],
-                ':nif'       => $dados['nif']
+                ':nif'       => $dados['nif'],
+                ':foto'      => $dados['foto']
             ]);
 
             $pdo->commit();
@@ -124,4 +126,3 @@ try {
     http_response_code(500);
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
-?>
