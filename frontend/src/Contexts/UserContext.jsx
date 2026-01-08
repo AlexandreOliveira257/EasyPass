@@ -10,7 +10,7 @@ export function UserProvider({ children }) {
   const [notifications, setNotifications] = useState([])
   const [idpessoa, setIdPessoa] = useState(null)
   const [loading, setLoading] = useState(false)
-
+  const [fotoPerfil, setFotoPerfil] = useState(null);
   return (
     <UserContext.Provider value={
       { username, setUsername,
@@ -19,7 +19,8 @@ export function UserProvider({ children }) {
         passes, setPasses,
         notifications,setNotifications,
         idpessoa,setIdPessoa,
-        loading, setLoading}}>
+        loading, setLoading,
+        fotoPerfil, setFotoPerfil}}>
       {children}
     </UserContext.Provider>
   );

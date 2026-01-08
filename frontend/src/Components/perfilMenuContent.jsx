@@ -14,6 +14,7 @@ function PerfilMenuContent() {
   const anos = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i).reverse();
   const anosValidade = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
   const [selectedImage, setSelectedImage] = useState(null); // Novo estado para a imagem
+  const { setFotoPerfil } = useUser();
   const [formData, setFormData] = useState({
     // Dados pessoais
     nomeCompleto: nomeCompleto || "",
@@ -67,12 +68,13 @@ function PerfilMenuContent() {
 
                 if (result.status === "success") {
                     const u = result.data;
-                    
+                    const novaFoto = selectedImage || formData.foto_perfil;
+                    setFotoPerfil(novaFoto); // Atualiza o Header
                     // Preenche o form com os dados do utilizador 
                     setFormData(prev => {
                         // Tratamento da Data de Nascimento (AAAA-MM-DD)
                         const dataN = u.data_nascimento ? u.data_nascimento.split('-') : ["2000", "01", "01"];
-                        
+                        setFotoPerfil(u.foto_perfil);
                         // Tratamento da Data de Validade do Documento (AAAA-MM-DD)
                         // 'data_validade' -> JOIN do get_perfil.php
                         const dataV = u.data_validade 
@@ -88,7 +90,7 @@ function PerfilMenuContent() {
                             telemovel: u.telemovel || "",
                             nacionalidade: u.nacionalidade || "Portuguesa",
                             genero: u.genero_id || "", // assumir que o backend devolve o id do género
-                            foto_perfil: u.foto || "", // imagem em base64
+                            foto_perfil: u.foto_perfil || "", // imagem em base64
                             // Morada
                             morada: u.rua || "",
                             codigoPostal: u.codigo_postal || "",
@@ -126,7 +128,7 @@ function PerfilMenuContent() {
   // enviar dados ao backend
   const handleSave = async () => {
     const dadosEnviar = {
-      foto: selectedImage, // imagem em base64
+      foto: selectedImage || formData.foto_perfil, // imagem em base64
       nomeCompleto: formData.nomeCompleto,
       genero: formData.genero,
       nacionalidade: formData.nacionalidade,
@@ -164,6 +166,7 @@ function PerfilMenuContent() {
       const result = await response.json();
       console.log('Success:', result);
       alert("Dados guardados com sucesso!");
+  
 
     } catch (error) {
       console.error('Error:', error);

@@ -6,7 +6,9 @@ import ButtonBase from '@mui/material/ButtonBase';
 // Recebe currentImage para mostrar a foto que já vem da base de dados
 export default function UploadAvatar({ size = 80, onImageSelect, currentImage }) {
   const [avatarSrc, setAvatarSrc] = React.useState(currentImage);
-
+React.useEffect(() => {
+    setAvatarSrc(currentImage);
+  }, [currentImage]);
   // Sincroniza o preview caso a imagem mude no componente pai (ex: carregamento da DB)
   React.useEffect(() => {
     if (currentImage) setAvatarSrc(currentImage);
