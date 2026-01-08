@@ -75,7 +75,7 @@ function VerificarPasseUrbano({setView}){
         <div>
         <h1>{t('verificarPagamento').toUpperCase()}</h1>
         </div>
-        <span></span><img onClick={()=>setView("none")} className="goBackBtn" src="icons/goBackBtn.svg"/>
+        <span></span><img onClick={()=>setView("escolherPasseAutocarro")} className="goBackBtn" src="icons/goBackBtn.svg"/>
         </div>
          
           <div className="form">

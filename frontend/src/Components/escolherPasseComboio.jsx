@@ -6,7 +6,7 @@ const {t} = useTranslation()
 return(
     <div>
         <div className="flex">
-        <span></span><img onClick={()=>setView("verificarDadosComboio")} className="goBackBtn" src="icons/goBackBtn.svg"/>
+        <span></span><img onClick={()=>setView("escolherOperadorTrain")} className="goBackBtn" src="icons/goBackBtn.svg"/>
         </div>
         <h3 className="criarPasseh3">{t('escolherPassePretendeCriar')}</h3>
         <div className="criarPasseFlexImages">
