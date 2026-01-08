@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import PortalMenu from "./portalMenu";
 import "../Perfil.css"
 import { useUser } from "../Contexts/UserContext";
-
+import UploadAvatar from "./UploadAvatar";
 function PerfilMenuContent() {
   const [activeTab, setActiveTab] = useState(0);
   const {t} = useTranslation()
@@ -13,7 +13,7 @@ function PerfilMenuContent() {
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const anos = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i).reverse();
   const anosValidade = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
-
+  const [selectedImage, setSelectedImage] = useState(null); // Novo estado para a imagem
   const [formData, setFormData] = useState({
     // Dados pessoais
     nomeCompleto: nomeCompleto || "",
@@ -30,6 +30,7 @@ function PerfilMenuContent() {
     diaValidade: "01",
     mesValidade: "01",
     anoValidade: "2030",
+    foto_perfil: "",
 
     // Morada
     morada: "",
@@ -55,6 +56,7 @@ function PerfilMenuContent() {
             console.error("Não foi possível carregar o perfil: NIF em falta.");
             return; 
         }
+        
         
         if (nifSalvo) {
             try {
@@ -86,7 +88,7 @@ function PerfilMenuContent() {
                             telemovel: u.telemovel || "",
                             nacionalidade: u.nacionalidade || "Portuguesa",
                             genero: u.genero_id || "", // assumir que o backend devolve o id do género
-
+                            foto_perfil: u.foto || "", // imagem em base64
                             // Morada
                             morada: u.rua || "",
                             codigoPostal: u.codigo_postal || "",
@@ -124,6 +126,7 @@ function PerfilMenuContent() {
   // enviar dados ao backend
   const handleSave = async () => {
     const dadosEnviar = {
+      foto: selectedImage, // imagem em base64
       nomeCompleto: formData.nomeCompleto,
       genero: formData.genero,
       nacionalidade: formData.nacionalidade,
@@ -175,8 +178,13 @@ function PerfilMenuContent() {
 
         {/* FOTO */}
         <div className="photo-area">
-          <div className="circle-photo"></div>
-          <button className="btn-photo">{t('alterarFoto').toUpperCase()}</button>
+          <div className="circle-photo">
+            <UploadAvatar 
+              size={90} 
+              onImageSelect={(img) => setSelectedImage(img)} 
+              currentImage={formData.foto_perfil} // Se já tiver foto na DB
+            />
+          </div>
         </div>
 
         {/* TABS */}
