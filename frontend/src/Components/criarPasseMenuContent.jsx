@@ -8,6 +8,7 @@ import EscolherPasseAutocarro from "./escolherPasseAutocarro";
 import VerificarPasseVerde from "./PagamentoPasseVerde";
 import VerificarPasseUrbano from "./PagamentoPasseUrbano";
 import VerificarPasseJovem from "./PagamentoPasseJovem";
+import "./criarPasseMenuContent.css"
 
 
 function CriarPasseMenuContent(){
@@ -24,8 +25,8 @@ const {t} = useTranslation()
         <h3 className="criarPasseh3">{t('escolhaMeioTransporte')}</h3>
         <div className="criarPasseFlexImages">
             <figure><img src="BoatOption.svg"/><figcaption className="disabled">{t('barco')}</figcaption></figure>
-            <figure><img onClick={()=>setView("escolherOperadorBus")} src="BusOption1.svg"/><figcaption>{t('autocarro')}</figcaption></figure>
-            <figure><img onClick={()=>setView("escolherOperadorTrain")} src="TrainOption1.svg"/><figcaption>{t('comboio')}</figcaption></figure>
+            <figure id="transporteBtn"><img onClick={()=>setView("escolherOperadorBus")} src="BusOption1.svg"/><figcaption>{t('autocarro')}</figcaption></figure>
+            <figure id="transporteBtn"><img onClick={()=>setView("escolherOperadorTrain")} src="TrainOption1.svg"/><figcaption>{t('comboio')}</figcaption></figure>
             <figure><img src="MetroOption.svg"/><figcaption className="disabled">{t('metro')}</figcaption></figure>
         </div>
         </>

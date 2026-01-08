@@ -10,8 +10,8 @@ return(
         </div>
         <h3 className="criarPasseh3">{t('escolherPassePretendeCriar')}</h3>
         <div className="criarPasseFlexImages">
-        <figure><img onClick={()=>setView("verificarPasseUrbano")} src="tejoButton.svg"/><figcaption>{t('passeUrbano')}</figcaption></figure>
-        <figure><img onClick={()=>setView("verificarPasseJovem")} src="tejoButton.svg"/><figcaption>{t('passeJovem')}</figcaption></figure>
+        <figure id="transporteBtn"><img onClick={()=>setView("verificarPasseUrbano")} src="tejoButton.svg"/><figcaption>{t('passeUrbano')}</figcaption></figure>
+        <figure id="transporteBtn"><img onClick={()=>setView("verificarPasseJovem")} src="tejoButton.svg"/><figcaption>{t('passeJovem')}</figcaption></figure>
         </div>
     </div>
 )

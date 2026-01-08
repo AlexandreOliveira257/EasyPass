@@ -2,11 +2,13 @@ import { useTranslation } from "react-i18next"
 import { toast, Bounce, Slide, Zoom } from 'react-toastify';
 import { useNavigate } from "react-router";
 import { useUser } from "../Contexts/UserContext";
+
 function VerificarPasseVerde({setView}){
   const {loading,setLoading} = useUser();
    const {t} = useTranslation()
     const id_pessoa = Number(localStorage.getItem("id_pessoa"));
     const navigate = useNavigate();
+
   const notify = () =>
   toast.success("Pagamento confirmado!", {
     position: "bottom-right",
@@ -19,6 +21,7 @@ function VerificarPasseVerde({setView}){
     theme: "light",
     transition: Zoom,
   });
+  
   const notifyInfo = () => toast.info('Para mais informações consulte as suas notificações!', {
     position: "bottom-right",
     autoClose: 9000,

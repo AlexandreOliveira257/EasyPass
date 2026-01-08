@@ -10,7 +10,7 @@ return(
         </div>
         <h3 className="criarPasseh3">{t('escolherPassePretendeCriar')}</h3>
         <div className="criarPasseFlexImages">
-        <figure><img onClick={()=>setView("verificarPasseVerde")} src="pVerde.svg"/><figcaption>{t('passeFerroviarioVerde')}</figcaption></figure>
+        <figure id="transporteBtn"><img onClick={()=>setView("verificarPasseVerde")} src="pVerde.svg"/><figcaption>{t('passeFerroviarioVerde')}</figcaption></figure>
         </div>
     </div>
 )

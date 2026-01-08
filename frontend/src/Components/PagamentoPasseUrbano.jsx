@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next"
 import { toast, Bounce, Slide, Zoom } from 'react-toastify';
 import { useNavigate } from "react-router";
 import { useUser } from "../Contexts/UserContext";
+
 function VerificarPasseUrbano({setView}){
     const {t} = useTranslation()
     const id_pessoa = Number(localStorage.getItem("id_pessoa"));
@@ -20,6 +21,7 @@ function VerificarPasseUrbano({setView}){
     theme: "light",
     transition: Zoom,
   });
+
   const notifyInfo = () => toast.info('Para mais informações consulte as suas notificações!', {
     position: "bottom-right",
     autoClose: 9000,
@@ -31,6 +33,7 @@ function VerificarPasseUrbano({setView}){
     theme: "light",
     transition: Zoom,
 });
+
       async function BtnHandlerPagamento() {
            if(loading) return;
         setLoading(true);
@@ -65,6 +68,7 @@ function VerificarPasseUrbano({setView}){
           setLoading(false);
         }
       }
+
     return(
         <div className="formPerfil">
         <div className="flex">

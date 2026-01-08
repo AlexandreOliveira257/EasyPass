@@ -84,4 +84,9 @@
         border-radius: 6px;
         border: none;
         cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.022, 0.736, 0.198, 0.997);
+    }
+
+    .save-btn:hover {
+        background: #182146;
     }

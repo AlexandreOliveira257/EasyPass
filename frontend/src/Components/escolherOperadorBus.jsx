@@ -10,7 +10,8 @@ function EscolherOperadorBus({setView}){
         </div>
         <h3 className="criarPasseh3">{t('escolherOperadorPreferencia')}</h3>
         <div className="criarPasseFlexImages">
-        <figure><img onClick={()=>setView("escolherPasseAutocarro")} src="tejoButton.svg"/><figcaption>Rodoviária Tejo</figcaption></figure>
+        <figure id="transporteBtn">
+            <img onClick={()=>setView("escolherPasseAutocarro")} src="tejoButton.svg"/><figcaption>Rodoviária Tejo</figcaption></figure>
         </div>
         </div>
     )
