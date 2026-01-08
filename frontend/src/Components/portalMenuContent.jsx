@@ -216,10 +216,6 @@ function PortalMenuContent(){
                             <a onClick={NavigationHandler} className="btnPortal">{t('notificacoes')}</a>
                             <img src="icons/notifications.svg"/>
                         </div>
-                        <div className="flex">
-                            <a className="btnPortal">{t('gerirPasses')}</a>
-                            <img src={"icons/gerirPasses.svg"}/>
-                        </div>
                     </nav>
                 </div>
                 <div className="hrPortal"></div>
