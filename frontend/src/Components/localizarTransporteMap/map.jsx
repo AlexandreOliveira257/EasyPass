@@ -8,14 +8,19 @@ export default function Map() {
   const map = useRef(null);
   const santarem = { lng: -8.675239, lat: 39.242294 };
   const zoom = 14;
-  maptilersdk.config.apiKey = 'ccju2Vzo4orZNRCbc50a'; /* <<-- NAO PARTILHAR CHAVE API */
+  const mapApi = process.env.REACT_APP_MAP_TILLER_API;
+
+  console.log("Map API: " + mapApi);
+
+
+  maptilersdk.config.apiKey = mapApi;
 
   useEffect(() => {
     if (map.current) return; // Faz com que o mapa não inicie mais do que uma vez
 
     map.current = new maptilersdk.Map({
         container: mapContainer.current,
-        style: maptilersdk.MapStyle.STREETS,
+        style: "019abd07-7fbd-7062-8681-1eebe53d9a99",
         center: [santarem.lng, santarem.lat],
         zoom: zoom
     });
@@ -27,6 +32,7 @@ export default function Map() {
     }, [santarem.lng, santarem.lat, zoom]);
 
     return (
+
     <div className="map-wrap">
         <div ref={mapContainer} className="map" />
     </div>
