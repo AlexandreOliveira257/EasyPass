@@ -21,7 +21,14 @@
     color: #AB2020;
 }
 
+#menuSelect {
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.022, 0.736, 0.198, 0.997);
+}
 
+#menuSelect:hover {
+    transform: scale(1.04);
+}
 
 a {
     text-decoration: 0;

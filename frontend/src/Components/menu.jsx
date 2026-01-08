@@ -61,43 +61,43 @@ function Menu() {
       <h1 className="menu">Menu</h1>
 
       <nav className="iconsMenu">
-        <Link to="/passes">
+        <Link to="/passes" id="menuSelect">
         <img src="icons/passe.svg" />Passes
         </Link>
 
-        <a disabled={loading} onClick={() => NavigationHandler("/pedidos")} className="menu-link">
+        <a disabled={loading} onClick={() => NavigationHandler("/pedidos")} className="menu-link" id="menuSelect">
           <img src="icons/pedidos.svg"/>
         {t("pedidos")}
         </a>
 
-        <a disabled={loading} onClick={() => NavigationHandler("/movimentos")} className="menu-link">
+        <a disabled={loading} onClick={() => NavigationHandler("/movimentos")} className="menu-link" id="menuSelect">
           <img src="icons/movimentos.svg"/>
           {t("movimentos")}
         </a>
 
-        <Link to="/perfil">
+        <Link to="/perfil" id="menuSelect">
         <img src="icons/User.svg" />
         {t("perfil")}
         </Link>
 
-        <Link to="/horarios">
+        <Link to="/horarios" id="menuSelect">
         <img src="icons/horários.svg" />
         {t("horarios")}
         </Link>
 
-        <Link to="/localizarTransporte">
+        <Link to="/localizarTransporte" id="menuSelect">
         <img src="icons/localizar.svg" />
         {t("transportes")}
         </Link>
 
         <div className="barra"></div>
 
-        <Link to="/definicoes" className="definicoes">
+        <Link to="/definicoes" className="definicoes" id="menuSelect">
         <img src="icons/settings.svg" />
         {t("settings")}
         </Link>
 
-        <Link onClick={handleLogout} className="terminarSessao">
+        <Link onClick={handleLogout} className="terminarSessao" id="menuSelect">
           <img src="icons/logout.svg" />{t("logout")}
         </Link>
       </nav>
