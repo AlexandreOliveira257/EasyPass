@@ -1,16 +1,22 @@
 import React, { useRef, useEffect } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
+import * as turf from '@turf/turf';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import './map.css';
 
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  
+  // --- CONFIGURAÇÃO: EDITA AQUI ---
+  const MAPTILER_API_KEY = 'ccju2Vzo4orZNRCbc50a'; 
+  const MAP_STYLE_ID = '019abd07-7fbd-7062-8681-1eebe53d9a99';
+  // --------------------------------
+
   const santarem = { lng: -8.675239, lat: 39.242294 };
   const zoom = 14;
-  const mapApi = process.env.REACT_APP_MAP_TILLER_API;
 
-  // Coordenadas para a animação
+  // Traçado do comboio (podes adicionar mais pontos para caminhos complexos)
   const trainPath = [
     [-8.675239, 39.242294],
     [-8.676500, 39.244000],
@@ -22,65 +28,66 @@ export default function Map() {
   useEffect(() => {
     if (map.current) return;
 
-    maptilersdk.config.apiKey = mapApi;
+    maptilersdk.config.apiKey = MAPTILER_API_KEY;
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current,
-      style: "019abd07-7fbd-7062-8681-1eebe53d9a99",
+      style: MAP_STYLE_ID,
       center: [santarem.lng, santarem.lat],
       zoom: zoom
     });
 
     map.current.on('load', () => {
-      map.current.addSource('transports-source', {
+      // 1. Criar a linha e calcular distância com Turf
+      const route = turf.lineString(trainPath);
+      const distance = turf.length(route);
+
+      // 2. Adicionar a fonte de dados (começa no ponto inicial)
+      map.current.addSource('train-source', {
         type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [{
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: trainPath[0] },
-            properties: { id: 'moving-train' }
-          }]
-        }
+        data: turf.point(trainPath[0])
       });
 
-      // Ponto no mapa (comboio)
+      // 3. Adicionar a camada visual
       map.current.addLayer({
-        id: 'transport-layer',
+        id: 'train-layer',
         type: 'circle',
-        source: 'transports-source',
+        source: 'train-source',
         paint: {
-          'circle-radius': 8,
+          'circle-radius': 9,
           'circle-color': '#1b1287',
-          'circle-stroke-width': 2,
+          'circle-stroke-width': 3,
           'circle-stroke-color': '#ffffff'
         }
       });
 
-      // Animação
-      let pathIndex = 0;
-      const animate = () => {
-        pathIndex = (pathIndex + 1) % trainPath.length;
-        const source = map.current.getSource('transports-source');
+      // 4. Lógica de Animação Suave
+      let startTime = 0;
+      const duration = 8000; // 8 segundos para percorrer o trajeto
 
-        // verificar se tem erros
-        if (source && typeof source.setData === 'function') {
-          source.setData({
-            type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              geometry: { type: 'Point', coordinates: trainPath[pathIndex] },
-              properties: {}
-            }]
-          });
+      const frame = (time) => {
+        if (!startTime) startTime = time;
+        const phase = (time - startTime) / duration;
+
+        if (phase <= 1) {
+          // Calcula onde o ponto deve estar baseado no tempo (0 a 1)
+          const currentPos = turf.along(route, phase * distance);
+          
+          const source = map.current.getSource('train-source');
+          if (source) source.setData(currentPos);
+          
+          requestAnimationFrame(frame);
+        } else {
+          // Loop: Reinicia a animação
+          startTime = 0;
+          requestAnimationFrame(frame);
         }
-        setTimeout(animate, 1000); // Movimento a cada 1 seg
       };
 
-      animate();
+      requestAnimationFrame(frame);
     });
 
-  }, [mapApi]); // API do mapa para evitar re-renders desnecessários
+  }, []); // useEffect corre apenas uma vez ao montar o componente
 
   return (
     <div className="map-wrap">
