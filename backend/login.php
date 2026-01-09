@@ -25,7 +25,7 @@ if (!$email || !$pass) {
 
 $pdo = estabelerConexao();
 
-$stmt = $pdo->prepare("SELECT id_pessoa, nome, nif, email FROM PESSOA WHERE email = ? AND palavra_passe = ?");
+$stmt = $pdo->prepare("SELECT id_pessoa, nome, nif, email, foto_perfil FROM PESSOA WHERE email = ? AND palavra_passe = ?");
 $stmt->execute([$email, $pass]);
 
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,7 +43,7 @@ if ($user) {
 
     // busca passes
     $stmt3 = $pdo->prepare("
-        SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo, foto_perfil
+        SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo
         FROM PASSE 
         INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
         INNER JOIN ESTADO_PASSE ON PASSE.passe_estado_id = ESTADO_PASSE.id_estado_passe
@@ -72,7 +72,8 @@ if ($user) {
         "nif" => (string)$nif_final,
         "email" => $email,
         "passes" => $userPasses,
-        "notifications" => $userNotifications
+        "notifications" => $userNotifications,
+        "foto_perfil" => $user['foto_perfil'] ?? null
     ]);
 } else {
     echo json_encode(["result" => "Email ou palavra-passe incorretos!"]);
