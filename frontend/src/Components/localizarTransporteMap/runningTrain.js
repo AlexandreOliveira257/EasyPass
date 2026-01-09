@@ -1,4 +1,7 @@
 import * as turf from '@turf/turf';
+import * as maptilersdk from '@maptiler/sdk';
+
+let activeTrainPopup = null;
 
 // trajeto do comboio
 export const trainPath = [
@@ -70,6 +73,19 @@ export const setupTrainAnimation = (map, trainPath, duration = 300000) => {
     }
   });
 
+  map.on('click', 'train-layer', (e) => {
+    if (activeTrainPopup) activeTrainPopup.remove();
+
+    activeTrainPopup = new maptilersdk.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML('<strong>Comboio: Alfa Pendular</strong><br>Estado: Operacional<br>Velocidade: 124 km/h')
+      .addTo(map);
+
+      activeTrainPopup.on('close', () => {
+        activeTrainPopup = null;
+      });
+  });
+
   // animação
   let startTime = 0;
   let animationRequest;
@@ -80,8 +96,15 @@ export const setupTrainAnimation = (map, trainPath, duration = 300000) => {
 
     if (phase <= 1) {
       const currentPos = turf.along(route, phase * distance);
+      const coords = currentPos.geometry.coordinates;
       const source = map.getSource('train-source');
+
       if (source) source.setData(currentPos);
+
+    if (activeTrainPopup && typeof activeTrainPopup.setLngLat === 'function' && activeTrainPopup.isOpen()) {
+      activeTrainPopup.setLngLat(coords);
+    }
+
       animationRequest = requestAnimationFrame(frame);
     } else {
       startTime = 0;
@@ -92,5 +115,8 @@ export const setupTrainAnimation = (map, trainPath, duration = 300000) => {
   animationRequest = requestAnimationFrame(frame);
 
   // retornamos uma função para parar a animação se o componente for destruído
-  return () => cancelAnimationFrame(animationRequest);
+  return () => {
+    cancelAnimationFrame(animationRequest);
+    if (activeTrainPopup) activeTrainPopup.remove();
+  };
 };

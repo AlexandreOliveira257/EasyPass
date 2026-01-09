@@ -1,4 +1,7 @@
 import * as turf from '@turf/turf';
+import * as maptilersdk from '@maptiler/sdk';
+
+let activeBusPopup = null;
 
 // trajeto do autocarro
 export const busPath = [
@@ -91,6 +94,23 @@ export const setupBusAnimation = (map, busPath, duration = 160000) => {
     }
   });
 
+  // popup
+  map.on('click', 'bus-layer', (e) => {
+    if (activeBusPopup) activeBusPopup.remove();
+
+    activeBusPopup = new maptilersdk.Popup({
+      closeButton: true,
+      closeOnClick: false
+    })
+      .setLngLat(e.lngLat)
+      .setHTML('<strong>Urbano U564</strong><br>Estado: Operacional<br>Velocidade média: 62 km/h')
+      .addTo(map);
+
+    activeBusPopup.on('close', () => {
+      activeBusPopup = null;
+    });
+  });
+
   // animação
   let startTime = 0;
   let animationRequest;
@@ -102,7 +122,13 @@ export const setupBusAnimation = (map, busPath, duration = 160000) => {
     if (phase <= 1) {
       const currentPos = turf.along(route, phase * distance);
       const source = map.getSource('bus-source');
+      const coords = currentPos.geometry.coordinates;
       if (source) source.setData(currentPos);
+
+    if (activeBusPopup && typeof activeBusPopup.setLngLat === 'function' && activeBusPopup.isOpen()) {
+      activeBusPopup.setLngLat(coords);
+    }
+
       animationRequest = requestAnimationFrame(frame);
     } else {
       startTime = 0;
