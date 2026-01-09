@@ -80,7 +80,7 @@ export default function EasyPassLogin() {
 
             <div className="register-prompt">
               <p>Ainda não tem conta na EasyPass?</p>
-              <button className="btn-register">
+              <button onClick={() => setShowRegister(true)} className="btn-register">
                 <span>REGISTAR</span>
                 <span className="arrow">
                   <img src="./icons/goBackBtnWhite.svg"/>
@@ -96,7 +96,7 @@ export default function EasyPassLogin() {
         <div className="register-container">
           <div className="register-card">
             {/* Close Button */}
-            <button onClick={() => setShowRegister(false)} className="backBtn">
+            <button onClick={() => {setShowRegister(false); setShowLogin(false)}} className="backBtn">
               <img src="./icons/goBackBtn.svg"/>
             </button>
 
