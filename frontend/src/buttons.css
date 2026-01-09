@@ -63,3 +63,8 @@
 .limparNotifications img{
    width: 1.5vw;
 }
+
+.btnDelete{
+   background-color: rgb(231, 16, 16) !important;
+
+}

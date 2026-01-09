@@ -10,7 +10,7 @@ export default function EasyPassLogin() {
   const [showRegister, setShowRegister] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {username, setUsername, setPedido, setMovimentos, setPasses, setNotifications,setIdPessoa, setFotoPerfil} = useUser();
+  const {username, setUsername, setPedido, setMovimentos, setPasses, setNotifications,setIdPessoa, setFotoPerfil, setLoading} = useUser();
   const [nif, setNif] = useState("");
   const navigate = useNavigate();
 
@@ -155,7 +155,7 @@ export default function EasyPassLogin() {
 
  function loginSubmit() {
   const url = "https://migale.antrob.eu/backend/login.php";
-
+  setLoading(true);
   fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -171,7 +171,7 @@ export default function EasyPassLogin() {
       if (data.result === "Login com sucesso!") {
         // apanhar o NIF (prevenção contra maiúsculas/minúsculas)
         const nifRecebido = data.nif || "";
-
+        setLoading(false);
         if (!nifRecebido) {
             console.error("Error: nif not received.");
             return;
@@ -189,10 +189,10 @@ export default function EasyPassLogin() {
         setMovimentos(data.movimentos || []);
         setNotifications(data.notifications || []);
         setFotoPerfil(data.foto_perfil || null);
-
         navigate("/passes");  
       } else {
         alert(data.result);
+        setLoading(false);
       }
     })
     .catch(err => console.error("Erro no Fetch:", err));

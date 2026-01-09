@@ -155,6 +155,18 @@ function PortalMenuContent(){
                 setLoading(false);
                 return;
             }
+            if(amount > 20){
+                alert("O valor máximo para recarregar é 20€.");
+                setLoading(false);
+                return;
+            }
+        }
+        if(action === "apagar"){
+            const confirmDelete = window.confirm("Tem certeza que deseja apagar este passe?");  
+            if (!confirmDelete) {
+                setLoading(false);
+                return; 
+            }
         }
             try {
         const response = await fetch("https://migale.antrob.eu/backend/handlePass.php", {
@@ -334,7 +346,7 @@ function PortalMenuContent(){
           : "pass-cardTrain"
       }>
         <div className="pass-header">
-          <div className="avatarPass"></div>
+           <Avatar src={fotoPerfil}/>
           <div className="user-info">
             <h3>{username}</h3>
             <p>Identificação: {selectedPass.id_passe}</p>
@@ -360,15 +372,19 @@ function PortalMenuContent(){
           </div>
         </div>
       </div>
-       <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "apagar")}>
+      <div className="alignButtonsGerirPasse">
+        <p style={{color: "#171766"}}>Saldo: {selectedPass.saldo} €</p>
+        <p style={{color: "#171766"}}>Estado: {selectedPass.estado_passe_descricao}</p>
+       <button style={{margin: "0.5vw"}}className="save-btn btnDelete" onClick={() => handlePass(selectedPass.id_passe, "apagar")}>
           Apagar Passe
         </button>
-        <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "renovar")}>
+        <button style={{margin: "0.5vw"}} className="save-btn" onClick={() => handlePass(selectedPass.id_passe, "renovar")}>
           Renovar
         </button>
-        <button className="btnDeletePass" onClick={() => handlePass(selectedPass.id_passe, "recarregar")}>
+        <button style={{margin: "0.5vw"}} className="save-btn" onClick={() => handlePass(selectedPass.id_passe, "recarregar")}>
           Recarregar Saldo
         </button>
+        </div>
     </div>
   </>
 )}
