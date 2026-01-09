@@ -47,7 +47,11 @@ try {
         $passo_estado_id,
         $saldo
     ]);
-
+    $stmt = $pdo->prepare("
+                INSERT INTO MOVIMENTOPASSE (passe_id, pagamento_tipo_id, data_hora, descricao)
+                VALUES (:id, 2, current_timestamp(), 'Criação do passe')
+            ");
+    $stmt->execute(["id" => $id_pessoa]);
     // NOTIFICACAO → data_envio no SQL
     $stmt = $pdo->prepare(
         "INSERT INTO NOTIFICACAO 

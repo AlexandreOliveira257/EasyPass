@@ -29,6 +29,18 @@ function PortalMenuContent(){
     transition: Zoom,
     });
 
+    const notifyMovimentos = () => 
+      toast.info("Movimentos atualizados!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Zoom,
+    });
     const notifyDelete = () => 
       toast.success("Passe apagado com sucesso!", {
     position: "bottom-right",
@@ -179,7 +191,9 @@ function PortalMenuContent(){
                 setSelectedPass(null);
                 setShowPassDetails(false);
                 setLoading(false);
-                
+                setTimeout(() => {
+                notifyMovimentos();
+                }, 1200);
                 // Atualiza userPasses no localStorage
                     if(action === "apagar") {
                         const updatedPasses = userPasses.filter(passe => passe.id_passe !== idPasse);

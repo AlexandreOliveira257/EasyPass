@@ -46,7 +46,7 @@ try {
 
             $stmt = $pdo->prepare("
                 INSERT INTO MOVIMENTOPASSE (passe_id, pagamento_tipo_id, data_hora, descricao)
-                VALUES (:id, 2, current_timestamp(), 'Recarregamento de saldo')
+                VALUES (:id, 2, current_timestamp(), 'Renovação do passe')
             ");
             $stmt->execute(["id" => $idPasse]);
             // buscar a nova data_validade
