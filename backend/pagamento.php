@@ -79,7 +79,7 @@ try {
     // criar pedido se necessário
     if ($requerPasseFisico) {
         $stmt = $pdo->prepare(
-            "INSERT INTO PEDIDOS 
+            "INSERT INTO PEDIDO
             ( pessoa_id, pedido_estado_id, mensagem, data_emissao)
             VALUES (?, ?, ?, CURRENT_DATE)"
         );
