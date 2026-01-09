@@ -44,6 +44,11 @@ try {
     ");
             $stmt->execute(["id" => $idPasse]);
 
+            $stmt = $pdo->prepare("
+                INSERT INTO MOVIMENTOPASSE (passe_id, pagamento_tipo_id, data_hora, descricao)
+                VALUES (:id, 2, current_timestamp(), 'Recarregamento de saldo')
+            ");
+            $stmt->execute(["id" => $idPasse]);
             // buscar a nova data_validade
             $stmt2 = $pdo->prepare("
         SELECT data_validade
@@ -68,6 +73,12 @@ try {
                 WHERE id_passe = :id
             ");
             $stmt->execute(["id" => $idPasse, "amount" => $amount]);
+
+            $stmt = $pdo->prepare("
+                INSERT INTO MOVIMENTOPASSE (passe_id, pagamento_tipo_id, data_hora, descricao)
+                VALUES (:id, 3, current_timestamp(), 'Recarregamento de saldo')
+            ");
+            $stmt->execute(["id" => $idPasse]);
 
             echo json_encode([
                 "success" => true,
