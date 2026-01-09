@@ -24,7 +24,7 @@ $user = $stmt->fetch();
 if ($user) {
     try {
         $stmt1 = $pdo->prepare("
-        SELECT mensagem, estado_pedido_id, data_emissao
+        SELECT mensagem, pedido_estado_id, data_emissao
         FROM PEDIDO
         WHERE pessoa_id = ?
     ");
