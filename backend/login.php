@@ -43,7 +43,7 @@ if ($user) {
 
     // busca passes
     $stmt3 = $pdo->prepare("
-        SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo
+        SELECT id_passe, data_validade, data_emissao, saldo, preco, ESTADO_PASSE.estado_passe_descricao, TIPOPASSE.nome_tipo, foto_perfil
         FROM PASSE 
         INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
         INNER JOIN ESTADO_PASSE ON PASSE.passe_estado_id = ESTADO_PASSE.id_estado_passe
@@ -62,7 +62,7 @@ if ($user) {
 
     $stmt4->execute([$email]);
     $userNotifications = $stmt4->fetchAll(PDO::FETCH_ASSOC);
-    
+
     echo json_encode([
         "DEBUG_VER" => "3.0_FINAL",
         "result" => "Login com sucesso!",
@@ -77,4 +77,3 @@ if ($user) {
 } else {
     echo json_encode(["result" => "Email ou palavra-passe incorretos!"]);
 }
-
