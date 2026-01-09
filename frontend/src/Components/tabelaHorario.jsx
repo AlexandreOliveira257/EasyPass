@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
 import "../Horarios.css"
+import { useUser } from "../Contexts/UserContext"
 function TabelaHorario({ origem, destino }){
     const [horario, setHorario] = useState([])
+    const {loading, setLoading} = useUser()
     useEffect(() =>{
+        setLoading(true)
         const url =
-  "https://corsproxy.io/?" +
-  encodeURIComponent(`https://rtejo-search-engine.bitcliq.com/JsonHandler.ashx?t=s&s=rt&o=${origem}&d=${destino}`);
+        "https://corsproxy.io/?" +
+        encodeURIComponent(`https://rtejo-search-engine.bitcliq.com/JsonHandler.ashx?t=s&s=rt&o=${origem}&d=${destino}`);
 
       fetch(url) //tive que usar fetch aqui porque...nãosei, supostamente a outra api envia jsonp e esta envia json puro
         .then(r => r.json())
         .then(data => {
              setHorario(data)
+             setLoading(false)
         });
-        },);//useEffect
+        },[origem, destino]);//useEffect
     return(
         <div>
             <div className="containerHorario">

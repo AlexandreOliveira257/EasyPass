@@ -1,0 +1,21 @@
+export const localidadesComHorarioSantarém = [
+  "ACHETE",
+  "ALCANHÕES",
+  "ALMEIRIM",
+  "ALMOSTER (SANTARÉM)",
+  "ALPIARÇA",
+  "AZAMBUJA",
+  "BENFICA DO RIBATEJO",
+  "CARTAXO",
+  "FAZENDAS DE ALMEIRIM",
+  "GOLEGÃ",
+  "PERNES",
+  "PÓVOA DE SANTARÉM",
+  "RIO MAIOR",
+  "SANTARÉM",
+  "SÃO VICENTE DO PAÚL",
+  "TREMÊS",
+  "VALE DE SANTARÉM",
+  "VILA CHÃ DE OURIQUE",
+  // adiciona aqui os restantes que quiseres
+];

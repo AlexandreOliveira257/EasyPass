@@ -69,7 +69,6 @@ export default function EasyPassLogin() {
             <div className="form-group">
               <label>Password</label>
               <input onChange={e => setPassword(e.target.value)}type="password" placeholder="A sua palavra-passe" />   
-              <a href="#" className="forgot-password">Esqueceu-se da palavra-passe?</a>                  
             </div>
 
             <button onClick={loginSubmit} className="btn-submit">

@@ -5,13 +5,14 @@ import { Link } from "react-router";
 import { useUser } from "../Contexts/UserContext";
 import { toast, Zoom } from "react-toastify";
 import "../Cartoes.css"
+import Avatar from '@mui/material/Avatar';
 
 function PortalMenuContent(){
     const {t} = useTranslation()
     const [showPassDetails, setShowPassDetails] = useState(false);
     const [selectedPass, setSelectedPass] = useState(null);
     const [showNotifications, setShowNotifications] = useState(false);
-    const {username, setUsername, notifications, setNotifications, loading, setLoading} = useUser();
+    const {username, setUsername, notifications, setNotifications, loading, setLoading, fotoPerfil} = useUser();
     const userPasses = JSON.parse(localStorage.getItem("userPasses"))
    
 
@@ -234,7 +235,7 @@ function PortalMenuContent(){
                                 >
 
                                 <div className="pass-header">
-                                    <div className="avatarPass"></div>
+                                    <Avatar src={fotoPerfil}/>
                                     <div className="user-info">
                                         <h3>{username}</h3>
                                         <p>Identificação: {el.id_passe}</p>
