@@ -7,17 +7,20 @@ import PortalMenuContent from "./portalMenuContent";
 
 function Menu() {
   const { t } = useTranslation();
-  const { username, setUsername, setPedido, setMovimentos, loading, setLoading } = useUser();
+  const { username, setUsername, setPedido, setMovimentos, loading, setLoading, setFotoPerfil } = useUser();
   const navigate = useNavigate();
-
+  const id_pessoa = Number(localStorage.getItem("id_pessoa"));
   // Função para terminar sessão
   const handleLogout = () => {
     // Limpar dados do utilizador
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
     localStorage.removeItem("nif");
-    setUsername("");
-
+    localStorage.removeItem("id_pessoa");
+    localStorage.removeItem("userPasses");
+    localStorage.setItem("isLoggedIn", false);
+    setUsername("");  
+    setFotoPerfil(null);
     // Redireciona para o login
     navigate("/iniciar");
   };
@@ -36,7 +39,7 @@ function Menu() {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ id: id_pessoa }),
       });
 
       const data = await response.json();

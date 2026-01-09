@@ -6,7 +6,6 @@ import { useState } from "react"
 import { useUser } from "../Contexts/UserContext"
 import "../Pedidos.css"
 function PedidosMenuContent(){
-  const [showPedido,setShowPedido] = useState(false);
   const {pedidos} = useUser();
   const {t} = useTranslation()
   console.log(pedidos)

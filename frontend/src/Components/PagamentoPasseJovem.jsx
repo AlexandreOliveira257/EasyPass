@@ -2,12 +2,12 @@ import { useTranslation } from "react-i18next"
 import { toast, Bounce, Slide, Zoom } from 'react-toastify';
 import { useNavigate } from "react-router";
 import { useUser } from "../Contexts/UserContext";
-
+import { useState } from "react";
 function VerificarPasseJovem({setView}){
     const { t } = useTranslation();
     const id_pessoa = Number(localStorage.getItem("id_pessoa"));
-
-const {loading,setLoading} = useUser();
+    const [passeFisico, setPasseFisico] = useState(false);
+    const {loading,setLoading} = useUser();
     const navigate = useNavigate();
 
   const notify = () =>
@@ -47,7 +47,9 @@ const {loading,setLoading} = useUser();
           tipo_id: 3,
           id_pessoa: id_pessoa,
           passo_estado_id: 1,
-          saldo: 0,          
+          saldo: 0,
+          requerPasseFisico: passeFisico,
+          mensagemPedido:   "Pedido de Passe Físico da modalidade Passe Jovem."        
         })
       });
 
@@ -86,10 +88,10 @@ const {loading,setLoading} = useUser();
             <label>{t('requerPasseFisico')}</label>
             <div className="doc-type">
               <label>
-                {t('sim')} <input defaultChecked className="radio"type="radio" name="passeFisico" /> 
+                {t('sim')} <input onChange={() => setPasseFisico(true)} className="radio"type="radio" name="passeFisico" /> 
               </label>
               <label>
-                {t('nao')} <input className="radio" type="radio" name="passeFisico"  /> 
+                {t('nao')} <input onChange={() => setPasseFisico(false)} defaultChecked className="radio" type="radio" name="passeFisico"  /> 
               </label>
             </div>
             <hr></hr>

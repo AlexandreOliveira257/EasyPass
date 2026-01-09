@@ -81,7 +81,7 @@ try {
         $stmt = $pdo->prepare(
             "INSERT INTO PEDIDO
             ( pessoa_id, pedido_estado_id, mensagem, data_emissao)
-            VALUES (?, ?, ?, CURRENT_DATE)"
+            VALUES (?, ?, ?, CURRENT_TIMESTAMP)"
         );
         $stmt->execute([
             $id_pessoa,

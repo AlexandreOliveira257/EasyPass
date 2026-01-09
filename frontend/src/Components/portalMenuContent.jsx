@@ -12,9 +12,9 @@ function PortalMenuContent(){
     const [showPassDetails, setShowPassDetails] = useState(false);
     const [selectedPass, setSelectedPass] = useState(null);
     const [showNotifications, setShowNotifications] = useState(false);
-    const {username, setUsername, notifications, setNotifications, loading, setLoading, fotoPerfil} = useUser();
+    const {username, setUsername, notifications, setNotifications,pedidos,setPedido, loading, setLoading, fotoPerfil} = useUser();
     const userPasses = JSON.parse(localStorage.getItem("userPasses"))
-   
+    const id_pessoa = Number(localStorage.getItem("id_pessoa"));
 
     const notify = () => 
       toast.success("Notificações eliminadas!", {
@@ -93,7 +93,7 @@ function PortalMenuContent(){
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username }),
+                body: JSON.stringify({ id: id_pessoa }),
             });
 
             const data = await response.json();
@@ -211,7 +211,7 @@ function PortalMenuContent(){
         {!showNotifications  && !showPassDetails && (
             <>
                 <div className="flex">
-                    <h1>{t('welcome')}, {(username || localStorage.getItem("userName") || "").trim().split(" ")[0]}</h1>
+                    <h1>{t('welcome')}, {(username || localStorage.getItem("userName") || "")}</h1>
                     <nav className="navPortal">
                         <div className="flex">
                             <a onClick={NavigationHandler} className="btnPortal">{t('notificacoes')}</a>
