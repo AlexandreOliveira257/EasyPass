@@ -25,7 +25,8 @@ $tipo_id = $data['tipo_id'] ?? null;
 $id_pessoa = $data['id_pessoa'] ?? null;
 $passo_estado_id = $data['passo_estado_id'] ?? null;
 $saldo = $data['saldo'] ?? 0;
-
+$requerPasseFisico = $data['requerPasseFisico'] ?? false;
+$mensagemPedido = $data['mensagemPedido'] ?? "";
 // validação mínima
 if (!isset($tipo_id, $id_pessoa, $passo_estado_id)) {
     echo json_encode(["erro" => "Dados obrigatórios em falta"]);
@@ -75,10 +76,25 @@ try {
 
     $stmt->execute([$id_pessoa]);
     $passesAtualizado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // criar pedido se necessário
+    if ($requerPasseFisico) {
+        $stmt = $pdo->prepare(
+            "INSERT INTO PEDIDOS 
+            ( pessoa_id, pedido_estado_id, mensagem, data_emissao)
+            VALUES (?, ?, ?, CURRENT_DATE)"
+        );
+        $stmt->execute([
+            $id_pessoa,
+            1, // estado "pendente"
+            $mensagemPedido
+        ]);
+    }
+
+
 
     echo json_encode([
         "informacao" => "Passe criado com sucesso!",
-        "passesAtualizado" => $passesAtualizado
+        "passesAtualizado" => $passesAtualizado,
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

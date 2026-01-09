@@ -16,21 +16,19 @@ $data = json_decode($input, true);
 
 $pdo = estabelerConexao();
 
-$username = $data['username'] ?? "";
-$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE nome = ?");
-$stmt->execute([$username]);
+$id = $data['id'] ?? "";
+$stmt = $pdo->prepare("SELECT id_pessoa, nome FROM PESSOA WHERE id_pessoa = ?");
+$stmt->execute([$id]);
 $user = $stmt->fetch();
 
 if ($user) {
     try {
         $stmt1 = $pdo->prepare("
-        SELECT mensagem, ESTADO_PEDIDO.estado_pedido_descricao, data_emissao
-        FROM PEDIDO 
-        INNER JOIN PESSOA ON PESSOA.id_pessoa = PEDIDO.pessoa_id 
-        INNER JOIN ESTADO_PEDIDO on PEDIDO.pedido_estado_id = ESTADO_PEDIDO.id_estado_pedido
-        WHERE PESSOA.nome = ?
+        SELECT mensagem, estado_pedido_id, data_emissao
+        FROM PEDIDO
+        WHERE pessoa_id = ?
     ");
-        $stmt1->execute([$username]);
+        $stmt1->execute([$id]);
         $userPedidos = $stmt1->fetchAll(PDO::FETCH_ASSOC);
         // busca movimentos
         $stmt2 = $pdo->prepare("
@@ -39,16 +37,16 @@ if ($user) {
         INNER JOIN PASSE ON MOVIMENTOPASSE.passe_id = PASSE.id_passe
         INNER JOIN PESSOA ON PASSE.pessoa_id = PESSOA.id_pessoa
         INNER JOIN TIPOPASSE ON PASSE.tipo_id = TIPOPASSE.id_tipo
-        WHERE PESSOA.nome = ?
+        WHERE PESSOA.id_pessoa = ?
     ");
-        $stmt2->execute([$username]);
+        $stmt2->execute([$id]);
         $userMovimentos = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         $stmt4 = $pdo->prepare("
         SELECT titulo, mensagem, data_envio, lida FROM NOTIFICACAO 
         INNER JOIN PESSOA ON NOTIFICACAO.pessoa_id = PESSOA.id_pessoa
-        WHERE PESSOA.nome = ?
+        WHERE PESSOA.id_pessoa = ?
     ");
-        $stmt4->execute([$username]);
+        $stmt4->execute([$id]);
         $userNotifications = $stmt4->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode([
             "informacao" => "Pedidos, Movimentos e notificações obtidos com sucesso!",
