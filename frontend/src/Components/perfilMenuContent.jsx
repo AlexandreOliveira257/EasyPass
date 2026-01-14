@@ -11,11 +11,12 @@ function PerfilMenuContent() {
   const { nomeCompleto, nif, email } = useUser();
   const dias = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
-  const anos = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i).reverse();
-  const anosValidade = Array.from({ length: 2040 - 2020 + 1 }, (_, i) => 2020 + i).reverse();
+  const anos = Array.from({ length: 2026 - 1930 + 1 }, (_, i) => 1930 + i).reverse();
+  const anosValidade = Array.from({ length: 2040 - 2026 + 1 }, (_, i) => 2020 + i).reverse();
   const [selectedImage, setSelectedImage] = useState(null); // Novo estado para a imagem
   const { setFotoPerfil } = useUser();
   const [formData, setFormData] = useState({
+    
     // Dados pessoais
     nomeCompleto: nomeCompleto || "",
     genero: "1",
@@ -292,9 +293,12 @@ function PerfilMenuContent() {
             </div>
 
             <label>{t('numeroDocumentoIdentificacao')}</label>
-            <input type="text" 
+            <input type="text" maxLength={9}
                    value={formData.numeroDocumentoIdentificacao} 
-                   onChange={(e) => setFormData({ ...formData, numeroDocumentoIdentificacao: e.target.value })} />
+                   onChange={(e) => {
+                    const onlyNumbers = e.target.value.replace(/\D/g, '');
+                    
+                    setFormData({ ...formData, numeroDocumentoIdentificacao: onlyNumbers })}} />
 
             <label>{t('validadeDocumentoIdentificacao')}</label>
             <div className="row">
@@ -334,10 +338,19 @@ function PerfilMenuContent() {
                    onChange={(e) => setFormData({ ...formData, morada: e.target.value })} />
 
             <label>{t('codigoPostal')}</label>
-            <input type="text" 
+            <input type="text"
                    placeholder={t('oSeuCodigoPostal')} 
                    value={formData.codigoPostal} 
-                   onChange={(e) => setFormData({ ...formData, codigoPostal: e.target.value })} />
+                   onChange={(e) => {
+                    const onlyNumbers = e.target.value.replace(/\D/g, '');
+
+                    const maxLength = onlyNumbers.slice(0, 7);
+
+                    let result = maxLength;
+                    if (maxLength.length > 4) {
+                      result = maxLength.slice(0, 4) + '-' + maxLength.slice(4);
+                    } 
+                      setFormData({ ...formData, codigoPostal: result });}} />
 
             <label>{t('localidade')}</label>
             <input type="text" 
@@ -366,9 +379,13 @@ function PerfilMenuContent() {
 
             <label>{t('telemovel')}</label>
             <input type="text" 
+                   inputMode='numeric' 
+                   maxLength={9} 
+                   placeholder={t('oSeuTelemovel')}
                    value={formData.telemovel} 
-                   onChange={(e) => setFormData({ ...formData, telemovel: e.target.value })} 
-                   placeholder={t('oSeuTelemovel')} />
+                   onChange={(e) => {
+                    const onlyNumbers = e.target.value.replace(/\D/g, '');
+                    setFormData({ ...formData, telemovel: onlyNumbers })}} />
 
             <label>{t('contactoPreferencial')}</label>
             <select value={formData.contactoPreferencial} 
