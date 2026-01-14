@@ -40,11 +40,6 @@ export default function EasyPassLogin() {
                 <img src="./icons/goBackBtn.svg"/>
               </span>
             </button>
-            <Link to="/passes">
-            <button onClick={() => {setUsername("Convidado") }}className="btn-link">
-            ENTRAR COMO CONVIDADO
-            </button>
-            </Link>
           </div>
         )}
       </div>
